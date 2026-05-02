@@ -28,7 +28,6 @@
 12. [🧪 Tests](#-tests)
 13. [🌐 Déploiement](#-déploiement)
 14. [📚 Documentation](#-documentation)
-15. [👥 Équipe & Contribution](#-équipe--contribution)
 
 ---
 
@@ -1300,26 +1299,7 @@ sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
 - [Django Security](https://docs.djangoproject.com/en/4.2/topics/security/)
 - [Bootstrap 5 Documentation](https://getbootstrap.com/docs/5.0/)
 
----
 
-## 👥 Équipe & Contribution
-
-### Équipe de Développement
-
-| Rôle | Responsable | Tâches |
-|------|------------|--------|
-| **Lead Backend** | NAHAIRY Zakaria | Architecture, modèles, authentification, API |
-| **Lead Frontend** | HATIM Amine EZZOUINE | UX/UI, templates, styling, responsive |
-
-### Établissement & Contexte
-
-```
-Établissement : EMSI Casablanca
-Filière : 3IIR (Ingénierie Informatique et Réseaux)
-Semestre : S2
-Année Académique : 2025/2026
-Type de Projet : Projet de Fin d'Année (PFA)
-```
 
 ### Comment Contribuer
 
