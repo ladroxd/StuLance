@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block title %}Messagerie — {{ mission.title }}{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 class="mb-0"><i class="bi bi-chat-dots text-primary"></i> {{ mission.title }}</h5>
+                    <small class="text-muted">Avec {{ other_user.get_full_name }}</small>
+                </div>
+                <a href="{% url 'mission_detail' mission.pk %}" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-arrow-left"></i> Mission
+                </a>
+            </div>
+            <div class="card-body" id="chat-box" style="height:450px;overflow-y:auto;background:#f8f9fa;">
+                {% for msg in messages %}
+                <div class="d-flex {% if msg.sender == request.user %}justify-content-end{% endif %} mb-2">
+                    <div class="p-2 px-3 rounded-3 {% if msg.sender == request.user %}bg-primary text-white{% else %}bg-white border{% endif %}" style="max-width:70%">
+                        <div class="small fw-bold mb-1">{{ msg.sender.get_full_name }}</div>
+                        <div>{{ msg.content }}</div>
+                        <div class="small {% if msg.sender == request.user %}text-white-50{% else %}text-muted{% endif %} text-end mt-1">{{ msg.sent_at|date:"H:i" }}</div>
+                    </div>
+                </div>
+                {% empty %}
+                <p class="text-center text-muted mt-5">Commencez la conversation...</p>
+                {% endfor %}
+            </div>
+            <div class="card-footer">
+                <form id="msg-form" class="d-flex gap-2">
+                    {% csrf_token %}
+                    <input type="text" id="msg-input" class="form-control" placeholder="Votre message..." autocomplete="off" required>
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-send"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+const chatBox = document.getElementById('chat-box');
+const form = document.getElementById('msg-form');
+const input = document.getElementById('msg-input');
+const sendUrl = "{% url 'send_message' mission.pk %}";
+const pollUrl = "{% url 'poll_messages' mission.pk %}";
+const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+let lastId = {{ messages.last.pk|default:0 }};
+
+chatBox.scrollTop = chatBox.scrollHeight;
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const content = input.value.trim();
+    if (!content) return;
+    input.value = '';
+    const res = await fetch(sendUrl, {
+        method: 'POST',
+        headers: {'X-CSRFToken': csrfToken, 'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `content=${encodeURIComponent(content)}`
+    });
+    const data = await res.json();
+    appendMessage(data);
+    lastId = data.id;
+});
+
+function appendMessage(msg) {
+    const div = document.createElement('div');
+    div.className = `d-flex ${msg.is_me ? 'justify-content-end' : ''} mb-2`;
+    div.innerHTML = `
+        <div class="p-2 px-3 rounded-3 ${msg.is_me ? 'bg-primary text-white' : 'bg-white border'}" style="max-width:70%">
+            <div class="small fw-bold mb-1">${msg.sender}</div>
+            <div>${msg.content}</div>
+            <div class="small ${msg.is_me ? 'text-white-50' : 'text-muted'} text-end mt-1">${msg.sent_at}</div>
+        </div>`;
+    chatBox.appendChild(div);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+setInterval(async () => {
+    const res = await fetch(`${pollUrl}?since=${lastId}`);
+    const data = await res.json();
+    data.messages.forEach(msg => {
+        appendMessage(msg);
+        lastId = msg.id;
+    });
+}, 3000);
+</script>
+{% endblock %}

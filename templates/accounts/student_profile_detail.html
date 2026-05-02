@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}{{ profile.user.get_full_name }} — StuLance{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card shadow mb-4">
+            <div class="card-body text-center">
+                {% if profile.photo %}
+                    <img src="{{ profile.photo.url }}" class="rounded-circle mb-3" width="120" height="120" style="object-fit:cover">
+                {% else %}
+                    <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width:120px;height:120px">
+                        <i class="bi bi-person fs-1 text-primary"></i>
+                    </div>
+                {% endif %}
+                <h4>{{ profile.user.get_full_name }}</h4>
+                <p class="text-muted">{{ profile.school }}</p>
+                <p class="text-muted small">{{ profile.field_of_study }}</p>
+                <div class="d-flex justify-content-around text-center mb-3">
+                    <div>
+                        <div class="fw-bold fs-5 text-warning">{{ profile.average_rating|floatformat:1 }}<i class="bi bi-star-fill ms-1 small"></i></div>
+                        <small class="text-muted">Note</small>
+                    </div>
+                    <div>
+                        <div class="fw-bold fs-5">{{ profile.total_missions }}</div>
+                        <small class="text-muted">Missions</small>
+                    </div>
+                </div>
+                {% if profile.skills_list %}
+                <div class="d-flex flex-wrap gap-1 justify-content-center">
+                    {% for skill in profile.skills_list %}
+                        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary">{{ skill }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        {% if profile.bio %}
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <h5>A propos</h5>
+                <p>{{ profile.bio }}</p>
+            </div>
+        </div>
+        {% endif %}
+        <div class="card shadow">
+            <div class="card-header"><h5 class="mb-0">Portfolio</h5></div>
+            <div class="card-body">
+                {% for project in profile.portfolio.all %}
+                <div class="border rounded p-3 mb-3">
+                    <h6>{{ project.title }}</h6>
+                    <p class="text-muted small">{{ project.description }}</p>
+                    {% if project.url %}
+                        <a href="{{ project.url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-link-45deg"></i> Voir le projet
+                        </a>
+                    {% endif %}
+                </div>
+                {% empty %}
+                <p class="text-muted text-center">Aucun projet.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

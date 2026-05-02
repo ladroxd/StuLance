@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block title %}Mon Profil — StuLance{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card shadow mb-4">
+            <div class="card-body text-center">
+                {% if profile.photo %}
+                    <img src="{{ profile.photo.url }}" class="rounded-circle mb-3" width="120" height="120" style="object-fit:cover">
+                {% else %}
+                    <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width:120px;height:120px">
+                        <i class="bi bi-person fs-1 text-primary"></i>
+                    </div>
+                {% endif %}
+                <h4>{{ profile.user.get_full_name }}</h4>
+                <p class="text-muted">{{ profile.school }}</p>
+                <p class="text-muted small">{{ profile.field_of_study }}</p>
+                <div class="d-flex justify-content-center gap-2 mb-3">
+                    {% if profile.github_url %}
+                        <a href="{{ profile.github_url }}" target="_blank" class="btn btn-sm btn-outline-dark">
+                            <i class="bi bi-github"></i>
+                        </a>
+                    {% endif %}
+                    {% if profile.linkedin_url %}
+                        <a href="{{ profile.linkedin_url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-linkedin"></i>
+                        </a>
+                    {% endif %}
+                </div>
+                <div class="d-flex justify-content-around text-center mb-3">
+                    <div>
+                        <div class="fw-bold fs-5 text-warning">{{ profile.average_rating|floatformat:1 }}<i class="bi bi-star-fill ms-1 small"></i></div>
+                        <small class="text-muted">Note</small>
+                    </div>
+                    <div>
+                        <div class="fw-bold fs-5">{{ profile.total_missions }}</div>
+                        <small class="text-muted">Missions</small>
+                    </div>
+                    <div>
+                        <div class="fw-bold">
+                            {% if profile.verification_status == 'verified' %}
+                                <span class="badge bg-success"><i class="bi bi-check-circle"></i> Verifie</span>
+                            {% elif profile.verification_status == 'pending' %}
+                                <span class="badge bg-warning text-dark">En attente</span>
+                            {% else %}
+                                <span class="badge bg-danger">Rejete</span>
+                            {% endif %}
+                        </div>
+                        <small class="text-muted">Statut</small>
+                    </div>
+                </div>
+                <a href="{% url 'edit_student_profile' %}" class="btn btn-outline-primary btn-sm w-100">
+                    <i class="bi bi-pencil"></i> Modifier le profil
+                </a>
+            </div>
+        </div>
+
+        {% if profile.skills_list %}
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <h6 class="card-title">Competences</h6>
+                <div class="d-flex flex-wrap gap-2">
+                    {% for skill in profile.skills_list %}
+                        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary">{{ skill }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="col-md-8">
+        {% if profile.bio %}
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <h5>A propos</h5>
+                <p>{{ profile.bio }}</p>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="card shadow">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Portfolio</h5>
+                <a href="{% url 'add_portfolio_project' %}" class="btn btn-primary btn-sm">
+                    <i class="bi bi-plus"></i> Ajouter
+                </a>
+            </div>
+            <div class="card-body">
+                {% for project in profile.portfolio.all %}
+                <div class="border rounded p-3 mb-3">
+                    <div class="d-flex justify-content-between">
+                        <h6>{{ project.title }}</h6>
+                        <form method="post" action="{% url 'delete_portfolio_project' project.pk %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Supprimer ce projet ?')">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <p class="text-muted small">{{ project.description }}</p>
+                    {% if project.url %}
+                        <a href="{{ project.url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-link-45deg"></i> Voir le projet
+                        </a>
+                    {% endif %}
+                </div>
+                {% empty %}
+                <p class="text-muted text-center">Aucun projet dans le portfolio.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

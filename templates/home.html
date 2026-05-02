@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block title %}StuLance — Freelancing Academique{% endblock %}
+{% block content %}
+
+<div class="hero-section text-center py-5 mb-5 rounded-3 bg-primary text-white">
+    <h1 class="display-4 fw-bold">Trouvez votre prochaine mission</h1>
+    <p class="lead">La plateforme de freelancing pour etudiants marocains</p>
+    <div class="d-flex gap-3 justify-content-center mt-4">
+        <a href="{% url 'mission_list' %}" class="btn btn-light btn-lg">
+            <i class="bi bi-search"></i> Explorer les missions
+        </a>
+        <a href="{% url 'register_student' %}" class="btn btn-outline-light btn-lg">
+            <i class="bi bi-person-plus"></i> Devenir Freelancer
+        </a>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-md-4 text-center">
+        <div class="feature-icon bg-primary bg-opacity-10 rounded-circle d-inline-flex p-3 mb-3">
+            <i class="bi bi-briefcase-fill fs-2 text-primary"></i>
+        </div>
+        <h5>Des missions variees</h5>
+        <p class="text-muted">Developpement, design, marketing, redaction et plus encore.</p>
+    </div>
+    <div class="col-md-4 text-center">
+        <div class="feature-icon bg-success bg-opacity-10 rounded-circle d-inline-flex p-3 mb-3">
+            <i class="bi bi-shield-check-fill fs-2 text-success"></i>
+        </div>
+        <h5>Environnement securise</h5>
+        <p class="text-muted">Profils verifies, messagerie integree et notation mutuelle.</p>
+    </div>
+    <div class="col-md-4 text-center">
+        <div class="feature-icon bg-warning bg-opacity-10 rounded-circle d-inline-flex p-3 mb-3">
+            <i class="bi bi-mortarboard-fill fs-2 text-warning"></i>
+        </div>
+        <h5>Adapte aux etudiants</h5>
+        <p class="text-muted">Missions flexibles compatibles avec votre emploi du temps.</p>
+    </div>
+</div>
+
+{% if categories %}
+<h3 class="mb-3">Categories</h3>
+<div class="d-flex flex-wrap gap-2 mb-5">
+    {% for cat in categories %}
+        <a href="{% url 'mission_list' %}?category={{ cat.pk }}" class="btn btn-outline-primary btn-sm">
+            {% if cat.icon %}<i class="bi bi-{{ cat.icon }}"></i>{% endif %} {{ cat.name }}
+        </a>
+    {% endfor %}
+</div>
+{% endif %}
+
+<h3 class="mb-3">Missions recentes</h3>
+<div class="row g-4">
+    {% for mission in missions %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <span class="badge bg-primary mb-2">{{ mission.category }}</span>
+                <h5 class="card-title">{{ mission.title }}</h5>
+                <p class="card-text text-muted small">{{ mission.description|truncatewords:20 }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="fw-bold text-success">{{ mission.budget }} MAD</span>
+                    <span class="text-muted small"><i class="bi bi-clock"></i> {{ mission.deadline_days }}j</span>
+                </div>
+                {% if mission.skills_required %}
+                <div class="mt-2">
+                    {% for skill in mission.skills_list %}
+                        <span class="badge bg-light text-dark border me-1">{{ skill }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            <div class="card-footer bg-transparent">
+                <a href="{% url 'mission_detail' mission.pk %}" class="btn btn-primary btn-sm w-100">Voir la mission</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center text-muted">
+        <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+        Aucune mission disponible pour le moment.
+    </div>
+    {% endfor %}
+</div>
+
+{% if missions %}
+<div class="text-center mt-4">
+    <a href="{% url 'mission_list' %}" class="btn btn-outline-primary">Voir toutes les missions</a>
+</div>
+{% endif %}
+
+{% endblock %}
