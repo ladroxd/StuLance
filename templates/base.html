@@ -9,51 +9,57 @@
     {% load static %}
     {% if CURRENT_LANG == 'ar' %}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    {% else %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     {% endif %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="{% static 'dist/main.css' %}" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body class="d-flex flex-column min-vh-100">
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<!-- ── Navbar ─────────────────────────────────────────── -->
+<nav class="navbar navbar-expand-lg navbar-dark navbar-glass">
     <div class="container">
-        <a class="navbar-brand fw-bold fs-4" href="{% url 'home' %}" style="font-family: 'Poppins', sans-serif;">
-            <img src="{% static 'images/Logo Variants/logo_purple_neon.png' %}" alt="StuLance Logo" class="logo-icon" style="height: 40px; width: auto; margin-right: -5px;"> StuLance
+        <a class="navbar-brand fw-bold" href="{% url 'home' %}">
+            <img src="{% static 'images/Logo Variants/logo_purple_neon.png' %}" alt="StuLance Logo" style="height: 40px; width: auto;">
+            <span>STU<span class="accent-text">LANCE</span></span>
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navMenu">
-            <ul class="navbar-nav flex-grow-1 justify-content-center">
+            <ul class="navbar-nav ms-auto align-items-center">
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'mission_list' %}">
                         <i class="bi bi-briefcase"></i> {% trans "Missions" %}
                     </a>
                 </li>
-            </ul>
-            <ul class="navbar-nav ms-auto align-items-center">
                 {% if user.is_authenticated %}
-                    <li class="nav-item me-2">
-                        <a class="nav-link position-relative" href="{% url 'inbox' %}">
-                            <i class="bi bi-chat-dots fs-5"></i>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'inbox' %}">
+                            <i class="bi bi-chat-dots"></i>
                         </a>
                     </li>
-                    <li class="nav-item me-2">
+                    <li class="nav-item">
                         <a class="nav-link position-relative" href="{% url 'notification_list' %}" id="notif-bell">
-                            <i class="bi bi-bell fs-5"></i>
+                            <i class="bi bi-bell"></i>
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none" id="notif-badge">0</span>
                         </a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                    <li class="nav-item dropdown ms-3">
+                        <button class="nav-link dropdown-toggle bg-transparent border-0" type="button" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="true" style="padding: 0.5rem 0; cursor: pointer;">
                             <i class="bi bi-person-circle"></i> {{ user.get_full_name|default:user.username }}
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                             <li><a class="dropdown-item" href="{% if user.is_staff %}/admin/{% else %}{% url 'dashboard' %}{% endif %}"><i class="bi bi-speedometer2"></i> {% trans "Dashboard" %}</a></li>
                             {% if user.role == 'student' %}
                             <li><a class="dropdown-item" href="{% url 'student_profile' %}"><i class="bi bi-person"></i> {% trans "My Profile" %}</a></li>
                             {% endif %}
                             <li><hr class="dropdown-divider"></li>
                             <li>
-                                <form method="post" action="{% url 'logout' %}">
+                                <form method="post" action="{% url 'logout' %}" class="m-0">
                                     {% csrf_token %}
                                     <button type="submit" class="dropdown-item text-danger">
                                         <i class="bi bi-box-arrow-right"></i> {% trans "Sign Out" %}
@@ -64,40 +70,40 @@
                     </li>
                 {% else %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">{% trans "Sign In" %}</a></li>
-                    <li class="nav-item">
-                        <a class="btn btn-light btn-sm ms-2" href="{% url 'register_student' %}">{% trans "Sign Up" %}</a>
+                    <li class="nav-item ms-2">
+                        <a class="btn btn-primary btn-sm" href="{% url 'register_student' %}">{% trans "Sign Up" %}</a>
                     </li>
                 {% endif %}
-
+                
                 <li class="nav-item dropdown ms-2">
-                    <a class="nav-link dropdown-toggle text-white-50" href="#" data-bs-toggle="dropdown">
+                    <button class="nav-link dropdown-toggle bg-transparent border-0" type="button" id="langDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="true" style="padding: 0.5rem 0; cursor: pointer;">
                         {% if CURRENT_LANG == 'ar' %}العربية
                         {% elif CURRENT_LANG == 'fr' %}FR
                         {% else %}EN{% endif %}
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown">
                         <li>
-                            <form action="{% url 'set_language' %}" method="post">
+                            <form action="{% url 'set_language' %}" method="post" class="m-0">
                                 {% csrf_token %}
                                 <input type="hidden" name="language" value="en">
                                 <input type="hidden" name="next" value="{{ request.get_full_path }}">
-                                <button type="submit" class="dropdown-item {% if CURRENT_LANG == 'en' %}fw-bold{% endif %}">English</button>
+                                <button type="submit" class="dropdown-item {% if CURRENT_LANG == 'en' %}fw-bold text-accent{% endif %}">English</button>
                             </form>
                         </li>
                         <li>
-                            <form action="{% url 'set_language' %}" method="post">
+                            <form action="{% url 'set_language' %}" method="post" class="m-0">
                                 {% csrf_token %}
                                 <input type="hidden" name="language" value="fr">
                                 <input type="hidden" name="next" value="{{ request.get_full_path }}">
-                                <button type="submit" class="dropdown-item {% if CURRENT_LANG == 'fr' %}fw-bold{% endif %}">Français</button>
+                                <button type="submit" class="dropdown-item {% if CURRENT_LANG == 'fr' %}fw-bold text-accent{% endif %}">Français</button>
                             </form>
                         </li>
                         <li>
-                            <form action="{% url 'set_language' %}" method="post">
+                            <form action="{% url 'set_language' %}" method="post" class="m-0">
                                 {% csrf_token %}
                                 <input type="hidden" name="language" value="ar">
                                 <input type="hidden" name="next" value="{{ request.get_full_path }}">
-                                <button type="submit" class="dropdown-item {% if CURRENT_LANG == 'ar' %}fw-bold{% endif %}">العربية</button>
+                                <button type="submit" class="dropdown-item {% if CURRENT_LANG == 'ar' %}fw-bold text-accent{% endif %}">العربية</button>
                             </form>
                         </li>
                     </ul>
@@ -107,37 +113,93 @@
     </div>
 </nav>
 
-<div class="container my-4 flex-grow-1">
+<!-- ── Main Content ─────────────────────────────────── -->
+{% block full_content %}
+<div class="container flex-grow-1 my-4">
     {% for message in messages %}
         <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
             {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     {% endfor %}
     {% block content %}{% endblock %}
 </div>
+{% endblock %}
 
-<footer class="bg-dark text-light py-4 mt-5">
+<!-- ── Footer ────────────────────────────────────────── -->
+{% block footer %}
+<footer class="mt-5">
     <div class="container">
-        <div class="row">
-            <div class="col-md-8 text-center text-md-start">
-                <p class="mb-2">&copy; 2026 StuLance — {% trans "All rights reserved" %}</p>
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                <p class="mb-0">&copy; 2026 StuLance — {% trans "All rights reserved" %}</p>
             </div>
-            <div class="col-md-4 text-center text-md-end">
-                <p class="mb-1">
-                    <i class="bi bi-envelope"></i>
-                    <a href="mailto:contact@stulance.com" class="text-light text-decoration-none">contact@stulance.com</a>
-                </p>
-                <p class="mb-0">
-                    <i class="bi bi-telephone"></i>
-                    <a href="tel:+33123456789" class="text-light text-decoration-none">+33 1 23 45 67 89</a>
-                </p>
+            <div class="col-md-6 text-center text-md-end">
+                <div style="display: flex; justify-content: center; gap: 24px; flex-wrap: wrap;">
+                    <a href="mailto:contact@stulance.com" class="text-decoration-none">
+                        <i class="bi bi-envelope"></i> contact@stulance.com
+                    </a>
+                    <a href="tel:+212612345678" class="text-decoration-none">
+                        <i class="bi bi-telephone"></i> +212 6 xx xx xx xx
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </footer>
+{% endblock %}
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{% static 'dist/main.js' %}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const dropdownButtons = document.querySelectorAll('[data-bs-toggle="dropdown"]');
+        const dropdownInstances = new Map();
+        
+        // Initialize all dropdowns and store references
+        dropdownButtons.forEach(function(button) {
+            const dropdown = new bootstrap.Dropdown(button, {
+                autoClose: true
+            });
+            dropdownInstances.set(button.id, dropdown);
+        });
+        
+        // Add explicit click handler to manually toggle and close other dropdowns
+        dropdownButtons.forEach(function(button) {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const currentDropdown = dropdownInstances.get(button.id);
+                
+                // Close all other dropdowns
+                dropdownButtons.forEach(function(otherButton) {
+                    if (otherButton.id !== button.id) {
+                        const otherDropdown = dropdownInstances.get(otherButton.id);
+                        if (otherDropdown) {
+                            otherDropdown.hide();
+                        }
+                    }
+                });
+                
+                // Toggle current dropdown
+                if (currentDropdown) {
+                    currentDropdown.toggle();
+                }
+            });
+        });
+        
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('[data-bs-toggle="dropdown"]') && 
+                !e.target.closest('.dropdown-menu')) {
+                dropdownInstances.forEach(function(dropdown) {
+                    dropdown.hide();
+                });
+            }
+        });
+    });
+</script>
 {% block extra_js %}{% endblock %}
 </body>
 </html>

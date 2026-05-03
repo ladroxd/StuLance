@@ -2,59 +2,65 @@
 {% load i18n %}
 {% block title %}{% trans "Dashboard" %} — StuLance{% endblock %}
 {% block content %}
+
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h3>{% trans "Hello," %} {{ user.get_full_name }} <i class="bi bi-mortarboard text-primary"></i></h3>
+    <div>
+        <h3 class="mb-1">{% trans "Hello," %} {{ user.get_full_name }} <i class="bi bi-mortarboard" style="color:var(--accent)"></i></h3>
+        <p class="text-muted mb-0" style="font-size:14px">{% trans "Here's what's happening with your freelance work." %}</p>
+    </div>
     <a href="{% url 'mission_list' %}" class="btn btn-primary">
         <i class="bi bi-search"></i> {% trans "Find Missions" %}
     </a>
 </div>
 
+<!-- ── Stat Cards ─────────────────────────────────────── -->
 <div class="row g-3 mb-4">
-    <div class="col-md-3">
-        <div class="card bg-primary text-white text-center shadow">
-            <div class="card-body">
-                <div class="fs-2 fw-bold">{{ applications|length }}</div>
-                <div>{% trans "Applications" %}</div>
+    <div class="col-6 col-md-3">
+        <div class="card text-center">
+            <div class="card-body py-3">
+                <div class="fs-2 fw-bold" style="color:var(--accent);font-family:'DM Mono',monospace">{{ applications|length }}</div>
+                <div class="text-muted" style="font-size:13px">{% trans "Applications" %}</div>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card bg-warning text-dark text-center shadow">
-            <div class="card-body">
-                <div class="fs-2 fw-bold">{{ active_missions|length }}</div>
-                <div>{% trans "In Progress" %}</div>
+    <div class="col-6 col-md-3">
+        <div class="card text-center">
+            <div class="card-body py-3">
+                <div class="fs-2 fw-bold" style="color:#f59e0b;font-family:'DM Mono',monospace">{{ active_missions|length }}</div>
+                <div class="text-muted" style="font-size:13px">{% trans "In Progress" %}</div>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card bg-success text-white text-center shadow">
-            <div class="card-body">
-                <div class="fs-2 fw-bold">{{ profile.total_missions }}</div>
-                <div>{% trans "Completed" %}</div>
+    <div class="col-6 col-md-3">
+        <div class="card text-center">
+            <div class="card-body py-3">
+                <div class="fs-2 fw-bold" style="color:#10b981;font-family:'DM Mono',monospace">{{ profile.total_missions }}</div>
+                <div class="text-muted" style="font-size:13px">{% trans "Completed" %}</div>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card bg-info text-white text-center shadow">
-            <div class="card-body">
-                <div class="fs-2 fw-bold">{{ profile.average_rating|floatformat:1 }} <i class="bi bi-star-fill small"></i></div>
-                <div>{% trans "Average Rating" %}</div>
+    <div class="col-6 col-md-3">
+        <div class="card text-center">
+            <div class="card-body py-3">
+                <div class="fs-2 fw-bold" style="color:#0ea5e9;font-family:'DM Mono',monospace">{{ profile.average_rating|floatformat:1 }} <i class="bi bi-star-fill" style="font-size:1rem"></i></div>
+                <div class="text-muted" style="font-size:13px">{% trans "Rating" %}</div>
             </div>
         </div>
     </div>
 </div>
 
+<!-- ── Active Missions ────────────────────────────────── -->
 {% if active_missions %}
 <h5 class="mb-3">{% trans "Active Missions" %}</h5>
 {% for mission in active_missions %}
-<div class="card shadow-sm mb-3">
+<div class="card mb-3">
     <div class="card-body d-flex justify-content-between align-items-center">
         <div>
             <h6 class="mb-1">{{ mission.title }}</h6>
             <small class="text-muted">{{ mission.budget }} MAD — {{ mission.deadline_days }} {% trans "days" %}</small>
         </div>
         <div class="d-flex gap-2">
-            <a href="{% url 'conversation' mission.pk %}" class="btn btn-outline-primary btn-sm">
+            <a href="{% url 'conversation' mission.pk %}" class="btn btn-ghost btn-sm">
                 <i class="bi bi-chat-dots"></i> {% trans "Messages" %}
             </a>
             <a href="{% url 'mission_detail' mission.pk %}" class="btn btn-primary btn-sm">{% trans "View" %}</a>
@@ -64,20 +70,28 @@
 {% endfor %}
 {% endif %}
 
+<!-- ── Applications ───────────────────────────────────── -->
 <h5 class="mb-3 mt-4">{% trans "My Applications" %}</h5>
 {% for app in applications %}
-<div class="card shadow-sm mb-2">
+<div class="card mb-2">
     <div class="card-body d-flex justify-content-between align-items-center">
         <div>
-            <a href="{% url 'mission_detail' app.mission.pk %}" class="fw-bold text-decoration-none">{{ app.mission.title }}</a>
+            <a href="{% url 'mission_detail' app.mission.pk %}" class="fw-bold text-decoration-none" style="color:var(--text)">{{ app.mission.title }}</a>
             <div class="text-muted small">{{ app.mission.budget }} MAD — {{ app.applied_at|date:"d/m/Y" }}</div>
         </div>
-        <span class="badge {% if app.status == 'pending' %}bg-warning text-dark{% elif app.status == 'accepted' %}bg-success{% else %}bg-danger{% endif %}">
+        <span class="badge {% if app.status == 'pending' %}bg-warning{% elif app.status == 'accepted' %}bg-success{% else %}bg-danger{% endif %}">
             {{ app.get_status_display }}
         </span>
     </div>
 </div>
 {% empty %}
-<p class="text-muted">{% trans "No applications yet." %} <a href="{% url 'mission_list' %}">{% trans "Browse missions" %}</a></p>
+<div class="card">
+    <div class="card-body text-center py-4">
+        <i class="bi bi-inbox fs-1 text-muted d-block mb-3"></i>
+        <p class="text-muted mb-3">{% trans "No applications yet." %}</p>
+        <a href="{% url 'mission_list' %}" class="btn btn-primary btn-sm">{% trans "Browse missions" %}</a>
+    </div>
+</div>
 {% endfor %}
+
 {% endblock %}

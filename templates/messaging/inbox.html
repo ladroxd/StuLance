@@ -13,7 +13,7 @@
 
         <div class="card shadow">
             {% if conversations %}
-                <ul class="list-group list-group-flush">
+                <ul class="list-group list-group-flush" style="--bs-list-group-bg:transparent;--bs-list-group-border-color:var(--navy-border);--bs-list-group-color:var(--text)">
                     {% for item in conversations %}
                     <li class="list-group-item d-flex align-items-center gap-3 py-3">
                         <a href="{% url 'direct_conversation' item.conv.pk %}" class="d-flex align-items-center gap-3 flex-grow-1 text-decoration-none overflow-hidden">
@@ -22,7 +22,7 @@
                             </div>
                             <div class="flex-grow-1 overflow-hidden">
                                 <div class="d-flex justify-content-between">
-                                    <span class="fw-semibold {% if item.unread %}text-dark{% else %}text-muted{% endif %}">
+                                    <span class="fw-semibold {% if item.unread %}text-white{% else %}text-muted{% endif %}">
                                         {{ item.other.get_full_name|default:item.other.username }}
                                     </span>
                                     {% if item.last_msg %}

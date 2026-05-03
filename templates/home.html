@@ -1,94 +1,263 @@
 {% extends 'base.html' %}
 {% load i18n %}
-{% block title %}StuLance — {% trans "Academic Freelancing" %}{% endblock %}
-{% block content %}
+{% block title %}StuLance — {% trans "Moroccan Student Freelance Hub" %}{% endblock %}
 
-<div class="hero-section text-center py-5 mb-5 rounded-3 bg-primary text-white">
-    <h1 class="display-4 fw-bold">{% trans "Find Your Next Mission" %}</h1>
-    <p class="lead">{% trans "The freelancing platform for Moroccan students" %}</p>
-    <div class="d-flex gap-3 justify-content-center mt-4">
-        <a href="{% url 'mission_list' %}" class="btn btn-light btn-lg">
-            <i class="bi bi-search"></i> {% trans "Browse Missions" %}
-        </a>
-        <a href="{% url 'register_student' %}" class="btn btn-outline-light btn-lg">
-            <i class="bi bi-person-plus"></i> {% trans "Become a Freelancer" %}
-        </a>
-    </div>
-</div>
+{% block full_content %}
+<div class="home-page">
 
-<div class="row mb-5">
-    <div class="col-md-4 text-center">
-        <div class="feature-icon bg-primary bg-opacity-10 rounded-circle d-inline-flex p-3 mb-3">
-            <i class="bi bi-briefcase-fill fs-2 text-primary"></i>
+{% for message in messages %}
+    <div class="container pt-3">
+        <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        <h5>{% trans "Diverse Missions" %}</h5>
-        <p class="text-muted">{% trans "Development, design, marketing, writing and more." %}</p>
     </div>
-    <div class="col-md-4 text-center">
-        <div class="feature-icon bg-success bg-opacity-10 rounded-circle d-inline-flex p-3 mb-3">
-            <i class="bi bi-shield-check-fill fs-2 text-success"></i>
-        </div>
-        <h5>{% trans "Secure Environment" %}</h5>
-        <p class="text-muted">{% trans "Verified profiles, integrated messaging and mutual ratings." %}</p>
-    </div>
-    <div class="col-md-4 text-center">
-        <div class="feature-icon bg-warning bg-opacity-10 rounded-circle d-inline-flex p-3 mb-3">
-            <i class="bi bi-mortarboard-fill fs-2 text-warning"></i>
-        </div>
-        <h5>{% trans "Student-Friendly" %}</h5>
-        <p class="text-muted">{% trans "Flexible missions compatible with your schedule." %}</p>
-    </div>
-</div>
+{% endfor %}
 
-{% if categories %}
-<h3 class="mb-3">{% trans "Categories" %}</h3>
-<div class="d-flex flex-wrap gap-2 mb-5">
-    {% for cat in categories %}
-        <a href="{% url 'mission_list' %}?category={{ cat.pk }}" class="btn btn-outline-primary btn-sm">
-            {% if cat.icon %}<i class="bi bi-{{ cat.icon }}"></i>{% endif %} {{ cat.name }}
-        </a>
-    {% endfor %}
-</div>
-{% endif %}
-
-<h3 class="mb-3">{% trans "Recent Missions" %}</h3>
-<div class="row g-4">
-    {% for mission in missions %}
-    <div class="col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm">
-            <div class="card-body">
-                <span class="badge bg-primary mb-2">{{ mission.category }}</span>
-                <h5 class="card-title">{{ mission.title }}</h5>
-                <p class="card-text text-muted small">{{ mission.description|truncatewords:20 }}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                    <span class="fw-bold text-success">{{ mission.budget }} MAD</span>
-                    <span class="text-muted small"><i class="bi bi-clock"></i> {{ mission.deadline_days }} {% trans "days" %}</span>
-                </div>
-                {% if mission.skills_required %}
-                <div class="mt-2">
-                    {% for skill in mission.skills_list %}
-                        <span class="badge bg-light text-dark border me-1">{{ skill }}</span>
-                    {% endfor %}
-                </div>
-                {% endif %}
+<!-- ── Hero ──────────────────────────────────────────────── -->
+<section class="home-hero">
+    <div class="home-hero__inner">
+        <span class="home-badge">🇲🇦 {% trans "Morocco's #1 Student Talent Platform" %}</span>
+        <h1 class="home-hero__title">
+            {% trans "Where Student Talent" %}<br>
+            <span class="accent-text">{% trans "Meets Opportunity" %}</span>
+        </h1>
+        <p class="home-hero__sub">
+            {% trans "StuLance connects Morocco's brightest students with companies, startups, and individuals who need real skills — fast, secure, and verified." %}
+        </p>
+        <div class="home-hero__cta">
+            <a href="{% url 'register_student' %}" class="btn btn-primary btn-lg">{% trans "I'm a Student →" %}</a>
+            <a href="{% url 'register_client' %}" class="btn btn-secondary btn-lg">{% trans "I'm Recruiting" %}</a>
+        </div>
+        <div class="home-stats">
+            <div class="home-stat">
+                <span class="home-stat__value">12,400+</span>
+                <span class="home-stat__label">{% trans "Students" %}</span>
             </div>
-            <div class="card-footer bg-transparent">
-                <a href="{% url 'mission_detail' mission.pk %}" class="btn btn-primary btn-sm w-100">{% trans "View Mission" %}</a>
+            <div class="home-stats__divider"></div>
+            <div class="home-stat">
+                <span class="home-stat__value">3,200+</span>
+                <span class="home-stat__label">{% trans "Recruiters" %}</span>
+            </div>
+            <div class="home-stats__divider"></div>
+            <div class="home-stat">
+                <span class="home-stat__value">28,000+</span>
+                <span class="home-stat__label">{% trans "Projects" %}</span>
+            </div>
+            <div class="home-stats__divider"></div>
+            <div class="home-stat">
+                <span class="home-stat__value">98%</span>
+                <span class="home-stat__label">{% trans "Satisfaction" %}</span>
             </div>
         </div>
     </div>
-    {% empty %}
-    <div class="col-12 text-center text-muted">
-        <i class="bi bi-inbox fs-1 d-block mb-2"></i>
-        {% trans "No missions available at the moment." %}
+</section>
+
+<!-- ── Skill Marquee ─────────────────────────────────────── -->
+<div class="home-marquee-wrap">
+    <div class="home-marquee-pill">
+        <div class="home-marquee-overflow">
+            <div class="home-marquee-track">
+                <span class="home-skill-pill">React.js</span>
+                <span class="home-skill-pill">UI/UX Design</span>
+                <span class="home-skill-pill">Python</span>
+                <span class="home-skill-pill">Data Analysis</span>
+                <span class="home-skill-pill">Mobile Dev</span>
+                <span class="home-skill-pill">Node.js</span>
+                <span class="home-skill-pill">ML / AI</span>
+                <span class="home-skill-pill">Graphic Design</span>
+                <span class="home-skill-pill">Laravel</span>
+                <span class="home-skill-pill">DevOps</span>
+                <span class="home-skill-pill">Cybersecurity</span>
+                <span class="home-skill-pill">3D Modeling</span>
+                <span class="home-skill-pill">Flutter</span>
+                <span class="home-skill-pill">TypeScript</span>
+                <span class="home-skill-pill">Figma</span>
+                <span class="home-skill-pill">PostgreSQL</span>
+                <span class="home-skill-pill">Branding</span>
+                <span class="home-skill-pill">Video Editing</span>
+                <span class="home-skill-pill">React.js</span>
+                <span class="home-skill-pill">UI/UX Design</span>
+                <span class="home-skill-pill">Python</span>
+                <span class="home-skill-pill">Data Analysis</span>
+                <span class="home-skill-pill">Mobile Dev</span>
+                <span class="home-skill-pill">Node.js</span>
+                <span class="home-skill-pill">ML / AI</span>
+                <span class="home-skill-pill">Graphic Design</span>
+                <span class="home-skill-pill">Laravel</span>
+                <span class="home-skill-pill">DevOps</span>
+                <span class="home-skill-pill">Cybersecurity</span>
+                <span class="home-skill-pill">3D Modeling</span>
+                <span class="home-skill-pill">Flutter</span>
+                <span class="home-skill-pill">TypeScript</span>
+                <span class="home-skill-pill">Figma</span>
+                <span class="home-skill-pill">PostgreSQL</span>
+                <span class="home-skill-pill">Branding</span>
+                <span class="home-skill-pill">Video Editing</span>
+            </div>
+        </div>
     </div>
-    {% endfor %}
 </div>
 
+<!-- ── How It Works ──────────────────────────────────────── -->
+<section class="home-how">
+    <div class="home-section-inner">
+        <div class="home-how__grid">
+            <div class="home-how__col">
+                <span class="home-badge home-badge--purple">{% trans "For Students" %}</span>
+                <h2 class="home-how__title">{% trans "Build your freelance career while studying" %}</h2>
+                <div class="home-steps">
+                    <div class="home-step glass-card">
+                        <span class="home-step__num">01</span>
+                        <div>
+                            <div class="home-step__title">{% trans "Create your profile" %}</div>
+                            <div class="home-step__desc">{% trans "Verify your student status, add your skills, and upload portfolio pieces" %}</div>
+                        </div>
+                    </div>
+                    <div class="home-step glass-card">
+                        <span class="home-step__num">02</span>
+                        <div>
+                            <div class="home-step__title">{% trans "Get discovered" %}</div>
+                            <div class="home-step__desc">{% trans "Recruiters find you via skill search, or apply directly to posted projects" %}</div>
+                        </div>
+                    </div>
+                    <div class="home-step glass-card">
+                        <span class="home-step__num">03</span>
+                        <div>
+                            <div class="home-step__title">{% trans "Deliver & get paid" %}</div>
+                            <div class="home-step__desc">{% trans "Complete milestones, receive secure payments, build your reputation" %}</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="{% url 'register_student' %}" class="btn btn-primary mt-4">{% trans "Join as Student →" %}</a>
+            </div>
+            <div class="home-how__col">
+                <span class="home-badge home-badge--blue">{% trans "For Recruiters" %}</span>
+                <h2 class="home-how__title">{% trans "Access verified student talent on demand" %}</h2>
+                <div class="home-steps">
+                    <div class="home-step glass-card">
+                        <span class="home-step__num home-step__num--blue">01</span>
+                        <div>
+                            <div class="home-step__title">{% trans "Post a project" %}</div>
+                            <div class="home-step__desc">{% trans "Describe your project, budget, and required skills in minutes" %}</div>
+                        </div>
+                    </div>
+                    <div class="home-step glass-card">
+                        <span class="home-step__num home-step__num--blue">02</span>
+                        <div>
+                            <div class="home-step__title">{% trans "Browse matched talent" %}</div>
+                            <div class="home-step__desc">{% trans "Our AI surfaces the most relevant student profiles for your needs" %}</div>
+                        </div>
+                    </div>
+                    <div class="home-step glass-card">
+                        <span class="home-step__num home-step__num--blue">03</span>
+                        <div>
+                            <div class="home-step__title">{% trans "Hire with confidence" %}</div>
+                            <div class="home-step__desc">{% trans "All students are verified — pay securely with escrow protection" %}</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="{% url 'register_client' %}" class="btn btn-secondary mt-4">{% trans "Browse Talent →" %}</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── Features ──────────────────────────────────────────── -->
+<section class="home-features">
+    <div class="home-section-inner">
+        <h2 class="home-features__title">{% trans "Built for trust & results" %}</h2>
+        <div class="home-features__grid">
+            <div class="glass-card home-feature-card">
+                <div class="home-feature-card__icon"><i class="bi bi-patch-check-fill"></i></div>
+                <div class="home-feature-card__title">{% trans "Verified Student Profiles" %}</div>
+                <div class="home-feature-card__desc">{% trans "Every student is verified through their university ID, ensuring authentic talent." %}</div>
+            </div>
+            <div class="glass-card home-feature-card">
+                <div class="home-feature-card__icon"><i class="bi bi-shield-lock-fill"></i></div>
+                <div class="home-feature-card__title">{% trans "Secure Escrow Payments" %}</div>
+                <div class="home-feature-card__desc">{% trans "Funds are held in escrow until project milestones are delivered and approved." %}</div>
+            </div>
+            <div class="glass-card home-feature-card">
+                <div class="home-feature-card__icon"><i class="bi bi-stars"></i></div>
+                <div class="home-feature-card__title">{% trans "Skill-Matched AI" %}</div>
+                <div class="home-feature-card__desc">{% trans "Our matching engine connects recruiters to the most relevant student profiles." %}</div>
+            </div>
+            <div class="glass-card home-feature-card">
+                <div class="home-feature-card__icon"><i class="bi bi-briefcase-fill"></i></div>
+                <div class="home-feature-card__title">{% trans "Real Portfolio Work" %}</div>
+                <div class="home-feature-card__desc">{% trans "Students showcase live projects, not just CVs — see the work before you hire." %}</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── Featured Missions ─────────────────────────────────── -->
 {% if missions %}
-<div class="text-center mt-4">
-    <a href="{% url 'mission_list' %}" class="btn btn-outline-primary">{% trans "View All Missions" %}</a>
-</div>
+<section class="home-missions">
+    <div class="home-section-inner">
+        <h2 class="home-missions__title">{% trans "Featured Missions" %}</h2>
+        <div class="home-missions__grid">
+            {% for mission in missions %}
+            <a href="{% url 'mission_detail' mission.pk %}" class="text-decoration-none">
+                <div class="glass-card home-mission-card">
+                    <div class="home-mission-card__top">
+                        <span class="badge bg-primary">{{ mission.category }}</span>
+                        <span class="text-muted" style="font-size:13px"><i class="bi bi-clock"></i> {{ mission.deadline_days }} {% trans "days" %}</span>
+                    </div>
+                    <h5 class="home-mission-card__title">{{ mission.title }}</h5>
+                    <p class="home-mission-card__desc">{{ mission.description|truncatewords:15 }}</p>
+                    {% if mission.skills_required %}
+                    <div class="home-mission-card__skills">
+                        {% for skill in mission.skills_list|slice:":3" %}
+                            <span class="badge bg-secondary">{{ skill }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <div class="home-mission-card__footer">
+                        <strong style="color: var(--accent); font-family: 'DM Mono', monospace;">{{ mission.budget }} MAD</strong>
+                        <span class="btn btn-primary btn-sm">{% trans "Apply Now" %}</span>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-5">
+            <a href="{% url 'mission_list' %}" class="btn btn-primary">{% trans "View All Missions" %} <i class="bi bi-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
 {% endif %}
 
+<!-- ── CTA Band ───────────────────────────────────────────── -->
+<section class="home-cta">
+    <h2 class="home-cta__title">{% trans "Ready to launch your future?" %}</h2>
+    <p class="home-cta__sub">{% trans "Join thousands of students already building real careers." %}</p>
+    <a href="{% url 'register_student' %}" class="btn btn-primary btn-lg">{% trans "Create Your Profile — It's Free" %}</a>
+</section>
+
+</div><!-- /.home-page -->
+
+<!-- ── Footer ────────────────────────────────────────── -->
+<footer class="mt-0">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                <p class="mb-0">&copy; 2026 StuLance — {% trans "All rights reserved" %}</p>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+                <div style="display: flex; justify-content: flex-end; gap: 24px; flex-wrap: wrap;">
+                    <a href="mailto:contact@stulance.com" class="text-decoration-none">
+                        <i class="bi bi-envelope"></i> contact@stulance.com
+                    </a>
+                    <a href="tel:+212612345678" class="text-decoration-none">
+                        <i class="bi bi-telephone"></i> +212 6 xx xx xx xx
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
 {% endblock %}
+
+{% block footer %}{% endblock %}
