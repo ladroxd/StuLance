@@ -42,13 +42,19 @@ class UserAdmin(BaseUserAdmin):
     def role_badge(self, obj):
         colors = {
             'student': '#0d6efd',
-            'client': '#198754',
-            'admin': '#dc3545',
+            'client':  '#198754',
+            'admin':   '#dc3545',
+        }
+        labels = {
+            'student': 'Student',
+            'client':  'Recruiter',
+            'admin':   'Admin',
         }
         color = colors.get(obj.role, '#6c757d')
+        label = labels.get(obj.role, obj.role.title())
         return format_html(
             '<span style="background:{};color:#fff;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600">{}</span>',
-            color, obj.get_role_display() if hasattr(obj, 'get_role_display') else obj.role.title()
+            color, label
         )
     role_badge.short_description = 'Role'
 

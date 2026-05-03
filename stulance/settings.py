@@ -36,7 +36,7 @@ JAZZMIN_SETTINGS = {
         "auth": "fas fa-users-cog",
         "accounts.user": "fas fa-user",
         "accounts.studentprofile": "fas fa-user-graduate",
-        "accounts.clientprofile": "fas fa-building",
+        "accounts.clientprofile": "fas fa-user-tie",
         "accounts.portfolioproject": "fas fa-folder-open",
         "missions.mission": "fas fa-briefcase",
         "missions.category": "fas fa-tags",

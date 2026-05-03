@@ -8,6 +8,6 @@ venv/
 .claude/
 !Media/
 StuLance.zip
-
+.gitignore
 media_uploads/
 *.mo

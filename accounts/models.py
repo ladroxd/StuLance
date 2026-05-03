@@ -46,7 +46,7 @@ class StudentProfile(models.Model):
     total_missions = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return f"Profil de {self.user.get_full_name() or self.user.username}"
+        return f"{self.user.get_full_name() or self.user.username}"
 
     def skills_list(self):
         return [s.strip() for s in self.skills.split(',') if s.strip()]
@@ -71,6 +71,10 @@ class ClientProfile(models.Model):
         (TYPE_COMPANY, _('Company')),
         (TYPE_INDIVIDUAL, _('Individual')),
     ]
+
+    class Meta:
+        verbose_name = _('Recruiter Profile')
+        verbose_name_plural = _('Recruiter Profiles')
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='client_profile')
     client_type = models.CharField(max_length=15, choices=TYPE_CHOICES, default=TYPE_INDIVIDUAL)
