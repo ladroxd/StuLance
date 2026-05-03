@@ -16,13 +16,14 @@
 
 <!-- ── Hero ──────────────────────────────────────────────── -->
 <section class="home-hero">
-    <div class="home-hero__inner">
+    <canvas id="shader-bg" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;"></canvas>
+    <div class="home-hero__inner" style="position:relative;z-index:1;">
         <span class="home-badge">🇲🇦 {% trans "Morocco's #1 Student Talent Platform" %}</span>
         <h1 class="home-hero__title">
             {% trans "Where Student Talent" %}<br>
             <span class="accent-text">{% trans "Meets Opportunity" %}</span>
         </h1>
-        <p class="home-hero__sub">
+        <p class="home-hero__sub" style="color: #ebebeb; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 12px rgba(0, 0, 0, 0.6);">
             {% trans "StuLance connects Morocco's brightest students with companies, startups, and individuals who need real skills — fast, secure, and verified." %}
         </p>
         <div class="home-hero__cta">
@@ -261,3 +262,11 @@
 {% endblock %}
 
 {% block footer %}{% endblock %}
+
+{% block extra_js %}
+{% load static %}
+<script type="module">
+  import { initShaderBackground } from "{% static 'js/components/shader-background.js' %}";
+  initShaderBackground(document.getElementById('shader-bg'));
+</script>
+{% endblock %}

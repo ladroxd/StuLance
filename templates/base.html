@@ -29,13 +29,15 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navMenu">
-            <ul class="navbar-nav ms-auto align-items-center">
+        <div class="collapse navbar-collapse position-relative" id="navMenu">
+            <ul class="navbar-nav align-items-center position-absolute start-50 translate-middle-x" style="margin-left: -90px;">
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'mission_list' %}">
                         <i class="bi bi-briefcase"></i> {% trans "Missions" %}
                     </a>
                 </li>
+            </ul>
+            <ul class="navbar-nav ms-auto align-items-center">
                 {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'inbox' %}">
