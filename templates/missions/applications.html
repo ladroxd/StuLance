@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
-{% block title %}Candidatures — {{ mission.title }}{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Applications" %} — {{ mission.title }}{% endblock %}
 {% block content %}
-<h3 class="mb-1">Candidatures pour</h3>
+<h3 class="mb-1">{% trans "Applications for" %}</h3>
 <h4 class="text-primary mb-4">{{ mission.title }}</h4>
 
 {% if not applications %}
-<div class="alert alert-info">Aucune candidature recue pour le moment.</div>
+<div class="alert alert-info">{% trans "No applications received yet." %}</div>
 {% endif %}
 
 {% for app in applications %}
@@ -47,13 +48,13 @@
                     <form method="post" action="{% url 'accept_application' app.pk %}">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-success btn-sm">
-                            <i class="bi bi-check"></i> Accepter
+                            <i class="bi bi-check"></i> {% trans "Accept" %}
                         </button>
                     </form>
                     <form method="post" action="{% url 'reject_application' app.pk %}">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-outline-danger btn-sm">
-                            <i class="bi bi-x"></i> Refuser
+                            <i class="bi bi-x"></i> {% trans "Reject" %}
                         </button>
                     </form>
                 </div>
@@ -64,6 +65,6 @@
 </div>
 {% endfor %}
 <a href="{% url 'mission_detail' mission.pk %}" class="btn btn-outline-secondary mt-2">
-    <i class="bi bi-arrow-left"></i> Retour a la mission
+    <i class="bi bi-arrow-left"></i> {% trans "Back to Mission" %}
 </a>
 {% endblock %}

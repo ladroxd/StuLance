@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-{% block title %}Mon Profil — StuLance{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "My Profile" %} — StuLance{% endblock %}
 {% block content %}
 <div class="row">
     <div class="col-md-4">
@@ -30,27 +31,27 @@
                 <div class="d-flex justify-content-around text-center mb-3">
                     <div>
                         <div class="fw-bold fs-5 text-warning">{{ profile.average_rating|floatformat:1 }}<i class="bi bi-star-fill ms-1 small"></i></div>
-                        <small class="text-muted">Note</small>
+                        <small class="text-muted">{% trans "Rating" %}</small>
                     </div>
                     <div>
                         <div class="fw-bold fs-5">{{ profile.total_missions }}</div>
-                        <small class="text-muted">Missions</small>
+                        <small class="text-muted">{% trans "Missions" %}</small>
                     </div>
                     <div>
                         <div class="fw-bold">
                             {% if profile.verification_status == 'verified' %}
-                                <span class="badge bg-success"><i class="bi bi-check-circle"></i> Verifie</span>
+                                <span class="badge bg-success"><i class="bi bi-check-circle"></i> {% trans "Verified" %}</span>
                             {% elif profile.verification_status == 'pending' %}
-                                <span class="badge bg-warning text-dark">En attente</span>
+                                <span class="badge bg-warning text-dark">{% trans "Pending" %}</span>
                             {% else %}
-                                <span class="badge bg-danger">Rejete</span>
+                                <span class="badge bg-danger">{% trans "Rejected" %}</span>
                             {% endif %}
                         </div>
-                        <small class="text-muted">Statut</small>
+                        <small class="text-muted">{% trans "Status" %}</small>
                     </div>
                 </div>
                 <a href="{% url 'edit_student_profile' %}" class="btn btn-outline-primary btn-sm w-100">
-                    <i class="bi bi-pencil"></i> Modifier le profil
+                    <i class="bi bi-pencil"></i> {% trans "Edit Profile" %}
                 </a>
             </div>
         </div>
@@ -58,7 +59,7 @@
         {% if profile.skills_list %}
         <div class="card shadow mb-4">
             <div class="card-body">
-                <h6 class="card-title">Competences</h6>
+                <h6 class="card-title">{% trans "Skills" %}</h6>
                 <div class="d-flex flex-wrap gap-2">
                     {% for skill in profile.skills_list %}
                         <span class="badge bg-primary bg-opacity-10 text-primary border border-primary">{{ skill }}</span>
@@ -73,7 +74,7 @@
         {% if profile.bio %}
         <div class="card shadow mb-4">
             <div class="card-body">
-                <h5>A propos</h5>
+                <h5>{% trans "About" %}</h5>
                 <p>{{ profile.bio }}</p>
             </div>
         </div>
@@ -81,9 +82,9 @@
 
         <div class="card shadow">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Portfolio</h5>
+                <h5 class="mb-0">{% trans "Portfolio" %}</h5>
                 <a href="{% url 'add_portfolio_project' %}" class="btn btn-primary btn-sm">
-                    <i class="bi bi-plus"></i> Ajouter
+                    <i class="bi bi-plus"></i> {% trans "Add" %}
                 </a>
             </div>
             <div class="card-body">
@@ -93,7 +94,7 @@
                         <h6>{{ project.title }}</h6>
                         <form method="post" action="{% url 'delete_portfolio_project' project.pk %}" class="d-inline">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Supprimer ce projet ?')">
+                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('{% trans "Delete this project?" %}')">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </form>
@@ -101,12 +102,12 @@
                     <p class="text-muted small">{{ project.description }}</p>
                     {% if project.url %}
                         <a href="{{ project.url }}" target="_blank" class="btn btn-sm btn-outline-primary">
-                            <i class="bi bi-link-45deg"></i> Voir le projet
+                            <i class="bi bi-link-45deg"></i> {% trans "View project" %}
                         </a>
                     {% endif %}
                 </div>
                 {% empty %}
-                <p class="text-muted text-center">Aucun projet dans le portfolio.</p>
+                <p class="text-muted text-center">{% trans "No projects in portfolio." %}</p>
                 {% endfor %}
             </div>
         </div>

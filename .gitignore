@@ -5,3 +5,9 @@ __pycache__/
 .env
 venv/
 .vscode/
+.claude/
+!Media/
+StuLance.zip
+
+media_uploads/
+*.mo

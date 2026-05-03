@@ -1,15 +1,20 @@
+{% load i18n %}
+{% get_current_language as CURRENT_LANG %}
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="{{ CURRENT_LANG }}" {% if CURRENT_LANG == 'ar' %}dir="rtl"{% endif %}>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}StuLance{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    {% if CURRENT_LANG == 'ar' %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    {% endif %}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
     {% load static %}
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
         <a class="navbar-brand fw-bold fs-4" href="{% url 'home' %}">
@@ -22,7 +27,7 @@
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'mission_list' %}">
-                        <i class="bi bi-briefcase"></i> Missions
+                        <i class="bi bi-briefcase"></i> {% trans "Missions" %}
                     </a>
                 </li>
             </ul>
@@ -39,33 +44,67 @@
                             <i class="bi bi-person-circle"></i> {{ user.get_full_name|default:user.username }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="{% url 'dashboard' %}"><i class="bi bi-speedometer2"></i> Tableau de bord</a></li>
+                            <li><a class="dropdown-item" href="{% url 'dashboard' %}"><i class="bi bi-speedometer2"></i> {% trans "Dashboard" %}</a></li>
                             {% if user.role == 'student' %}
-                            <li><a class="dropdown-item" href="{% url 'student_profile' %}"><i class="bi bi-person"></i> Mon profil</a></li>
+                            <li><a class="dropdown-item" href="{% url 'student_profile' %}"><i class="bi bi-person"></i> {% trans "My Profile" %}</a></li>
                             {% endif %}
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <form method="post" action="{% url 'logout' %}">
                                     {% csrf_token %}
                                     <button type="submit" class="dropdown-item text-danger">
-                                        <i class="bi bi-box-arrow-right"></i> Deconnexion
+                                        <i class="bi bi-box-arrow-right"></i> {% trans "Sign Out" %}
                                     </button>
                                 </form>
                             </li>
                         </ul>
                     </li>
                 {% else %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Connexion</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">{% trans "Sign In" %}</a></li>
                     <li class="nav-item">
-                        <a class="btn btn-light btn-sm ms-2" href="{% url 'register_student' %}">S'inscrire</a>
+                        <a class="btn btn-light btn-sm ms-2" href="{% url 'register_student' %}">{% trans "Sign Up" %}</a>
                     </li>
                 {% endif %}
+
+                <li class="nav-item dropdown ms-2">
+                    <a class="nav-link dropdown-toggle text-white-50" href="#" data-bs-toggle="dropdown">
+                        {% if CURRENT_LANG == 'ar' %}العربية
+                        {% elif CURRENT_LANG == 'fr' %}FR
+                        {% else %}EN{% endif %}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <form action="{% url 'set_language' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="language" value="en">
+                                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                                <button type="submit" class="dropdown-item {% if CURRENT_LANG == 'en' %}fw-bold{% endif %}">English</button>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{% url 'set_language' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="language" value="fr">
+                                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                                <button type="submit" class="dropdown-item {% if CURRENT_LANG == 'fr' %}fw-bold{% endif %}">Français</button>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{% url 'set_language' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="language" value="ar">
+                                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                                <button type="submit" class="dropdown-item {% if CURRENT_LANG == 'ar' %}fw-bold{% endif %}">العربية</button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
 </nav>
 
-<div class="container my-4">
+<div class="container my-4 flex-grow-1">
     {% for message in messages %}
         <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
             {{ message }}
@@ -76,8 +115,22 @@
 </div>
 
 <footer class="bg-dark text-light py-4 mt-5">
-    <div class="container text-center">
-        <p class="mb-0">&copy; 2026 StuLance — EMSI Casablanca | NAHAIRY Zakaria &amp; HATIM Amine EZZOUINE</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 text-center text-md-start">
+                <p class="mb-2">&copy; 2026 StuLance — {% trans "All rights reserved" %}</p>
+            </div>
+            <div class="col-md-4 text-center text-md-end">
+                <p class="mb-1">
+                    <i class="bi bi-envelope"></i>
+                    <a href="mailto:contact@stulance.com" class="text-light text-decoration-none">contact@stulance.com</a>
+                </p>
+                <p class="mb-0">
+                    <i class="bi bi-telephone"></i>
+                    <a href="tel:+33123456789" class="text-light text-decoration-none">+33 1 23 45 67 89</a>
+                </p>
+            </div>
+        </div>
     </div>
 </footer>
 

@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
-{% block title %}Inscription Etudiant — StuLance{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Student Registration" %} — StuLance{% endblock %}
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-7">
         <div class="card shadow">
             <div class="card-body p-4">
                 <h3 class="card-title text-center mb-4">
-                    <i class="bi bi-mortarboard text-primary"></i> Inscription Etudiant
+                    <i class="bi bi-mortarboard text-primary"></i> {% trans "Student Registration" %}
                 </h3>
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
@@ -28,9 +29,9 @@
                         {% endif %}
                     </div>
                     {% endfor %}
-                    <button type="submit" class="btn btn-primary w-100">Creer mon compte</button>
+                    <button type="submit" class="btn btn-primary w-100">{% trans "Create My Account" %}</button>
                 </form>
-                <p class="text-center mt-3 mb-0">Deja inscrit ? <a href="{% url 'login' %}">Se connecter</a></p>
+                <p class="text-center mt-3 mb-0">{% trans "Already registered?" %} <a href="{% url 'login' %}">{% trans "Sign In" %}</a></p>
             </div>
         </div>
     </div>

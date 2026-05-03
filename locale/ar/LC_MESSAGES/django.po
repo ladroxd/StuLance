@@ -1,0 +1,438 @@
+# Arabic translations for StuLance
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ar\n"
+
+msgid "Academic Freelancing"
+msgstr "العمل الحر الأكاديمي"
+
+msgid "Find Your Next Mission"
+msgstr "ابحث عن مهمتك القادمة"
+
+msgid "The freelancing platform for Moroccan students"
+msgstr "منصة العمل الحر لطلاب المغرب"
+
+msgid "Browse Missions"
+msgstr "استعرض المهام"
+
+msgid "Become a Freelancer"
+msgstr "كن مستقلاً"
+
+msgid "Diverse Missions"
+msgstr "مهام متنوعة"
+
+msgid "Development, design, marketing, writing and more."
+msgstr "تطوير، تصميم، تسويق، كتابة والمزيد."
+
+msgid "Secure Environment"
+msgstr "بيئة آمنة"
+
+msgid "Verified profiles, integrated messaging and mutual ratings."
+msgstr "ملفات موثقة، مراسلة متكاملة وتقييمات متبادلة."
+
+msgid "Student-Friendly"
+msgstr "مناسب للطلاب"
+
+msgid "Flexible missions compatible with your schedule."
+msgstr "مهام مرنة تتناسب مع جدولك الدراسي."
+
+msgid "Categories"
+msgstr "الفئات"
+
+msgid "Recent Missions"
+msgstr "أحدث المهام"
+
+msgid "View Mission"
+msgstr "عرض المهمة"
+
+msgid "No missions available at the moment."
+msgstr "لا توجد مهام متاحة في الوقت الحالي."
+
+msgid "View All Missions"
+msgstr "عرض جميع المهام"
+
+msgid "days"
+msgstr "أيام"
+
+msgid "Missions"
+msgstr "المهام"
+
+msgid "Dashboard"
+msgstr "لوحة التحكم"
+
+msgid "My Profile"
+msgstr "ملفي الشخصي"
+
+msgid "Sign Out"
+msgstr "تسجيل الخروج"
+
+msgid "Sign In"
+msgstr "تسجيل الدخول"
+
+msgid "Sign Up"
+msgstr "إنشاء حساب"
+
+msgid "All rights reserved"
+msgstr "جميع الحقوق محفوظة"
+
+msgid "Username"
+msgstr "اسم المستخدم"
+
+msgid "Password"
+msgstr "كلمة المرور"
+
+msgid "No account yet?"
+msgstr "ليس لديك حساب؟"
+
+msgid "Student"
+msgstr "طالب"
+
+msgid "Client"
+msgstr "عميل"
+
+msgid "Student Registration"
+msgstr "تسجيل طالب"
+
+msgid "Client Registration"
+msgstr "تسجيل عميل"
+
+msgid "Create My Account"
+msgstr "إنشاء حسابي"
+
+msgid "Already registered?"
+msgstr "هل لديك حساب بالفعل؟"
+
+msgid "Filters"
+msgstr "الفلاتر"
+
+msgid "Search"
+msgstr "بحث"
+
+msgid "Keywords..."
+msgstr "كلمات مفتاحية..."
+
+msgid "Category"
+msgstr "الفئة"
+
+msgid "All"
+msgstr "الكل"
+
+msgid "Min Budget (MAD)"
+msgstr "الميزانية الدنيا (درهم)"
+
+msgid "Max Budget (MAD)"
+msgstr "الميزانية القصوى (درهم)"
+
+msgid "Max Duration (days)"
+msgstr "المدة القصوى (أيام)"
+
+msgid "Filter"
+msgstr "تصفية"
+
+msgid "Reset"
+msgstr "إعادة تعيين"
+
+msgid "Post a Mission"
+msgstr "نشر مهمة"
+
+msgid "%(count)s mission(s) available"
+msgstr "%(count)s مهمة متاحة"
+
+msgid "application(s)"
+msgstr "طلب(ات)"
+
+msgid "View"
+msgstr "عرض"
+
+msgid "Apply"
+msgstr "تقديم"
+
+msgid "No missions match your search."
+msgstr "لا توجد مهام تتطابق مع بحثك."
+
+msgid "Required Skills"
+msgstr "المهارات المطلوبة"
+
+msgid "You applied — status:"
+msgstr "لقد تقدمت — الحالة:"
+
+msgid "Apply Now"
+msgstr "تقدم الآن"
+
+msgid "Applications"
+msgstr "الطلبات"
+
+msgid "Edit"
+msgstr "تعديل"
+
+msgid "Close"
+msgstr "إغلاق"
+
+msgid "Messaging"
+msgstr "المراسلة"
+
+msgid "Reviews"
+msgstr "التقييمات"
+
+msgid "Details"
+msgstr "التفاصيل"
+
+msgid "Cancel"
+msgstr "إلغاء"
+
+msgid "Mission:"
+msgstr "المهمة:"
+
+msgid "Submit Application"
+msgstr "إرسال الطلب"
+
+msgid "Applications for"
+msgstr "الطلبات لـ"
+
+msgid "No applications received yet."
+msgstr "لم يتم استلام أي طلبات بعد."
+
+msgid "Accept"
+msgstr "قبول"
+
+msgid "Reject"
+msgstr "رفض"
+
+msgid "Back to Mission"
+msgstr "العودة إلى المهمة"
+
+msgid "Delete Mission"
+msgstr "حذف المهمة"
+
+msgid "Delete this mission?"
+msgstr "حذف هذه المهمة؟"
+
+msgid "This action is irreversible."
+msgstr "هذا الإجراء لا رجعة فيه."
+
+msgid "Delete"
+msgstr "حذف"
+
+msgid "Leave a Review"
+msgstr "اترك تقييماً"
+
+msgid "Submit Review"
+msgstr "إرسال التقييم"
+
+msgid "Close Mission"
+msgstr "إغلاق المهمة"
+
+msgid "Close this mission?"
+msgstr "إغلاق هذه المهمة؟"
+
+msgid "Confirm"
+msgstr "تأكيد"
+
+msgid "Hello,"
+msgstr "مرحباً،"
+
+msgid "Find Missions"
+msgstr "ابحث عن مهام"
+
+msgid "In Progress"
+msgstr "جاري"
+
+msgid "Completed"
+msgstr "مكتملة"
+
+msgid "Average Rating"
+msgstr "متوسط التقييم"
+
+msgid "Active Missions"
+msgstr "المهام الجارية"
+
+msgid "Messages"
+msgstr "الرسائل"
+
+msgid "My Applications"
+msgstr "طلباتي"
+
+msgid "No applications yet."
+msgstr "لا توجد طلبات بعد."
+
+msgid "Browse missions"
+msgstr "استعرض المهام"
+
+msgid "Client Dashboard"
+msgstr "لوحة تحكم العميل"
+
+msgid "Open Missions"
+msgstr "المهام المفتوحة"
+
+msgid "Student:"
+msgstr "الطالب:"
+
+msgid "My Open Missions"
+msgstr "مهامي المفتوحة"
+
+msgid "No open missions."
+msgstr "لا توجد مهام مفتوحة."
+
+msgid "With"
+msgstr "مع"
+
+msgid "Mission"
+msgstr "المهمة"
+
+msgid "Start the conversation..."
+msgstr "ابدأ المحادثة..."
+
+msgid "Your message..."
+msgstr "رسالتك..."
+
+msgid "Notifications"
+msgstr "الإشعارات"
+
+msgid "Mark all as read"
+msgstr "تعيين الكل كمقروء"
+
+msgid "New"
+msgstr "جديد"
+
+msgid "No notifications."
+msgstr "لا توجد إشعارات."
+
+msgid "Rating"
+msgstr "التقييم"
+
+msgid "Status"
+msgstr "الحالة"
+
+msgid "Verified"
+msgstr "موثق"
+
+msgid "Pending"
+msgstr "قيد الانتظار"
+
+msgid "Rejected"
+msgstr "مرفوض"
+
+msgid "Edit Profile"
+msgstr "تعديل الملف الشخصي"
+
+msgid "Skills"
+msgstr "المهارات"
+
+msgid "About"
+msgstr "عن"
+
+msgid "Portfolio"
+msgstr "المحفظة"
+
+msgid "Add"
+msgstr "إضافة"
+
+msgid "Delete this project?"
+msgstr "حذف هذا المشروع؟"
+
+msgid "View project"
+msgstr "عرض المشروع"
+
+msgid "No projects in portfolio."
+msgstr "لا توجد مشاريع في المحفظة."
+
+msgid "No projects."
+msgstr "لا توجد مشاريع."
+
+msgid "Website"
+msgstr "الموقع الإلكتروني"
+
+msgid "Save"
+msgstr "حفظ"
+
+msgid "Add a Project"
+msgstr "إضافة مشروع"
+
+msgid "Add a project to portfolio"
+msgstr "إضافة مشروع للمحفظة"
+
+msgid "English"
+msgstr "الإنجليزية"
+
+msgid "Français"
+msgstr "الفرنسية"
+
+msgid "العربية"
+msgstr "العربية"
+
+msgid "First Name"
+msgstr "الاسم الأول"
+
+msgid "Last Name"
+msgstr "الاسم الأخير"
+
+msgid "Email"
+msgstr "البريد الإلكتروني"
+
+msgid "School"
+msgstr "المدرسة"
+
+msgid "Field of Study"
+msgstr "التخصص"
+
+msgid "Student Card"
+msgstr "بطاقة الطالب"
+
+msgid "Student card (PDF or image)"
+msgstr "بطاقة الطالب (PDF أو صورة)"
+
+msgid "e.g. Python, Django, React"
+msgstr "مثال: Python, Django, React"
+
+msgid "Comma-separated tags"
+msgstr "وسوم مفصولة بفواصل"
+
+msgid "Client Type"
+msgstr "نوع العميل"
+
+msgid "Company Name"
+msgstr "اسم الشركة"
+
+msgid "Bio"
+msgstr "نبذة"
+
+msgid "Photo"
+msgstr "الصورة"
+
+msgid "GitHub URL"
+msgstr "رابط GitHub"
+
+msgid "LinkedIn URL"
+msgstr "رابط LinkedIn"
+
+msgid "Title"
+msgstr "العنوان"
+
+msgid "Description"
+msgstr "الوصف"
+
+msgid "URL"
+msgstr "الرابط"
+
+msgid "Image"
+msgstr "الصورة"
+
+msgid "Administrator"
+msgstr "مدير"
+
+msgid "Company"
+msgstr "شركة"
+
+msgid "Individual"
+msgstr "فرد"
+
+msgid "Recruiter"
+msgstr "مُجنِّد"
+
+msgid "Recruiter Registration"
+msgstr "تسجيل مُجنِّد"
+
+msgid "Recruiter Dashboard"
+msgstr "لوحة تحكم المُجنِّد"

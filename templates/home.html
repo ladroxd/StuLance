@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
-{% block title %}StuLance — Freelancing Academique{% endblock %}
+{% load i18n %}
+{% block title %}StuLance — {% trans "Academic Freelancing" %}{% endblock %}
 {% block content %}
 
 <div class="hero-section text-center py-5 mb-5 rounded-3 bg-primary text-white">
-    <h1 class="display-4 fw-bold">Trouvez votre prochaine mission</h1>
-    <p class="lead">La plateforme de freelancing pour etudiants marocains</p>
+    <h1 class="display-4 fw-bold">{% trans "Find Your Next Mission" %}</h1>
+    <p class="lead">{% trans "The freelancing platform for Moroccan students" %}</p>
     <div class="d-flex gap-3 justify-content-center mt-4">
         <a href="{% url 'mission_list' %}" class="btn btn-light btn-lg">
-            <i class="bi bi-search"></i> Explorer les missions
+            <i class="bi bi-search"></i> {% trans "Browse Missions" %}
         </a>
         <a href="{% url 'register_student' %}" class="btn btn-outline-light btn-lg">
-            <i class="bi bi-person-plus"></i> Devenir Freelancer
+            <i class="bi bi-person-plus"></i> {% trans "Become a Freelancer" %}
         </a>
     </div>
 </div>
@@ -20,27 +21,27 @@
         <div class="feature-icon bg-primary bg-opacity-10 rounded-circle d-inline-flex p-3 mb-3">
             <i class="bi bi-briefcase-fill fs-2 text-primary"></i>
         </div>
-        <h5>Des missions variees</h5>
-        <p class="text-muted">Developpement, design, marketing, redaction et plus encore.</p>
+        <h5>{% trans "Diverse Missions" %}</h5>
+        <p class="text-muted">{% trans "Development, design, marketing, writing and more." %}</p>
     </div>
     <div class="col-md-4 text-center">
         <div class="feature-icon bg-success bg-opacity-10 rounded-circle d-inline-flex p-3 mb-3">
             <i class="bi bi-shield-check-fill fs-2 text-success"></i>
         </div>
-        <h5>Environnement securise</h5>
-        <p class="text-muted">Profils verifies, messagerie integree et notation mutuelle.</p>
+        <h5>{% trans "Secure Environment" %}</h5>
+        <p class="text-muted">{% trans "Verified profiles, integrated messaging and mutual ratings." %}</p>
     </div>
     <div class="col-md-4 text-center">
         <div class="feature-icon bg-warning bg-opacity-10 rounded-circle d-inline-flex p-3 mb-3">
             <i class="bi bi-mortarboard-fill fs-2 text-warning"></i>
         </div>
-        <h5>Adapte aux etudiants</h5>
-        <p class="text-muted">Missions flexibles compatibles avec votre emploi du temps.</p>
+        <h5>{% trans "Student-Friendly" %}</h5>
+        <p class="text-muted">{% trans "Flexible missions compatible with your schedule." %}</p>
     </div>
 </div>
 
 {% if categories %}
-<h3 class="mb-3">Categories</h3>
+<h3 class="mb-3">{% trans "Categories" %}</h3>
 <div class="d-flex flex-wrap gap-2 mb-5">
     {% for cat in categories %}
         <a href="{% url 'mission_list' %}?category={{ cat.pk }}" class="btn btn-outline-primary btn-sm">
@@ -50,7 +51,7 @@
 </div>
 {% endif %}
 
-<h3 class="mb-3">Missions recentes</h3>
+<h3 class="mb-3">{% trans "Recent Missions" %}</h3>
 <div class="row g-4">
     {% for mission in missions %}
     <div class="col-md-6 col-lg-4">
@@ -61,7 +62,7 @@
                 <p class="card-text text-muted small">{{ mission.description|truncatewords:20 }}</p>
                 <div class="d-flex justify-content-between align-items-center">
                     <span class="fw-bold text-success">{{ mission.budget }} MAD</span>
-                    <span class="text-muted small"><i class="bi bi-clock"></i> {{ mission.deadline_days }}j</span>
+                    <span class="text-muted small"><i class="bi bi-clock"></i> {{ mission.deadline_days }} {% trans "days" %}</span>
                 </div>
                 {% if mission.skills_required %}
                 <div class="mt-2">
@@ -72,21 +73,21 @@
                 {% endif %}
             </div>
             <div class="card-footer bg-transparent">
-                <a href="{% url 'mission_detail' mission.pk %}" class="btn btn-primary btn-sm w-100">Voir la mission</a>
+                <a href="{% url 'mission_detail' mission.pk %}" class="btn btn-primary btn-sm w-100">{% trans "View Mission" %}</a>
             </div>
         </div>
     </div>
     {% empty %}
     <div class="col-12 text-center text-muted">
         <i class="bi bi-inbox fs-1 d-block mb-2"></i>
-        Aucune mission disponible pour le moment.
+        {% trans "No missions available at the moment." %}
     </div>
     {% endfor %}
 </div>
 
 {% if missions %}
 <div class="text-center mt-4">
-    <a href="{% url 'mission_list' %}" class="btn btn-outline-primary">Voir toutes les missions</a>
+    <a href="{% url 'mission_list' %}" class="btn btn-outline-primary">{% trans "View All Missions" %}</a>
 </div>
 {% endif %}
 

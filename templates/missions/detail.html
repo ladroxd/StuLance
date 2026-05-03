@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block title %}{{ mission.title }} — StuLance{% endblock %}
 {% block content %}
 <div class="row">
@@ -17,7 +18,7 @@
                 <p class="lead">{{ mission.description }}</p>
                 {% if mission.skills_required %}
                 <div class="mb-3">
-                    <h6>Competences requises</h6>
+                    <h6>{% trans "Required Skills" %}</h6>
                     {% for skill in mission.skills_list %}
                         <span class="badge bg-primary bg-opacity-10 text-primary border border-primary me-1">{{ skill }}</span>
                     {% endfor %}
@@ -27,12 +28,12 @@
                 {% if user.is_authenticated and user.role == 'student' and mission.status == 'open' %}
                     {% if has_applied %}
                         <div class="alert alert-info">
-                            <i class="bi bi-check-circle"></i> Vous avez postule — statut :
+                            <i class="bi bi-check-circle"></i> {% trans "You applied — status:" %}
                             <strong>{{ user_application.get_status_display }}</strong>
                         </div>
                     {% else %}
                         <a href="{% url 'apply_mission' mission.pk %}" class="btn btn-success btn-lg">
-                            <i class="bi bi-send"></i> Postuler maintenant
+                            <i class="bi bi-send"></i> {% trans "Apply Now" %}
                         </a>
                     {% endif %}
                 {% endif %}
@@ -40,14 +41,14 @@
                 {% if user == mission.client %}
                 <div class="d-flex gap-2 mt-3">
                     <a href="{% url 'mission_applications' mission.pk %}" class="btn btn-outline-primary">
-                        <i class="bi bi-people"></i> Candidatures ({{ mission.applications.count }})
+                        <i class="bi bi-people"></i> {% trans "Applications" %} ({{ mission.applications.count }})
                     </a>
                     <a href="{% url 'mission_edit' mission.pk %}" class="btn btn-outline-secondary">
-                        <i class="bi bi-pencil"></i> Modifier
+                        <i class="bi bi-pencil"></i> {% trans "Edit" %}
                     </a>
                     {% if mission.status == 'in_progress' %}
                     <a href="{% url 'complete_mission' mission.pk %}" class="btn btn-success">
-                        <i class="bi bi-check-circle"></i> Cloturer
+                        <i class="bi bi-check-circle"></i> {% trans "Close" %}
                     </a>
                     {% endif %}
                     <a href="{% url 'mission_delete' mission.pk %}" class="btn btn-outline-danger">
@@ -56,13 +57,10 @@
                 </div>
                 {% endif %}
 
-                {% if mission.status == 'in_progress' and user in mission.client|yesno:"," %}
-                {% endif %}
-
                 {% if mission.status == 'in_progress' and user == mission.selected_student or user == mission.client %}
                     {% if mission.selected_student %}
                     <a href="{% url 'conversation' mission.pk %}" class="btn btn-outline-primary mt-3">
-                        <i class="bi bi-chat-dots"></i> Messagerie
+                        <i class="bi bi-chat-dots"></i> {% trans "Messaging" %}
                     </a>
                     {% endif %}
                 {% endif %}
@@ -71,7 +69,7 @@
 
         {% if reviews %}
         <div class="card shadow">
-            <div class="card-header"><h5 class="mb-0">Avis</h5></div>
+            <div class="card-header"><h5 class="mb-0">{% trans "Reviews" %}</h5></div>
             <div class="card-body">
                 {% for review in reviews %}
                 <div class="border-bottom pb-3 mb-3">
@@ -98,18 +96,18 @@
     <div class="col-md-4">
         <div class="card shadow mb-3">
             <div class="card-body">
-                <h6 class="card-title">Details</h6>
+                <h6 class="card-title">{% trans "Details" %}</h6>
                 <ul class="list-unstyled">
                     <li class="mb-2"><i class="bi bi-cash text-success"></i> <strong>{{ mission.budget }} MAD</strong></li>
-                    <li class="mb-2"><i class="bi bi-clock text-primary"></i> {{ mission.deadline_days }} jours</li>
+                    <li class="mb-2"><i class="bi bi-clock text-primary"></i> {{ mission.deadline_days }} {% trans "days" %}</li>
                     <li class="mb-2"><i class="bi bi-calendar text-secondary"></i> {{ mission.created_at|date:"d/m/Y" }}</li>
-                    <li><i class="bi bi-people text-info"></i> {{ mission.applications.count }} candidature(s)</li>
+                    <li><i class="bi bi-people text-info"></i> {{ mission.applications.count }} {% trans "application(s)" %}</li>
                 </ul>
             </div>
         </div>
         <div class="card shadow">
             <div class="card-body">
-                <h6 class="card-title">Client</h6>
+                <h6 class="card-title">{% trans "Recruiter" %}</h6>
                 {% with profile=mission.client.client_profile %}
                     <a href="{% url 'client_profile_detail' profile.pk %}" class="text-decoration-none">
                         <strong>{{ profile }}</strong>

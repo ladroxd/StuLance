@@ -1,14 +1,15 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 class User(AbstractUser):
     ROLE_STUDENT = 'student'
     ROLE_CLIENT = 'client'
     ROLE_ADMIN = 'admin'
     ROLE_CHOICES = [
-        (ROLE_STUDENT, 'Etudiant'),
-        (ROLE_CLIENT, 'Client'),
-        (ROLE_ADMIN, 'Administrateur'),
+        (ROLE_STUDENT, _('Student')),
+        (ROLE_CLIENT, _('Recruiter')),
+        (ROLE_ADMIN, _('Administrator')),
     ]
     role = models.CharField(max_length=10, choices=ROLE_CHOICES)
     phone = models.CharField(max_length=20, blank=True)
@@ -26,15 +27,15 @@ class StudentProfile(models.Model):
     STATUS_VERIFIED = 'verified'
     STATUS_REJECTED = 'rejected'
     STATUS_CHOICES = [
-        (STATUS_PENDING, 'En attente'),
-        (STATUS_VERIFIED, 'Verifie'),
-        (STATUS_REJECTED, 'Rejete'),
+        (STATUS_PENDING, _('Pending')),
+        (STATUS_VERIFIED, _('Verified')),
+        (STATUS_REJECTED, _('Rejected')),
     ]
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
     bio = models.TextField(blank=True)
     photo = models.ImageField(upload_to='profiles/students/', blank=True, null=True)
-    skills = models.CharField(max_length=500, blank=True, help_text='Tags separes par des virgules')
+    skills = models.CharField(max_length=500, blank=True, help_text=_('Comma-separated tags'))
     github_url = models.URLField(blank=True)
     linkedin_url = models.URLField(blank=True)
     school = models.CharField(max_length=200, blank=True)
@@ -67,8 +68,8 @@ class ClientProfile(models.Model):
     TYPE_COMPANY = 'company'
     TYPE_INDIVIDUAL = 'individual'
     TYPE_CHOICES = [
-        (TYPE_COMPANY, 'Entreprise'),
-        (TYPE_INDIVIDUAL, 'Particulier'),
+        (TYPE_COMPANY, _('Company')),
+        (TYPE_INDIVIDUAL, _('Individual')),
     ]
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='client_profile')

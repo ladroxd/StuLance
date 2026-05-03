@@ -1,52 +1,53 @@
 {% extends 'base.html' %}
-{% block title %}Missions — StuLance{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Missions" %} — StuLance{% endblock %}
 {% block content %}
 <div class="row">
     <div class="col-md-3">
         <div class="card shadow-sm mb-4">
             <div class="card-body">
-                <h6 class="card-title">Filtres</h6>
+                <h6 class="card-title">{% trans "Filters" %}</h6>
                 <form method="get">
                     <div class="mb-3">
-                        <label class="form-label small">Recherche</label>
-                        <input type="text" name="q" class="form-control form-control-sm" value="{{ request.GET.q }}" placeholder="Mots-cles...">
+                        <label class="form-label small">{% trans "Search" %}</label>
+                        <input type="text" name="q" class="form-control form-control-sm" value="{{ request.GET.q }}" placeholder="{% trans 'Keywords...' %}">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label small">Categorie</label>
+                        <label class="form-label small">{% trans "Category" %}</label>
                         <select name="category" class="form-select form-select-sm">
-                            <option value="">Toutes</option>
+                            <option value="">{% trans "All" %}</option>
                             {% for cat in categories %}
                                 <option value="{{ cat.pk }}" {% if request.GET.category == cat.pk|stringformat:"s" %}selected{% endif %}>{{ cat.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label small">Budget min (MAD)</label>
+                        <label class="form-label small">{% trans "Min Budget (MAD)" %}</label>
                         <input type="number" name="budget_min" class="form-control form-control-sm" value="{{ request.GET.budget_min }}">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label small">Budget max (MAD)</label>
+                        <label class="form-label small">{% trans "Max Budget (MAD)" %}</label>
                         <input type="number" name="budget_max" class="form-control form-control-sm" value="{{ request.GET.budget_max }}">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label small">Duree max (jours)</label>
+                        <label class="form-label small">{% trans "Max Duration (days)" %}</label>
                         <input type="number" name="duration" class="form-control form-control-sm" value="{{ request.GET.duration }}">
                     </div>
-                    <button type="submit" class="btn btn-primary btn-sm w-100">Filtrer</button>
-                    <a href="{% url 'mission_list' %}" class="btn btn-outline-secondary btn-sm w-100 mt-2">Reinitialiser</a>
+                    <button type="submit" class="btn btn-primary btn-sm w-100">{% trans "Filter" %}</button>
+                    <a href="{% url 'mission_list' %}" class="btn btn-outline-secondary btn-sm w-100 mt-2">{% trans "Reset" %}</a>
                 </form>
             </div>
         </div>
         {% if user.is_authenticated and user.role == 'client' %}
         <a href="{% url 'mission_create' %}" class="btn btn-success w-100">
-            <i class="bi bi-plus-circle"></i> Publier une mission
+            <i class="bi bi-plus-circle"></i> {% trans "Post a Mission" %}
         </a>
         {% endif %}
     </div>
 
     <div class="col-md-9">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4>{{ missions|length }} mission(s) disponible(s)</h4>
+            <h4>{% blocktrans with count=missions|length %}{{ count }} mission(s) available{% endblocktrans %}</h4>
         </div>
         <div class="row g-4">
             {% for mission in missions %}
@@ -55,7 +56,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-2">
                             <span class="badge bg-primary">{{ mission.category }}</span>
-                            <span class="text-muted small"><i class="bi bi-clock"></i> {{ mission.deadline_days }}j</span>
+                            <span class="text-muted small"><i class="bi bi-clock"></i> {{ mission.deadline_days }} {% trans "days" %}</span>
                         </div>
                         <h5 class="card-title">{{ mission.title }}</h5>
                         <p class="card-text text-muted small">{{ mission.description|truncatewords:25 }}</p>
@@ -68,13 +69,13 @@
                         {% endif %}
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="fw-bold text-success fs-5">{{ mission.budget }} MAD</span>
-                            <small class="text-muted">{{ mission.applications.count }} candidature(s)</small>
+                            <small class="text-muted">{{ mission.applications.count }} {% trans "application(s)" %}</small>
                         </div>
                     </div>
                     <div class="card-footer bg-transparent d-flex gap-2">
-                        <a href="{% url 'mission_detail' mission.pk %}" class="btn btn-primary btn-sm flex-grow-1">Voir</a>
+                        <a href="{% url 'mission_detail' mission.pk %}" class="btn btn-primary btn-sm flex-grow-1">{% trans "View" %}</a>
                         {% if user.is_authenticated and user.role == 'student' %}
-                            <a href="{% url 'apply_mission' mission.pk %}" class="btn btn-outline-success btn-sm">Postuler</a>
+                            <a href="{% url 'apply_mission' mission.pk %}" class="btn btn-outline-success btn-sm">{% trans "Apply" %}</a>
                         {% endif %}
                     </div>
                 </div>
@@ -82,7 +83,7 @@
             {% empty %}
             <div class="col-12 text-center py-5 text-muted">
                 <i class="bi bi-search fs-1 d-block mb-2"></i>
-                Aucune mission ne correspond a votre recherche.
+                {% trans "No missions match your search." %}
             </div>
             {% endfor %}
         </div>

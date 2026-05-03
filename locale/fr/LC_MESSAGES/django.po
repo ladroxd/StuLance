@@ -1,0 +1,441 @@
+# French translations for StuLance
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+
+msgid "Academic Freelancing"
+msgstr "Freelancing Académique"
+
+msgid "Find Your Next Mission"
+msgstr "Trouvez votre prochaine mission"
+
+msgid "The freelancing platform for Moroccan students"
+msgstr "La plateforme de freelancing pour étudiants marocains"
+
+msgid "Browse Missions"
+msgstr "Explorer les missions"
+
+msgid "Become a Freelancer"
+msgstr "Devenir Freelancer"
+
+msgid "Diverse Missions"
+msgstr "Des missions variées"
+
+msgid "Development, design, marketing, writing and more."
+msgstr "Développement, design, marketing, rédaction et plus encore."
+
+msgid "Secure Environment"
+msgstr "Environnement sécurisé"
+
+msgid "Verified profiles, integrated messaging and mutual ratings."
+msgstr "Profils vérifiés, messagerie intégrée et notation mutuelle."
+
+msgid "Student-Friendly"
+msgstr "Adapté aux étudiants"
+
+msgid "Flexible missions compatible with your schedule."
+msgstr "Missions flexibles compatibles avec votre emploi du temps."
+
+msgid "Categories"
+msgstr "Catégories"
+
+msgid "Recent Missions"
+msgstr "Missions récentes"
+
+msgid "View Mission"
+msgstr "Voir la mission"
+
+msgid "No missions available at the moment."
+msgstr "Aucune mission disponible pour le moment."
+
+msgid "View All Missions"
+msgstr "Voir toutes les missions"
+
+msgid "days"
+msgstr "jours"
+
+msgid "Missions"
+msgstr "Missions"
+
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+msgid "My Profile"
+msgstr "Mon profil"
+
+msgid "Sign Out"
+msgstr "Déconnexion"
+
+msgid "Sign In"
+msgstr "Connexion"
+
+msgid "Sign Up"
+msgstr "S'inscrire"
+
+msgid "All rights reserved"
+msgstr "Tous droits réservés"
+
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+msgid "Password"
+msgstr "Mot de passe"
+
+msgid "No account yet?"
+msgstr "Pas encore de compte ?"
+
+msgid "Student"
+msgstr "Étudiant"
+
+msgid "Client"
+msgstr "Client"
+
+msgid "Student Registration"
+msgstr "Inscription Étudiant"
+
+msgid "Client Registration"
+msgstr "Inscription Client"
+
+msgid "Create My Account"
+msgstr "Créer mon compte"
+
+msgid "Already registered?"
+msgstr "Déjà inscrit ?"
+
+msgid "Filters"
+msgstr "Filtres"
+
+msgid "Search"
+msgstr "Recherche"
+
+msgid "Keywords..."
+msgstr "Mots-clés..."
+
+msgid "Category"
+msgstr "Catégorie"
+
+msgid "All"
+msgstr "Toutes"
+
+msgid "Min Budget (MAD)"
+msgstr "Budget min (MAD)"
+
+msgid "Max Budget (MAD)"
+msgstr "Budget max (MAD)"
+
+msgid "Max Duration (days)"
+msgstr "Durée max (jours)"
+
+msgid "Filter"
+msgstr "Filtrer"
+
+msgid "Reset"
+msgstr "Réinitialiser"
+
+msgid "Post a Mission"
+msgstr "Publier une mission"
+
+msgid "%(count)s mission(s) available"
+msgstr "%(count)s mission(s) disponible(s)"
+
+msgid "application(s)"
+msgstr "candidature(s)"
+
+msgid "View"
+msgstr "Voir"
+
+msgid "Apply"
+msgstr "Postuler"
+
+msgid "No missions match your search."
+msgstr "Aucune mission ne correspond à votre recherche."
+
+msgid "Required Skills"
+msgstr "Compétences requises"
+
+msgid "You applied — status:"
+msgstr "Vous avez postulé — statut :"
+
+msgid "Apply Now"
+msgstr "Postuler maintenant"
+
+msgid "Applications"
+msgstr "Candidatures"
+
+msgid "Edit"
+msgstr "Modifier"
+
+msgid "Close"
+msgstr "Clôturer"
+
+msgid "Messaging"
+msgstr "Messagerie"
+
+msgid "Reviews"
+msgstr "Avis"
+
+msgid "Details"
+msgstr "Détails"
+
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "Mission:"
+msgstr "Mission :"
+
+msgid "Submit Application"
+msgstr "Envoyer ma candidature"
+
+msgid "Applications for"
+msgstr "Candidatures pour"
+
+msgid "No applications received yet."
+msgstr "Aucune candidature reçue pour le moment."
+
+msgid "Accept"
+msgstr "Accepter"
+
+msgid "Reject"
+msgstr "Refuser"
+
+msgid "Back to Mission"
+msgstr "Retour à la mission"
+
+msgid "Delete Mission"
+msgstr "Supprimer la mission"
+
+msgid "Delete this mission?"
+msgstr "Supprimer cette mission ?"
+
+msgid "This action is irreversible."
+msgstr "Cette action est irréversible."
+
+msgid "Delete"
+msgstr "Supprimer"
+
+msgid "Leave a Review"
+msgstr "Laisser un avis"
+
+msgid "Submit Review"
+msgstr "Envoyer l'avis"
+
+msgid "Close Mission"
+msgstr "Clôturer la mission"
+
+msgid "Close this mission?"
+msgstr "Clôturer cette mission ?"
+
+msgid "Confirm"
+msgstr "Confirmer"
+
+msgid "Hello,"
+msgstr "Bonjour,"
+
+msgid "Find Missions"
+msgstr "Trouver des missions"
+
+msgid "In Progress"
+msgstr "En cours"
+
+msgid "Completed"
+msgstr "Terminées"
+
+msgid "Average Rating"
+msgstr "Note moyenne"
+
+msgid "Active Missions"
+msgstr "Missions en cours"
+
+msgid "Messages"
+msgstr "Messages"
+
+msgid "My Applications"
+msgstr "Mes candidatures"
+
+msgid "No applications yet."
+msgstr "Aucune candidature pour le moment."
+
+msgid "Browse missions"
+msgstr "Explorer les missions"
+
+msgid "Client Dashboard"
+msgstr "Tableau de bord Client"
+
+msgid "Open Missions"
+msgstr "Missions ouvertes"
+
+msgid "Student:"
+msgstr "Étudiant :"
+
+msgid "My Open Missions"
+msgstr "Mes missions ouvertes"
+
+msgid "No open missions."
+msgstr "Aucune mission ouverte."
+
+msgid "With"
+msgstr "Avec"
+
+msgid "Mission"
+msgstr "Mission"
+
+msgid "Start the conversation..."
+msgstr "Commencez la conversation..."
+
+msgid "Your message..."
+msgstr "Votre message..."
+
+msgid "Notifications"
+msgstr "Notifications"
+
+msgid "Mark all as read"
+msgstr "Tout marquer comme lu"
+
+msgid "New"
+msgstr "Nouveau"
+
+msgid "No notifications."
+msgstr "Aucune notification."
+
+msgid "Rating"
+msgstr "Note"
+
+msgid "Status"
+msgstr "Statut"
+
+msgid "Verified"
+msgstr "Vérifié"
+
+msgid "Pending"
+msgstr "En attente"
+
+msgid "Rejected"
+msgstr "Rejeté"
+
+msgid "Edit Profile"
+msgstr "Modifier le profil"
+
+msgid "Skills"
+msgstr "Compétences"
+
+msgid "About"
+msgstr "À propos"
+
+msgid "Portfolio"
+msgstr "Portfolio"
+
+msgid "Add"
+msgstr "Ajouter"
+
+msgid "Delete this project?"
+msgstr "Supprimer ce projet ?"
+
+msgid "View project"
+msgstr "Voir le projet"
+
+msgid "No projects in portfolio."
+msgstr "Aucun projet dans le portfolio."
+
+msgid "No projects."
+msgstr "Aucun projet."
+
+msgid "Website"
+msgstr "Site web"
+
+msgid "Save"
+msgstr "Sauvegarder"
+
+msgid "Add a Project"
+msgstr "Ajouter un projet"
+
+msgid "Add a project to portfolio"
+msgstr "Ajouter un projet au portfolio"
+
+msgid "English"
+msgstr "Anglais"
+
+msgid "Français"
+msgstr "Français"
+
+msgid "العربية"
+msgstr "Arabe"
+
+msgid "First Name"
+msgstr "Prénom"
+
+msgid "Last Name"
+msgstr "Nom"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "School"
+msgstr "École"
+
+msgid "Field of Study"
+msgstr "Filière"
+
+msgid "Student Card"
+msgstr "Carte étudiante"
+
+msgid "Student card (PDF or image)"
+msgstr "Carte étudiante (PDF ou image)"
+
+msgid "e.g. Python, Django, React"
+msgstr "ex: Python, Django, React"
+
+msgid "Comma-separated tags"
+msgstr "Tags séparés par des virgules"
+
+msgid "Client Type"
+msgstr "Type de client"
+
+msgid "Company Name"
+msgstr "Nom de l'entreprise"
+
+msgid "Bio"
+msgstr "Bio"
+
+msgid "Photo"
+msgstr "Photo"
+
+msgid "GitHub URL"
+msgstr "URL GitHub"
+
+msgid "LinkedIn URL"
+msgstr "URL LinkedIn"
+
+msgid "Title"
+msgstr "Titre"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Image"
+msgstr "Image"
+
+msgid "Administrator"
+msgstr "Administrateur"
+
+msgid "Company"
+msgstr "Entreprise"
+
+msgid "Individual"
+msgstr "Particulier"
+
+msgid "Recruiter"
+msgstr "Recruteur"
+
+msgid "Recruiter Registration"
+msgstr "Inscription Recruteur"
+
+msgid "Recruiter Dashboard"
+msgstr "Tableau de bord Recruteur"
+
+msgid "Client"
+msgstr "Client"
