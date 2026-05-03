@@ -11,3 +11,5 @@ StuLance.zip
 .gitignore
 media_uploads/
 *.mo
+node_modules/
+static/dist/
