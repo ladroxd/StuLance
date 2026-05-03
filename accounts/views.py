@@ -6,6 +6,16 @@ from .models import User, StudentProfile, ClientProfile, PortfolioProject
 from .forms import StudentRegisterForm, ClientRegisterForm, StudentProfileForm, ClientProfileForm, PortfolioProjectForm
 
 
+def onboarding(request):
+    if request.method == 'POST':
+        role = request.POST.get('role')
+        if role == 'student':
+            return redirect('register_student')
+        elif role == 'recruiter':
+            return redirect('register_client')
+    return render(request, 'accounts/onboarding.html')
+
+
 def register_student(request):
     if request.method == 'POST':
         form = StudentRegisterForm(request.POST, request.FILES)

@@ -1,0 +1,272 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% trans "Join StuLance" %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="{% static 'dist/main.css' %}" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        html, body { height: 100%; margin: 0; background: #0a0a0a; color: #f0f0f0; }
+
+        /* ── Top bar ── */
+        .ob-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            height: 60px;
+            border-bottom: 1px solid #2e2e2e;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: #0a0a0a;
+            z-index: 100;
+        }
+        .ob-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+        .ob-brand img { height: 34px; width: auto; }
+        .ob-brand span { color: #f0f0f0; }
+        .ob-brand .accent { color: #7c3aed; }
+
+        /* ── Step indicator ── */
+        .ob-steps {
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+        .ob-step {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #444;
+        }
+        .ob-step.active { color: #f0f0f0; }
+        .ob-step.done { color: #7c3aed; }
+        .ob-step__num {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 1.5px solid #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            font-family: 'DM Mono', monospace;
+            flex-shrink: 0;
+        }
+        .ob-step.active .ob-step__num {
+            border-color: #7c3aed;
+            color: #7c3aed;
+            background: rgba(124,58,237,0.12);
+        }
+        .ob-step.done .ob-step__num {
+            background: #7c3aed;
+            border-color: #7c3aed;
+            color: #fff;
+        }
+        .ob-step__line {
+            width: 32px;
+            height: 1px;
+            background: #2e2e2e;
+            margin: 0 4px;
+        }
+        .ob-exit {
+            font-size: 13px;
+            color: #888;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.15s;
+        }
+        .ob-exit:hover { color: #f0f0f0; }
+
+        /* ── Main content ── */
+        .ob-main {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 24px 40px;
+        }
+        .ob-inner {
+            text-align: center;
+            max-width: 560px;
+            width: 100%;
+        }
+        .ob-inner h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #f0f0f0;
+        }
+        .ob-inner p {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        /* ── Role cards ── */
+        .ob-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+        .ob-card {
+            padding: 32px 24px;
+            border-radius: 16px;
+            border: 2px solid #2e2e2e;
+            background: #161616;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+        .ob-card:hover {
+            border-color: rgba(124,58,237,0.5);
+            background: rgba(124,58,237,0.04);
+        }
+        .ob-card.selected {
+            border-color: #7c3aed;
+            background: rgba(124,58,237,0.08);
+        }
+        .ob-card__emoji {
+            font-size: 48px;
+            margin-bottom: 16px;
+            display: block;
+        }
+        .ob-card__title {
+            font-weight: 700;
+            font-size: 17px;
+            margin-bottom: 8px;
+            color: #f0f0f0;
+        }
+        .ob-card__desc {
+            font-size: 13px;
+            color: #888;
+            line-height: 1.6;
+        }
+
+        /* ── Continue button ── */
+        .ob-continue {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 11px 28px;
+            background: #7c3aed;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.18s ease;
+            box-shadow: 0 0 12px rgba(124,58,237,0.25);
+            opacity: 0.45;
+        }
+        .ob-continue.ready {
+            opacity: 1;
+            box-shadow: 0 0 20px rgba(124,58,237,0.4);
+        }
+        .ob-continue.ready:hover {
+            background: #6d28d9;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 480px) {
+            .ob-cards { grid-template-columns: 1fr; }
+            .ob-steps { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── Top Bar ─────────────────────────────────────────── -->
+<div class="ob-topbar">
+    <a href="{% url 'home' %}" class="ob-brand">
+        <img src="{% static 'images/Logo Variants/logo_purple_neon.png' %}" alt="StuLance">
+        <span>STU<span class="accent">LANCE</span></span>
+    </a>
+
+    <div class="ob-steps">
+        <div class="ob-step active">
+            <div class="ob-step__num">1</div>
+            <span>{% trans "Choose Role" %}</span>
+        </div>
+        <div class="ob-step__line"></div>
+        <div class="ob-step">
+            <div class="ob-step__num">2</div>
+            <span>{% trans "Personal Info" %}</span>
+        </div>
+        <div class="ob-step__line"></div>
+        <div class="ob-step">
+            <div class="ob-step__num">3</div>
+            <span>{% trans "Your Skills" %}</span>
+        </div>
+        <div class="ob-step__line"></div>
+        <div class="ob-step">
+            <div class="ob-step__num">4</div>
+            <span>{% trans "All Set" %}</span>
+        </div>
+    </div>
+
+    <a href="{% url 'home' %}" class="ob-exit">✕ {% trans "Exit" %}</a>
+</div>
+
+<!-- ── Content ─────────────────────────────────────────── -->
+<div class="ob-main">
+    <div class="ob-inner">
+        <h2>{% trans "Welcome to StuLance" %}</h2>
+        <p>{% trans "Tell us who you are to get started" %}</p>
+
+        <form method="post" id="ob-form">
+            {% csrf_token %}
+            <input type="hidden" name="role" id="role-input" value="">
+
+            <div class="ob-cards">
+                <div class="ob-card" data-role="student" onclick="selectRole(this)">
+                    <span class="ob-card__emoji">🎓</span>
+                    <div class="ob-card__title">{% trans "I'm a Student" %}</div>
+                    <div class="ob-card__desc">{% trans "Showcase my skills and find freelance projects" %}</div>
+                </div>
+                <div class="ob-card" data-role="recruiter" onclick="selectRole(this)">
+                    <span class="ob-card__emoji">🏢</span>
+                    <div class="ob-card__title">{% trans "I'm a Recruiter" %}</div>
+                    <div class="ob-card__desc">{% trans "Find and hire talented Moroccan students" %}</div>
+                </div>
+            </div>
+
+            <button type="submit" class="ob-continue" id="ob-btn" disabled>
+                {% trans "Continue" %} →
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+function selectRole(card) {
+    document.querySelectorAll('.ob-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    document.getElementById('role-input').value = card.dataset.role;
+    const btn = document.getElementById('ob-btn');
+    btn.disabled = false;
+    btn.classList.add('ready');
+}
+</script>
+
+</body>
+</html>

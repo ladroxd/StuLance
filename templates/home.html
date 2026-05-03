@@ -26,8 +26,8 @@
             {% trans "StuLance connects Morocco's brightest students with companies, startups, and individuals who need real skills — fast, secure, and verified." %}
         </p>
         <div class="home-hero__cta">
-            <a href="{% url 'register_student' %}" class="btn btn-primary btn-lg">{% trans "I'm a Student →" %}</a>
-            <a href="{% url 'register_client' %}" class="btn btn-secondary btn-lg">{% trans "I'm Recruiting" %}</a>
+            <a href="{% url 'onboarding' %}" class="btn btn-primary btn-lg">{% trans "I'm a Student →" %}</a>
+            <a href="{% url 'onboarding' %}" class="btn btn-secondary btn-lg">{% trans "I'm Recruiting" %}</a>
         </div>
         <div class="home-stats">
             <div class="home-stat">
@@ -129,7 +129,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="{% url 'register_student' %}" class="btn btn-primary mt-4">{% trans "Join as Student →" %}</a>
+                <a href="{% url 'onboarding' %}" class="btn btn-primary mt-4">{% trans "Join as Student →" %}</a>
             </div>
             <div class="home-how__col">
                 <span class="home-badge home-badge--blue">{% trans "For Recruiters" %}</span>
@@ -157,7 +157,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="{% url 'register_client' %}" class="btn btn-secondary mt-4">{% trans "Browse Talent →" %}</a>
+                <a href="{% url 'onboarding' %}" class="btn btn-secondary mt-4">{% trans "Browse Talent →" %}</a>
             </div>
         </div>
     </div>
@@ -233,7 +233,7 @@
 <section class="home-cta">
     <h2 class="home-cta__title">{% trans "Ready to launch your future?" %}</h2>
     <p class="home-cta__sub">{% trans "Join thousands of students already building real careers." %}</p>
-    <a href="{% url 'register_student' %}" class="btn btn-primary btn-lg">{% trans "Create Your Profile — It's Free" %}</a>
+    <a href="{% url 'onboarding' %}" class="btn btn-primary btn-lg">{% trans "Create Your Profile — It's Free" %}</a>
 </section>
 
 </div><!-- /.home-page -->
