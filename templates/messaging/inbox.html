@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Inbox" %} — StuLance{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="mb-0"><i class="bi bi-chat-dots-fill text-primary"></i> {% trans "Inbox" %}</h4>
+            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#newConvModal">
+                <i class="bi bi-pencil-square"></i> {% trans "New Message" %}
+            </button>
+        </div>
+
+        <div class="card shadow">
+            {% if conversations %}
+                <ul class="list-group list-group-flush">
+                    {% for item in conversations %}
+                    <li class="list-group-item d-flex align-items-center gap-3 py-3">
+                        <a href="{% url 'direct_conversation' item.conv.pk %}" class="d-flex align-items-center gap-3 flex-grow-1 text-decoration-none overflow-hidden">
+                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold flex-shrink-0" style="width:44px;height:44px;font-size:1.1rem;">
+                                {{ item.other.get_full_name|default:item.other.username|slice:":1"|upper }}
+                            </div>
+                            <div class="flex-grow-1 overflow-hidden">
+                                <div class="d-flex justify-content-between">
+                                    <span class="fw-semibold {% if item.unread %}text-dark{% else %}text-muted{% endif %}">
+                                        {{ item.other.get_full_name|default:item.other.username }}
+                                    </span>
+                                    {% if item.last_msg %}
+                                    <small class="text-muted">{{ item.last_msg.sent_at|date:"d/m H:i" }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted text-truncate" style="max-width:260px;">
+                                        {% if item.last_msg %}{{ item.last_msg.content }}{% else %}{% trans "No messages yet" %}{% endif %}
+                                    </small>
+                                    {% if item.unread %}
+                                    <span class="badge bg-primary rounded-pill ms-2">{{ item.unread }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </a>
+                        <form method="post" action="{% url 'delete_conversation' item.conv.pk %}" onsubmit="return confirm('{% trans "Delete this conversation?" %}')">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-outline-danger flex-shrink-0" title="{% trans 'Delete' %}">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </form>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="card-body text-center text-muted py-5">
+                    <i class="bi bi-chat-dots fs-1 d-block mb-3 text-secondary"></i>
+                    <p class="mb-3">{% trans "No conversations yet." %}</p>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newConvModal">
+                        <i class="bi bi-pencil-square"></i> {% trans "Start a conversation" %}
+                    </button>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- New Conversation Modal -->
+<div class="modal fade" id="newConvModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="post" action="{% url 'new_conversation' %}">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-person-plus"></i> {% trans "New Message" %}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <label class="form-label">{% trans "Username or Email" %}</label>
+                    <input type="text" name="recipient" class="form-control" placeholder="{% trans 'Enter username or email...' %}" required autofocus>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Cancel" %}</button>
+                    <button type="submit" class="btn btn-primary">{% trans "Start Chat" %}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

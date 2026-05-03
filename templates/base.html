@@ -34,6 +34,11 @@
             <ul class="navbar-nav ms-auto align-items-center">
                 {% if user.is_authenticated %}
                     <li class="nav-item me-2">
+                        <a class="nav-link position-relative" href="{% url 'inbox' %}">
+                            <i class="bi bi-chat-dots fs-5"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item me-2">
                         <a class="nav-link position-relative" href="{% url 'notification_list' %}" id="notif-bell">
                             <i class="bi bi-bell fs-5"></i>
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none" id="notif-badge">0</span>
@@ -44,7 +49,7 @@
                             <i class="bi bi-person-circle"></i> {{ user.get_full_name|default:user.username }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="{% url 'dashboard' %}"><i class="bi bi-speedometer2"></i> {% trans "Dashboard" %}</a></li>
+                            <li><a class="dropdown-item" href="{% if user.is_staff %}/admin/{% else %}{% url 'dashboard' %}{% endif %}"><i class="bi bi-speedometer2"></i> {% trans "Dashboard" %}</a></li>
                             {% if user.role == 'student' %}
                             <li><a class="dropdown-item" href="{% url 'student_profile' %}"><i class="bi bi-person"></i> {% trans "My Profile" %}</a></li>
                             {% endif %}

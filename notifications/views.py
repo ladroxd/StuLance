@@ -7,8 +7,24 @@ from .models import Notification
 @login_required
 def notification_list(request):
     notifs = Notification.objects.filter(user=request.user)
+
+    # Group stacked notifications by (type, link) — keeps ordering by latest
+    seen = {}
+    grouped = []
+    for n in notifs:
+        key = (n.notif_type, n.link)
+        if key in seen:
+            entry = seen[key]
+            entry['count'] += 1
+            if not n.is_read:
+                entry['has_unread'] = True
+        else:
+            entry = {'notif': n, 'count': 1, 'has_unread': not n.is_read}
+            seen[key] = entry
+            grouped.append(entry)
+
     notifs.filter(is_read=False).update(is_read=True)
-    return render(request, 'notifications/list.html', {'notifications': notifs})
+    return render(request, 'notifications/list.html', {'grouped': grouped})
 
 
 @login_required
