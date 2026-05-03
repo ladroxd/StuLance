@@ -1,4 +1,4 @@
-# 🚀 StuLance - Plateforme de Freelancing Académique
+# 🚀 StuLance - Academic Freelancing Platform
 
 [![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)](https://github.com/ladroxd/StuLance)
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/downloads/)
@@ -6,278 +6,278 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/Version-1.0.0-brightblue.svg)](#)
 
-**StuLance** est une plateforme web innovante permettant aux **étudiants marocains** de valoriser leurs compétences en tant que freelancers tout en offrant aux clients (entreprises, startups, particuliers) un moyen sécurisé et fiable de recruter des talents qualifiés.
+**StuLance** is an innovative web platform that allows **Moroccan students** to showcase their skills as freelancers while offering recruiters (companies, startups, individuals) a secure and reliable way to hire qualified talent.
 
-> 💡 **Résolvant un problème réel** : Comment permettre aux étudiants d'accéder à des opportunités freelance adaptées à leur disponibilité académique, dans un environnement sécurisé et conforme au contexte marocain ?
+> 💡 **Solving a real problem**: How can students access freelance opportunities adapted to their academic schedule, in a secure environment suited to the Moroccan context?
 
 ---
 
-## 📑 Table des Matières
+## 📑 Table of Contents
 
-1. [🎯 Aperçu du Projet](#-aperçu-du-projet)
-2. [✨ Fonctionnalités](#-fonctionnalités)
+1. [🎯 Project Overview](#-project-overview)
+2. [✨ Features](#-features)
 3. [🏗️ Architecture](#️-architecture)
-4. [⚙️ Stack Technologique](#️-stack-technologique)
+4. [⚙️ Tech Stack](#️-tech-stack)
 5. [📦 Installation](#-installation)
 6. [🔧 Configuration](#-configuration)
-7. [🚀 Utilisation](#-utilisation)
-8. [📁 Structure du Projet](#-structure-du-projet)
-9. [🗄️ Modèles de Données](#️-modèles-de-données)
+7. [🚀 Usage](#-usage)
+8. [📁 Project Structure](#-project-structure)
+9. [🗄️ Data Models](#️-data-models)
 10. [🔌 API Endpoints](#-api-endpoints)
-11. [🔐 Sécurité & Authentification](#-sécurité--authentification)
+11. [🔐 Security & Authentication](#-security--authentication)
 12. [🧪 Tests](#-tests)
-13. [🌐 Déploiement](#-déploiement)
+13. [🌐 Deployment](#-deployment)
 14. [📚 Documentation](#-documentation)
 
 ---
 
-## 🎯 Aperçu du Projet
+## 🎯 Project Overview
 
-### Context & Problématique
+### Context & Problem Statement
 
-Le freelancing connaît une croissance exponentielle au niveau mondial. Les étudiants en informatique, design, marketing et gestion possèdent des compétences réelles mais manquent de plateformes adaptées à leur contexte académique marocain.
+Freelancing is growing exponentially worldwide. Students in computer science, design, marketing, and management have real skills but lack platforms adapted to their Moroccan academic context.
 
-**Problèmes identifiés** :
-- ❌ Plateformes existantes (Upwork, Fiverr) sont génériques et en anglais
-- ❌ Pas d'adaptation au calendrier académique et contraintes des étudiants
-- ❌ Absence de vérification du statut étudiant
-- ❌ Complexité pour les utilisateurs marocains
+**Identified problems**:
+- ❌ Existing platforms (Upwork, Fiverr) are generic and in English
+- ❌ No adaptation to the academic calendar and student constraints
+- ❌ No student status verification
+- ❌ Complexity for Moroccan users
 
-**La Solution** : **StuLance** - Une plateforme dédiée, sécurisée et adaptée au contexte académique marocain.
+**The Solution**: **StuLance** — A dedicated, secure platform adapted to the Moroccan academic context.
 
-### Objectifs
+### Objectives
 
-**Généraux** :
-- ✅ Créer une plateforme web permettant aux étudiants de proposer leurs services
-- ✅ Permettre aux clients de publier des missions et recruter des talents
-- ✅ Offrir un environnement sécurisé, transparent et académiquement adapté
+**General**:
+- ✅ Create a web platform allowing students to offer their services
+- ✅ Allow recruiters to post missions and hire talent
+- ✅ Provide a secure, transparent and academically adapted environment
 
-**Spécifiques** :
-- ✅ Système de profils avec portfolio et compétences
-- ✅ Moteur de recherche et mise en relation client/étudiant
-- ✅ Système de suivi des missions et notation mutuelle
-- ✅ Vérification du statut étudiant via carte étudiante
-- ✅ Back-office d'administration pour modération
+**Specific**:
+- ✅ Profile system with portfolio and skills
+- ✅ Search engine and student/recruiter matching
+- ✅ Mission tracking and mutual rating system
+- ✅ Student status verification via student card
+- ✅ Administration back-office for moderation
 
 ---
 
-## ✨ Fonctionnalités
+## ✨ Features
 
-### 👤 Gestion des Utilisateurs et Profils
+### 👤 User & Profile Management
 
-#### Inscription & Authentification
+#### Registration & Authentication
 ```
-✅ Inscription sécurisée pour étudiants et clients
-✅ Authentification par email/mot de passe
-✅ Session Django sécurisée (CSRF protection)
-✅ Création automatique du profil lors de l'inscription
-```
-
-#### Profils Étudiants
-```
-✅ Upload de carte étudiante pour vérification
-✅ Vérification manuelle par administrateur (pending/verified/rejected)
-✅ Bio, photo de profil, compétences (tags)
-✅ Liens GitHub et LinkedIn
-✅ Informations académiques (école, filière)
-✅ Portfolio avec projets réalisés
-✅ Notation moyenne et statistiques de missions
+✅ Secure registration for students and recruiters
+✅ Email/password authentication
+✅ Secure Django session (CSRF protection)
+✅ Automatic profile creation upon registration
 ```
 
-#### Profils Clients
+#### Student Profiles
 ```
-✅ Type client (Entreprise ou Particulier)
-✅ Nom de l'entreprise/personne
-✅ Bio, photo de profil
-✅ Site web
-✅ Notation moyenne
-```
-
-### 🎯 Gestion des Missions
-
-#### Publication de Missions
-```
-✅ Titre, description détaillée
-✅ Budget en MAD (Dirham marocain)
-✅ Durée en jours
-✅ Catégorie de mission
-✅ Compétences requises
-✅ Statut : Ouverte → En cours → Terminée → Notée
+✅ Student card upload for verification
+✅ Manual verification by administrator (pending/verified/rejected)
+✅ Bio, profile photo, skills (tags)
+✅ GitHub and LinkedIn links
+✅ Academic information (school, field of study)
+✅ Portfolio with completed projects
+✅ Average rating and mission statistics
 ```
 
-#### Recherche & Filtrage
+#### Recruiter Profiles
 ```
-✅ Recherche par mots-clés
-✅ Filtrage par catégorie
-✅ Filtrage par budget (min/max)
-✅ Filtrage par durée
-✅ Affichage des missions ouvertes uniquement
+✅ Client type (Company or Individual)
+✅ Company/person name
+✅ Bio, profile photo
+✅ Website
+✅ Average rating
 ```
 
-#### Cycles de Vie
+### 🎯 Mission Management
+
+#### Publishing Missions
 ```
-Open (Ouverte)
+✅ Title, detailed description
+✅ Budget in MAD (Moroccan Dirham)
+✅ Duration in days
+✅ Mission category
+✅ Required skills
+✅ Status: Open → In Progress → Completed → Reviewed
+```
+
+#### Search & Filtering
+```
+✅ Keyword search
+✅ Filter by category
+✅ Filter by budget (min/max)
+✅ Filter by duration
+✅ Display open missions only
+```
+
+#### Mission Lifecycle
+```
+Open
   ↓
-In Progress (Acceptée)
+In Progress (Accepted)
   ↓
-Completed (Terminée)
+Completed
   ↓
-Reviewed (Notée)
+Reviewed
 ```
 
-### 📋 Système de Candidatures
+### 📋 Application System
 
 ```
-✅ Postuler avec lettre de motivation
-✅ Statut : Pending → Accepted → Rejected
-✅ Un étudiant ne peut postuler qu'une fois par mission
-✅ Client voir tous les candidats et leurs profils
-✅ Acceptation crée une notification
-✅ Rejet automatique des autres candidats
-✅ Mise à jour du compteur de missions étudiantes
+✅ Apply with a cover letter
+✅ Status: Pending → Accepted → Rejected
+✅ A student can only apply once per mission
+✅ Recruiter sees all applicants and their profiles
+✅ Acceptance triggers a notification
+✅ Automatic rejection of other applicants
+✅ Student mission counter updated
 ```
 
-### 💬 Messagerie & Communication
+### 💬 Messaging & Communication
 
 ```
-✅ Messagerie contextualisée par mission
-✅ Conversation entre étudiant et client
-✅ Historique des messages
-✅ Marquage comme lu/non lu
-✅ Notifications de nouveaux messages
-✅ Lien direct depuis chaque mission
+✅ Mission-contextualised messaging
+✅ Conversation between student and recruiter
+✅ Message history
+✅ Read/unread marking
+✅ New message notifications
+✅ Direct link from each mission
 ```
 
-### 📊 Tableaux de Bord
+### 📊 Dashboards
 
-#### Dashboard Étudiant
+#### Student Dashboard
 ```
-✅ Candidatures en cours (pending)
-✅ Missions acceptées (in_progress)
-✅ Missions complétées (completed)
-✅ Note moyenne reçue
-✅ Total de missions réalisées
-✅ Accès rapide au profil et portfolio
-```
-
-#### Dashboard Client
-```
-✅ Missions publiées (open, in_progress, completed)
-✅ Candidatures reçues par mission
-✅ Profils des candidats
-✅ Boutons pour accepter/refuser
-✅ Historique des missions passées
-✅ Gestion du compte
+✅ Pending applications
+✅ Accepted missions (in_progress)
+✅ Completed missions
+✅ Average rating received
+✅ Total missions completed
+✅ Quick access to profile and portfolio
 ```
 
-### ⭐ Système de Notation & Avis
+#### Recruiter Dashboard
+```
+✅ Posted missions (open, in_progress, completed)
+✅ Applications received per mission
+✅ Applicant profiles
+✅ Accept/reject buttons
+✅ Past mission history
+✅ Account management
+```
+
+### ⭐ Rating & Review System
 
 ```
-✅ Notation 1-5 étoiles + commentaire
-✅ Après clôture de mission seulement
-✅ Notation bilatérale (client → étudiant et inverse)
-✅ Calcul automatique de la note moyenne
-✅ Affichage des avis sur les profils
-✅ Unique par paire (mission, reviewer)
+✅ 1-5 star rating + comment
+✅ After mission closure only
+✅ Bilateral rating (recruiter → student and vice versa)
+✅ Automatic average rating calculation
+✅ Reviews displayed on profiles
+✅ Unique per pair (mission, reviewer)
 ```
 
 ### 🔔 Notifications
 
-Types de notifications :
+Notification types:
 ```
-✅ Nouvelle candidature : Client notifié quand étudiant postule
-✅ Message reçu : Notification de nouveau message
-✅ Candidature acceptée : Étudiant notifié quand accepté
-✅ Mission terminée : Notification de fin de mission
+✅ New application: Recruiter notified when student applies
+✅ Message received: New message notification
+✅ Application accepted: Student notified when accepted
+✅ Mission completed: End-of-mission notification
 ```
 
-Features :
+Features:
 ```
 ✅ In-app notifications
-✅ Marquage comme lu
-✅ Lien vers la ressource concernée
-✅ Historique complet
+✅ Mark as read
+✅ Link to the relevant resource
+✅ Full history
 ```
 
-### 🛡️ Panel d'Administration
+### 🛡️ Admin Panel
 
 ```
-✅ Vérification des comptes étudiants
-✅ Modération des missions signalées
-✅ Modération des profils signalés
-✅ Gestion des catégories de missions
-✅ Gestion des compétences
-✅ Génération de statistiques globales
-✅ Accès root Django admin
+✅ Student account verification
+✅ Reported mission moderation
+✅ Reported profile moderation
+✅ Mission category management
+✅ Skills management
+✅ Global statistics generation
+✅ Django root admin access
 ```
 
 ---
 
 ## 🏗️ Architecture
 
-### Architecture MVT (Model-View-Template) Django
+### MVT Architecture (Model-View-Template) Django
 
 ```
 StuLance/
 │
-├── Models (Données)
+├── Models (Data)
 │   ├── User (Custom AbstractUser)
 │   ├── StudentProfile & ClientProfile
 │   ├── Mission, Application, Review
 │   ├── Message (Messaging)
 │   └── Notification
 │
-├── Views (Logique métier)
-│   ├── Accounts (Auth, profils)
-│   ├── Missions (CRUD, candidatures)
-│   ├── Dashboard (Tableaux de bord)
+├── Views (Business logic)
+│   ├── Accounts (Auth, profiles)
+│   ├── Missions (CRUD, applications)
+│   ├── Dashboard (Dashboards)
 │   ├── Messaging (Conversations)
-│   └── Notifications (Gestion)
+│   └── Notifications (Management)
 │
-└── Templates (Présentation)
+└── Templates (Presentation)
     ├── Base layout
-    ├── Pages HTML rendues côté serveur
+    ├── Server-side rendered HTML pages
     ├── Bootstrap 5 responsive
-    └── Forms avec validation
+    └── Forms with validation
 ```
 
-### Flux de Données
+### Data Flow
 
 ```
-Client Web (HTML/CSS/JS)
+Web Client (HTML/CSS/JS)
     ↓
 Django URL Router
     ↓
-Views (authentification + logique)
+Views (authentication + logic)
     ↓
-Models (ORM Django)
+Models (Django ORM)
     ↓
 SQLite/MySQL Database
 ```
 
 ### Stateless Architecture (Sessions)
 
-- Pas d'API JWT externe
-- Sessions Django intégrées
-- Cookies HttpOnly sécurisés
-- CSRF tokens sur tous les formulaires
+- No external JWT API
+- Integrated Django sessions
+- HttpOnly secure cookies
+- CSRF tokens on all forms
 
 ---
 
-## ⚙️ Stack Technologique
+## ⚙️ Tech Stack
 
-| Composant | Technologie | Version | Raison |
-|-----------|-------------|---------|--------|
-| **Backend** | Django | 4.x | Framework full-stack, ORM puissant, sécurité intégrée |
-| **Frontend** | HTML5/CSS3/JS | - | Templates Django (Jinja2), Bootstrap 5 responsive |
-| **Database** | SQLite (dev) / MySQL | - | Léger en dev, performant en prod |
-| **API REST** | Django REST Framework | - | Endpoints JSON pour messagerie future |
-| **Auth** | Django Auth System | - | Sessions sécurisées, intégré nativement |
-| **File Storage** | Django FileField | - | Local en dev, S3 compatible en prod |
-| **Versioning** | Git | - | GitHub pour collaboration |
-| **Deployment** | Gunicorn + Nginx | - | VPS Linux (Ubuntu 20.04+) |
+| Component | Technology | Version | Reason |
+|-----------|------------|---------|--------|
+| **Backend** | Django | 4.x | Full-stack framework, powerful ORM, built-in security |
+| **Frontend** | HTML5/CSS3/JS | - | Django templates (Jinja2), Bootstrap 5 responsive |
+| **Database** | SQLite (dev) / MySQL | - | Lightweight in dev, performant in prod |
+| **REST API** | Django REST Framework | - | JSON endpoints for future mobile |
+| **Auth** | Django Auth System | - | Secure sessions, natively integrated |
+| **File Storage** | Django FileField | - | Local in dev, S3 compatible in prod |
+| **Versioning** | Git | - | GitHub for collaboration |
+| **Deployment** | Gunicorn + Nginx | - | Linux VPS (Ubuntu 20.04+) |
 
-### Dépendances Python (requirements.txt)
+### Python Dependencies (requirements.txt)
 ```
 Django==4.2.x
 djangorestframework
@@ -290,57 +290,57 @@ python-decouple (Environment variables)
 
 ## 📦 Installation
 
-### Prérequis
+### Prerequisites
 
 ```bash
 ✅ Python 3.8+
-✅ pip (gestionnaire de paquets)
+✅ pip (package manager)
 ✅ Git
-✅ MySQL 5.7+ (optionnel, SQLite par défaut)
+✅ MySQL 5.7+ (optional, SQLite by default)
 ```
 
-### Étape 1 : Cloner le Repository
+### Step 1: Clone the Repository
 
 ```bash
 git clone https://github.com/ladroxd/StuLance.git
 cd StuLance
 ```
 
-### Étape 2 : Créer l'Environnement Virtuel
+### Step 2: Create the Virtual Environment
 
 ```bash
-# Sur Windows
+# On Windows
 python -m venv venv
 venv\Scripts\activate
 
-# Sur macOS/Linux
+# On macOS/Linux
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-### Étape 3 : Installer les Dépendances
+### Step 3: Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### Étape 4 : Appliquer les Migrations
+### Step 4: Apply Migrations
 
 ```bash
 python manage.py migrate
 ```
 
-### Étape 4a : Créer le Superutilisateur (Admin)
+### Step 4a: Create Superuser (Admin)
 
 ```bash
 python manage.py createsuperuser
-# Suivre les prompts
+# Follow the prompts
 # Username: admin
 # Email: admin@example.com
-# Password: (sécurisé)
+# Password: (secure)
 ```
 
-### Étape 5 : Créer les Catégories (Optional)
+### Step 5: Create Categories (Optional)
 
 ```bash
 python manage.py shell
@@ -352,21 +352,21 @@ python manage.py shell
 >>> exit()
 ```
 
-### Étape 6 : Lancer le Serveur de Développement
+### Step 6: Start the Development Server
 
 ```bash
 python manage.py runserver
 ```
 
-✅ L'application est accessible à : **http://127.0.0.1:8000/**
+✅ The application is accessible at: **http://127.0.0.1:8000/**
 
 ---
 
 ## 🔧 Configuration
 
-### Variables d'Environnement (.env)
+### Environment Variables (.env)
 
-Créer un fichier `.env` à la racine du projet :
+Create a `.env` file at the project root:
 
 ```env
 # Django Configuration
@@ -374,7 +374,7 @@ SECRET_KEY=your-long-secret-key-here
 DEBUG=True
 ALLOWED_HOSTS=localhost,127.0.0.1
 
-# Database (SQLite - défaut)
+# Database (SQLite - default)
 DB_ENGINE=django.db.backends.sqlite3
 
 # Database (MySQL - production)
@@ -385,7 +385,7 @@ DB_ENGINE=django.db.backends.sqlite3
 # DB_HOST=localhost
 # DB_PORT=3306
 
-# Email (optionnel)
+# Email (optional)
 EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
 EMAIL_HOST=smtp.gmail.com
 EMAIL_PORT=587
@@ -393,31 +393,31 @@ EMAIL_USE_TLS=True
 EMAIL_HOST_USER=your_email@gmail.com
 EMAIL_HOST_PASSWORD=your_app_password
 
-# AWS S3 (optionnel - production)
+# AWS S3 (optional - production)
 USE_S3=False
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
 AWS_STORAGE_BUCKET_NAME=
 ```
 
-### Configuration MySQL (Production)
+### MySQL Configuration (Production)
 
 ```bash
-# 1. Créer la base de données
+# 1. Create the database
 mysql -u root -p
 > CREATE DATABASE stulance_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 > EXIT;
 
-# 2. Mettre à jour .env avec les infos MySQL
+# 2. Update .env with MySQL credentials
 
-# 3. Appliquer les migrations
+# 3. Apply migrations
 python manage.py migrate
 
-# 4. Créer le superuser
+# 4. Create superuser
 python manage.py createsuperuser
 ```
 
-### Fichier .gitignore (déjà inclus)
+### .gitignore (already included)
 
 ```
 *.pyc
@@ -435,169 +435,168 @@ venv/
 
 ---
 
-## 🚀 Utilisation
+## 🚀 Usage
 
-### 1️⃣ Flux Étudiant
+### 1️⃣ Student Flow
 
 ```
-1. S'inscrire → /accounts/register/student/
+1. Register → /accounts/register/student/
    - Email
-   - Mot de passe
-   - École & Filière
-   - Upload carte étudiante
-   
-2. Attendre vérification (Admin valide la carte)
-   - Statut: pending → verified
-   
-3. Créer profil → /accounts/edit/
+   - Password
+   - School & Field of study
+   - Upload student card
+
+2. Wait for verification (Admin validates the card)
+   - Status: pending → verified
+
+3. Create profile → /accounts/edit/
    - Bio, photo
-   - Compétences (tags)
-   - Liens GitHub/LinkedIn
-   - Portfolio (ajouter projets)
-   
-4. Chercher missions → /missions/
-   - Filtrer par catégorie, budget, durée
-   - Consulter détails
-   
-5. Postuler → /missions/<id>/apply/
-   - Lettre de motivation
-   - Client reçoit notification
-   
-6. Attendre acceptation
-   - Notification si accepté
-   - Accès à la messagerie
-   
-7. Communiquer → /messages/
-   - Discuter avec le client
-   - Envoyer livrables
-   
-8. Clôture & Notation
-   - Mission marquée terminée par client
-   - Laisser avis sur client
-   - Reçevoir notation
+   - Skills (tags)
+   - GitHub/LinkedIn links
+   - Portfolio (add projects)
+
+4. Browse missions → /missions/
+   - Filter by category, budget, duration
+   - View details
+
+5. Apply → /missions/<id>/apply/
+   - Cover letter
+   - Recruiter receives notification
+
+6. Wait for acceptance
+   - Notification if accepted
+   - Access to messaging
+
+7. Communicate → /messages/
+   - Chat with the recruiter
+   - Send deliverables
+
+8. Closure & Rating
+   - Mission marked complete by recruiter
+   - Leave a review for the recruiter
+   - Receive a rating
 ```
 
-### 2️⃣ Flux Client
+### 2️⃣ Recruiter Flow
 
 ```
-1. S'inscrire → /accounts/register/client/
-   - Email, mot de passe
-   - Type (Entreprise/Particulier)
-   - Nom entreprise
-   
-2. Créer profil → /accounts/edit/
+1. Register → /accounts/register/client/
+   - Email, password
+   - Type (Company/Individual)
+   - Company name
+
+2. Create profile → /accounts/edit/
    - Bio, photo
-   - Site web
+   - Website
    - Description
-   
-3. Publier mission → /missions/create/
-   - Titre détaillé
-   - Description complète
-   - Budget MAD
-   - Durée (jours)
-   - Catégorie
-   - Compétences requises
-   
-4. Gérer candidatures → /missions/<id>/applications/
-   - Voir tous les candidats
-   - Consulter leurs profils
-   - Portfolio & portfolio
-   - Accepter/Refuser
-   
-5. Communiquer → /messages/
-   - Discuter avec étudiant sélectionné
-   - Recevoir mises à jour
-   
-6. Marquer comme terminée
-   - Vérifier livrables
-   - Clôturer mission
-   
-7. Laisser notation
-   - Évaluation 1-5 étoiles
-   - Commentaire
-   - Vote pour la note moyenne de l'étudiant
+
+3. Post a mission → /missions/create/
+   - Detailed title
+   - Full description
+   - Budget in MAD
+   - Duration (days)
+   - Category
+   - Required skills
+
+4. Manage applications → /missions/<id>/applications/
+   - View all applicants
+   - Check their profiles & portfolios
+   - Accept/Reject
+
+5. Communicate → /messages/
+   - Chat with selected student
+   - Receive updates
+
+6. Mark as completed
+   - Verify deliverables
+   - Close the mission
+
+7. Leave a rating
+   - 1-5 star evaluation
+   - Comment
+   - Contributes to the student's average rating
 ```
 
-### 3️⃣ Flux Administrateur
+### 3️⃣ Administrator Flow
 
 ```
-1. Accéder au panel admin → /admin/
+1. Access admin panel → /admin/
    - Username: admin
-   - Password: (créé lors du setup)
-   
-2. Vérifier les étudiants
+   - Password: (created during setup)
+
+2. Verify students
    - StudentProfile → Pending approvals
-   - Valider ou rejeter les cartes
-   - Changer verification_status
-   
-3. Modérer le contenu
-   - Supprimer missions signalées
-   - Supprimer profils suspects
-   - Gérer utilisateurs
-   
-4. Gérer les catégories
-   - CRUD catégories de missions
-   - Ajouter/éditer les icons
-   
-5. Consulter statistiques
-   - Nombre d'utilisateurs
-   - Missions publiées
-   - Taux de conversion
+   - Validate or reject cards
+   - Change verification_status
+
+3. Moderate content
+   - Delete reported missions
+   - Delete suspicious profiles
+   - Manage users
+
+4. Manage categories
+   - CRUD mission categories
+   - Add/edit icons
+
+5. View statistics
+   - Number of users
+   - Published missions
+   - Conversion rate
 ```
 
 ---
 
-## 📁 Structure du Projet
+## 📁 Project Structure
 
 ```
 StuLance/
 │
-├── 📱 accounts/                    # Gestion des utilisateurs
+├── 📱 accounts/                    # User management
 │   ├── models.py                   # User, StudentProfile, ClientProfile, PortfolioProject
-│   ├── views.py                    # Auth, profil, portfolio
-│   ├── forms.py                    # Formulaires inscription & profil
+│   ├── views.py                    # Auth, profile, portfolio
+│   ├── forms.py                    # Registration & profile forms
 │   ├── urls.py                     # Routes /accounts/*
-│   ├── admin.py                    # Configuration admin Django
-│   └── migrations/                 # Migrations base de données
+│   ├── admin.py                    # Django admin configuration
+│   └── migrations/                 # Database migrations
 │
-├── 🎯 missions/                    # Gestion des missions & candidatures
+├── 🎯 missions/                    # Mission & application management
 │   ├── models.py                   # Mission, Application, Review, Category
-│   ├── views.py                    # CRUD missions, candidatures, notation
+│   ├── views.py                    # CRUD missions, applications, ratings
 │   ├── forms.py                    # MissionForm, ApplicationForm, ReviewForm
 │   ├── urls.py                     # Routes /missions/*
-│   ├── admin.py                    # Configuration admin
+│   ├── admin.py                    # Admin configuration
 │   └── migrations/
 │
-├── 💬 messaging/                   # Messagerie in-app
-│   ├── models.py                   # Message (par mission)
-│   ├── views.py                    # Afficher/envoyer messages
+├── 💬 messaging/                   # In-app messaging
+│   ├── models.py                   # Message (per mission)
+│   ├── views.py                    # Display/send messages
 │   ├── urls.py                     # Routes /messages/*
 │   ├── admin.py
 │   └── migrations/
 │
-├── 📊 dashboard/                   # Tableaux de bord
-│   ├── models.py                   # (Pas de modèles - utilise Mission, Application)
-│   ├── views.py                    # dashboard() - différencié student/client
+├── 📊 dashboard/                   # Dashboards
+│   ├── models.py                   # (No models — uses Mission, Application)
+│   ├── views.py                    # dashboard() — differentiated student/recruiter
 │   ├── urls.py                     # Routes /dashboard/*
 │   └── migrations/
 │
-├── 🔔 notifications/               # Système de notifications
+├── 🔔 notifications/               # Notification system
 │   ├── models.py                   # Notification
 │   ├── utils.py                    # create_notification()
-│   ├── views.py                    # Afficher notifications
+│   ├── views.py                    # Display notifications
 │   ├── urls.py                     # Routes /notifications/*
 │   └── migrations/
 │
-├── ⚙️ stulance/                    # Configuration Django (projet)
-│   ├── settings.py                 # Configurations, INSTALLED_APPS, Database
-│   ├── urls.py                     # Router principal (path('accounts/', ...) etc)
+├── ⚙️ stulance/                    # Django project configuration
+│   ├── settings.py                 # Config, INSTALLED_APPS, Database
+│   ├── urls.py                     # Main router
 │   ├── views.py                    # home()
 │   ├── wsgi.py                     # WSGI server
 │   └── asgi.py                     # ASGI server
 │
-├── 🎨 templates/                   # Templates HTML
-│   ├── base.html                   # Layout de base (navbar, footer)
-│   ├── home.html                   # Page d'accueil
+├── 🎨 templates/                   # HTML templates
+│   ├── base.html                   # Base layout (navbar, footer)
+│   ├── home.html                   # Home page
 │   ├── accounts/
 │   │   ├── register_student.html
 │   │   ├── register_client.html
@@ -608,48 +607,45 @@ StuLance/
 │   │   ├── edit_profile.html
 │   │   └── portfolio_form.html
 │   ├── missions/
-│   │   ├── list.html               # Affiche toutes les missions (filtrage)
-│   │   ├── detail.html             # Détail mission + candidatures
+│   │   ├── list.html               # All missions (with filtering)
+│   │   ├── detail.html             # Mission detail + applications
 │   │   ├── form.html               # Create/Edit mission
-│   │   ├── apply.html              # Form de candidature
-│   │   ├── applications.html       # Admin candidatures par client
-│   │   ├── review_form.html        # Laisser notation
-│   │   ├── complete_confirm.html   # Confirmer fin de mission
-│   │   └── confirm_delete.html     # Confirmer suppression
+│   │   ├── apply.html              # Application form
+│   │   ├── applications.html       # Recruiter application management
+│   │   ├── review_form.html        # Leave a rating
+│   │   ├── complete_confirm.html   # Confirm mission completion
+│   │   └── confirm_delete.html     # Confirm deletion
 │   ├── dashboard/
-│   │   ├── student.html            # Dashboard étudiant
-│   │   └── client.html             # Dashboard client
+│   │   ├── student.html            # Student dashboard
+│   │   └── client.html             # Recruiter dashboard
 │   ├── messaging/
-│   │   └── conversation.html       # Conversation messages/mission
+│   │   └── conversation.html       # Message conversation per mission
 │   └── notifications/
-│       └── list.html               # Liste notifications
+│       └── list.html               # Notifications list
 │
-├── 🎯 static/                      # Fichiers statiques
+├── 🎯 static/                      # Static files
 │   ├── css/
-│   │   └── style.css               # Styles personnalisés
+│   │   └── style.css               # Custom styles
 │   └── js/
-│       └── main.js                 # Scripts JavaScript
+│       └── main.js                 # JavaScript scripts
 │
-├── 📁 media_uploads/               # Uploads utilisateurs
-│   ├── profiles/
-│   │   ├── students/               # Photos étudiants
-│   │   └── clients/                # Photos clients
-│   ├── student_cards/              # Cartes étudiantes uploadées
-│   └── portfolio/                  # Images portfolio
+├── 🌍 locale/                      # Translations (i18n)
+│   ├── fr/LC_MESSAGES/django.po    # French translations
+│   └── ar/LC_MESSAGES/django.po    # Arabic translations
 │
-├── 🗄️ db.sqlite3                  # Base de données (dev uniquement)
+├── 🗄️ db.sqlite3                  # Database (dev only)
 │
-├── 📝 manage.py                    # Script management Django
-├── 📦 requirements.txt             # Dépendances Python
-├── .env.example                    # Exemple de configuration
-├── .gitignore                      # Fichiers à ignorer
-├── .gitattributes                  # Ligne endings
-└── README.md                       # Cette documentation
+├── 📝 manage.py                    # Django management script
+├── 📦 requirements.txt             # Python dependencies
+├── .env.example                    # Configuration example
+├── .gitignore                      # Files to ignore
+├── .gitattributes                  # Line endings
+└── README.md                       # This documentation
 ```
 
 ---
 
-## 🗄️ Modèles de Données
+## 🗄️ Data Models
 
 ### User (Custom AbstractUser)
 
@@ -658,11 +654,11 @@ class User(AbstractUser):
     ROLE_STUDENT = 'student'
     ROLE_CLIENT = 'client'
     ROLE_ADMIN = 'admin'
-    
-    role = CharField(choices=ROLE_CHOICES)  # Type d'utilisateur
+
+    role = CharField(choices=ROLE_CHOICES)  # User type
     phone = CharField(max_length=20)
     created_at = DateTimeField(auto_now_add=True)
-    
+
     Methods:
     - is_student()
     - is_client()
@@ -680,15 +676,15 @@ class StudentProfile(models.Model):
     linkedin_url = URLField()
     school = CharField()
     field_of_study = CharField()
-    student_card = FileField()  # Upload pour vérification
+    student_card = FileField()  # Upload for verification
     verification_status = CharField(
         choices=['pending', 'verified', 'rejected']
     )
     average_rating = FloatField(default=0.0)
     total_missions = PositiveIntegerField()
-    
+
     Methods:
-    - skills_list()  # Retourne liste de compétences
+    - skills_list()  # Returns list of skills
 ```
 
 ### ClientProfile
@@ -721,49 +717,49 @@ class PortfolioProject(models.Model):
 ```python
 class Mission(models.Model):
     STATUS_CHOICES = [
-        ('open', 'Ouverte'),
-        ('in_progress', 'En cours'),
-        ('completed', 'Terminée'),
-        ('cancelled', 'Annulée'),
+        ('open', 'Open'),
+        ('in_progress', 'In Progress'),
+        ('completed', 'Completed'),
+        ('cancelled', 'Cancelled'),
     ]
-    
+
     client = ForeignKey(User, related_name='missions')
     title = CharField(max_length=300)
     description = TextField()
     category = ForeignKey(Category)
     skills_required = CharField(max_length=500)  # "Python, Django"
     budget = DecimalField(max_digits=10, decimal_places=2)  # MAD
-    deadline_days = PositiveIntegerField()  # Durée en jours
+    deadline_days = PositiveIntegerField()  # Duration in days
     status = CharField(choices=STATUS_CHOICES, default='open')
     selected_student = ForeignKey(User, null=True, blank=True)
     created_at = DateTimeField(auto_now_add=True)
     updated_at = DateTimeField(auto_now=True)
-    
+
     Methods:
     - skills_list()
 ```
 
-### Application (Candidature)
+### Application
 
 ```python
 class Application(models.Model):
     STATUS_CHOICES = [
-        ('pending', 'En attente'),
-        ('accepted', 'Acceptée'),
-        ('rejected', 'Refusée'),
+        ('pending', 'Pending'),
+        ('accepted', 'Accepted'),
+        ('rejected', 'Rejected'),
     ]
-    
+
     mission = ForeignKey(Mission, related_name='applications')
     student = ForeignKey(User, related_name='applications')
-    cover_letter = TextField()  # Lettre de motivation
+    cover_letter = TextField()
     status = CharField(choices=STATUS_CHOICES, default='pending')
     applied_at = DateTimeField(auto_now_add=True)
-    
+
     Constraints:
-    - unique_together = ('mission', 'student')  # Une candidature par mission
+    - unique_together = ('mission', 'student')  # One application per mission
 ```
 
-### Review (Notation & Avis)
+### Review
 
 ```python
 class Review(models.Model):
@@ -773,9 +769,9 @@ class Review(models.Model):
     rating = PositiveSmallIntegerField(choices=[(i, i) for i in range(1, 6)])
     comment = TextField(blank=True)
     created_at = DateTimeField(auto_now_add=True)
-    
+
     Constraints:
-    - unique_together = ('mission', 'reviewer')  # Un avis par reviewer/mission
+    - unique_together = ('mission', 'reviewer')  # One review per reviewer/mission
 ```
 
 ### Message
@@ -787,8 +783,8 @@ class Message(models.Model):
     content = TextField()
     sent_at = DateTimeField(auto_now_add=True)
     is_read = BooleanField(default=False)
-    
-    Ordering: sent_at (du plus ancien au plus récent)
+
+    Ordering: sent_at (oldest to newest)
 ```
 
 ### Notification
@@ -796,17 +792,17 @@ class Message(models.Model):
 ```python
 class Notification(models.Model):
     TYPE_CHOICES = [
-        ('application', 'Nouvelle candidature'),
-        ('message', 'Nouveau message'),
-        ('mission_accepted', 'Mission acceptée'),
-        ('mission_completed', 'Mission terminée'),
+        ('application', 'New application'),
+        ('message', 'New message'),
+        ('mission_accepted', 'Mission accepted'),
+        ('mission_completed', 'Mission completed'),
     ]
-    
+
     user = ForeignKey(User, related_name='notifications')
     notif_type = CharField(choices=TYPE_CHOICES)
     title = CharField(max_length=200)
     message = TextField()
-    link = CharField(max_length=300)  # URL de la ressource
+    link = CharField(max_length=300)  # Resource URL
     is_read = BooleanField(default=False)
     created_at = DateTimeField(auto_now_add=True)
 ```
@@ -816,10 +812,10 @@ class Notification(models.Model):
 ```python
 class Category(models.Model):
     name = CharField(max_length=100, unique=True)
-    icon = CharField(max_length=50)  # Font Awesome ou emoji
+    icon = CharField(max_length=50)  # Bootstrap icon name
 ```
 
-### Diagramme ER Complet
+### Full ER Diagram
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -838,13 +834,12 @@ class Category(models.Model):
       │ • github_url          │                  │ • photo                │
       │ • linkedin_url        │                  │ • website              │
       │ • school              │                  │ • average_rating       │
-      │ • field_of_study      │                  │ • average_rating       │
-      │ • student_card        │                  └────────────────────────┘
-      │ • verification_status │
-      │ • average_rating      │       ┌──────────────────────────┐
-      │ • total_missions      │       │  PortfolioProject        │
-      └───────────┬───────────┘       │  (1-to-Many)             │
-                  │                   ├──────────────────────────┤
+      │ • field_of_study      │                  └────────────────────────┘
+      │ • student_card        │
+      │ • verification_status │       ┌──────────────────────────┐
+      │ • average_rating      │       │  PortfolioProject        │
+      │ • total_missions      │       │  (1-to-Many)             │
+      └───────────┬───────────┘       ├──────────────────────────┤
                   │                   │ • title                  │
                   │                   │ • description            │
                   │                   │ • url                    │
@@ -903,196 +898,195 @@ class Category(models.Model):
 
 ## 🔌 API Endpoints
 
-### Authentification & Comptes
+### Authentication & Accounts
 
-| Méthode | Endpoint | Description | Auth |
-|---------|----------|-------------|------|
-| GET | `/` | Page d'accueil | - |
-| GET/POST | `/accounts/register/student/` | Inscription étudiant | - |
-| GET/POST | `/accounts/register/client/` | Inscription client | - |
-| GET/POST | `/accounts/login/` | Connexion | - |
-| POST | `/accounts/logout/` | Déconnexion | ✓ |
-| GET | `/accounts/profile/` | Voir mon profil | ✓ |
-| GET/POST | `/accounts/edit/` | Éditer profil | ✓ |
-| GET/POST | `/accounts/portfolio/add/` | Ajouter projet | ✓ Étudiant |
-| GET | `/accounts/student/<id>/` | Voir profil étudiant | - |
-| GET | `/accounts/client/<id>/` | Voir profil client | - |
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/` | Home page | - |
+| GET/POST | `/accounts/register/student/` | Student registration | - |
+| GET/POST | `/accounts/register/client/` | Recruiter registration | - |
+| GET/POST | `/accounts/login/` | Sign in | - |
+| POST | `/accounts/logout/` | Sign out | ✓ |
+| GET | `/accounts/profile/` | View my profile | ✓ |
+| GET/POST | `/accounts/edit/` | Edit profile | ✓ |
+| GET/POST | `/accounts/portfolio/add/` | Add project | ✓ Student |
+| GET | `/accounts/student/<id>/` | View student profile | - |
+| GET | `/accounts/client/<id>/` | View recruiter profile | - |
 
 ### Missions
 
-| Méthode | Endpoint | Description | Auth |
-|---------|----------|-------------|------|
-| GET | `/missions/` | Lister missions ouvertes | - |
-| GET | `/missions/<id>/` | Détails mission | - |
-| GET/POST | `/missions/create/` | Créer mission | ✓ Client |
-| GET/POST | `/missions/<id>/edit/` | Éditer mission | ✓ Client owner |
-| POST | `/missions/<id>/delete/` | Supprimer mission | ✓ Client owner |
-| GET | `/missions/<id>/applications/` | Voir candidatures | ✓ Client owner |
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/missions/` | List open missions | - |
+| GET | `/missions/<id>/` | Mission details | - |
+| GET/POST | `/missions/create/` | Create mission | ✓ Recruiter |
+| GET/POST | `/missions/<id>/edit/` | Edit mission | ✓ Owner |
+| POST | `/missions/<id>/delete/` | Delete mission | ✓ Owner |
+| GET | `/missions/<id>/applications/` | View applications | ✓ Owner |
 
-### Candidatures
+### Applications
 
-| Méthode | Endpoint | Description | Auth |
-|---------|----------|-------------|------|
-| GET/POST | `/missions/<id>/apply/` | Postuler | ✓ Étudiant |
-| POST | `/applications/<id>/accept/` | Accepter candidature | ✓ Client owner |
-| POST | `/applications/<id>/reject/` | Refuser candidature | ✓ Client owner |
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET/POST | `/missions/<id>/apply/` | Apply | ✓ Student |
+| POST | `/applications/<id>/accept/` | Accept application | ✓ Owner |
+| POST | `/applications/<id>/reject/` | Reject application | ✓ Owner |
 
-### Missions (Actions)
+### Mission Actions
 
-| Méthode | Endpoint | Description | Auth |
-|---------|----------|-------------|------|
-| POST | `/missions/<id>/complete/` | Marquer comme terminée | ✓ Client |
-| GET/POST | `/missions/<id>/review/` | Laisser notation | ✓ |
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| POST | `/missions/<id>/complete/` | Mark as completed | ✓ Recruiter |
+| GET/POST | `/missions/<id>/review/` | Leave a rating | ✓ |
 
-### Messagerie
+### Messaging
 
-| Méthode | Endpoint | Description | Auth |
-|---------|----------|-------------|------|
-| GET | `/messages/` | Lister conversations | ✓ |
-| GET | `/messages/<mission_id>/` | Conversation mission | ✓ |
-| POST | `/messages/<mission_id>/send/` | Envoyer message | ✓ |
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/messages/<mission_id>/` | Mission conversation | ✓ |
+| POST | `/messages/<mission_id>/send/` | Send message | ✓ |
 
 ### Notifications
 
-| Méthode | Endpoint | Description | Auth |
-|---------|----------|-------------|------|
-| GET | `/notifications/` | Lister notifications | ✓ |
-| POST | `/notifications/<id>/mark-read/` | Marquer comme lue | ✓ |
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/notifications/` | List notifications | ✓ |
+| POST | `/notifications/<id>/mark-read/` | Mark as read | ✓ |
 
 ### Dashboard
 
-| Méthode | Endpoint | Description | Auth |
-|---------|----------|-------------|------|
-| GET | `/dashboard/` | Tableau de bord | ✓ |
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/dashboard/` | Dashboard | ✓ |
 
 ### Admin
 
-| Méthode | Endpoint | Description | Auth |
-|---------|----------|-------------|------|
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
 | GET/POST | `/admin/` | Django admin panel | ✓ Superuser |
 
 ---
 
-## 🔐 Sécurité & Authentification
+## 🔐 Security & Authentication
 
-### Mécanismes de Sécurité Intégrés
+### Built-in Security Mechanisms
 
-#### 1. **Authentification Django**
+#### 1. **Django Authentication**
 ```python
-✅ Système d'authentification natif Django
-✅ Stockage des mots de passe hashé (PBKDF2 par défaut)
-✅ Sessions sécurisées (session ID + cookie)
-✅ Cookies HttpOnly (pas d'accès JavaScript)
-✅ Secure flag sur cookies HTTPS
+✅ Native Django authentication system
+✅ Hashed password storage (PBKDF2 by default)
+✅ Secure sessions (session ID + cookie)
+✅ HttpOnly cookies (no JavaScript access)
+✅ Secure flag on HTTPS cookies
 ```
 
-#### 2. **Protection CSRF (Cross-Site Request Forgery)**
+#### 2. **CSRF Protection (Cross-Site Request Forgery)**
 ```python
-✅ CSRF middleware automatique
-✅ Tokens CSRF sur tous les formulaires
+✅ Automatic CSRF middleware
+✅ CSRF tokens on all forms
 ✅ SameSite cookies
 ```
 
-#### 3. **Contrôle d'Accès (Authorization)**
+#### 3. **Access Control (Authorization)**
 ```python
-✅ @login_required sur les vues protégées
-✅ Vérification user.is_student() / user.is_client()
-✅ Vérification user == requester (ownership)
-✅ Vérification des permissions sur les objets
+✅ @login_required on protected views
+✅ user.is_student() / user.is_client() checks
+✅ user == requester ownership verification
+✅ Object-level permission checks
 ```
 
-#### 4. **Protection XSS (Cross-Site Scripting)**
+#### 4. **XSS Protection (Cross-Site Scripting)**
 ```python
-✅ Auto-escape des templates Django {{ variable }}
-✅ Pas d'accès direct à HTML non validé
-✅ Utilisation de formulaires Django (sanitization)
+✅ Django template auto-escape {{ variable }}
+✅ No direct access to unvalidated HTML
+✅ Django forms used (sanitization)
 ```
 
-#### 5. **Protection SQL Injection**
+#### 5. **SQL Injection Protection**
 ```python
-✅ ORM Django (pas de raw SQL)
+✅ Django ORM (no raw SQL)
 ✅ Parameterized queries
-✅ QuerySet API sécurisée
+✅ Secure QuerySet API
 ```
 
-#### 6. **Upload de Fichiers**
+#### 6. **File Uploads**
 ```python
-✅ Stockage en dehors de la racine web (/media_uploads/)
-✅ Validation du type de fichier (FileField)
-✅ Génération de noms aléatoires
-✅ Impossible d'exécuter les fichiers
+✅ Storage outside web root (/media_uploads/)
+✅ File type validation (FileField)
+✅ Random name generation
+✅ Files cannot be executed
 ```
 
-#### 7. **Données Sensibles**
+#### 7. **Sensitive Data**
 ```python
-✅ Pas de stockage de tokens en dur
-✅ Pas de clés API publiques exposées
-✅ SECRET_KEY unique et sécurisé
-✅ DEBUG=False en production
+✅ No hardcoded tokens
+✅ No exposed public API keys
+✅ Unique and secure SECRET_KEY
+✅ DEBUG=False in production
 ```
 
-### Vérification du Statut Étudiant
+### Student Status Verification
 
 ```python
-# Processus manuel pour éviter les fraudes
-1. Étudiant upload carte étudiante
-2. Administrateur vérifie manuellement
-   - Vérification de l'image
-   - Vérification de la validité
-   - Mise à jour: STATUS_PENDING → STATUS_VERIFIED/REJECTED
-3. Étudiant notifié du statut
-4. Accès aux certaines fonctionnalités conditionné à verified=True
+# Manual process to prevent fraud
+1. Student uploads student card
+2. Administrator verifies manually
+   - Image check
+   - Validity verification
+   - Update: STATUS_PENDING → STATUS_VERIFIED/REJECTED
+3. Student notified of status
+4. Access to certain features conditioned on verified=True
 ```
 
-### Politique de Mots de Passe
+### Password Policy
 
 ```python
 VALIDATORS:
-✅ MinimumLengthValidator (8 caractères)
-✅ UserAttributeSimilarityValidator (pas d'identifiants dedans)
-✅ CommonPasswordValidator (pas de mots de passe courants)
-✅ NumericPasswordValidator (pas que des chiffres)
+✅ MinimumLengthValidator (8 characters)
+✅ UserAttributeSimilarityValidator (no identifiers inside)
+✅ CommonPasswordValidator (no common passwords)
+✅ NumericPasswordValidator (not all digits)
 ```
 
 ---
 
 ## 🧪 Tests
 
-### Lancer les Tests
+### Run Tests
 
 ```bash
-# Tous les tests
+# All tests
 python manage.py test
 
-# Tests d'une application spécifique
+# Tests for a specific app
 python manage.py test accounts
 python manage.py test missions
 python manage.py test messaging
 python manage.py test notifications
 
-# Tests d'une classe spécifique
+# Tests for a specific class
 python manage.py test accounts.tests.UserModelTests
 
-# Tests avec verbosité
+# Tests with verbosity
 python manage.py test --verbosity=2
 
-# Tests avec coverage
+# Tests with coverage
 pip install coverage
 coverage run --source='.' manage.py test
 coverage report
-coverage html  # Générer rapport HTML
+coverage html  # Generate HTML report
 ```
 
-### Structure des Tests
+### Test Structure
 
 ```
-accounts/tests.py          # Tests des modèles et vues
-missions/tests.py          # Tests CRUD missions
-messaging/tests.py         # Tests messagerie
-notifications/tests.py     # Tests notifications
+accounts/tests.py          # Model and view tests
+missions/tests.py          # Mission CRUD tests
+messaging/tests.py         # Messaging tests
+notifications/tests.py     # Notification tests
 ```
 
-### Exemple de Test
+### Example Test
 
 ```python
 from django.test import TestCase
@@ -1101,8 +1095,8 @@ from accounts.models import User, StudentProfile
 class StudentProfileTests(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            username='etudiant',
-            email='etudiant@example.com',
+            username='student',
+            email='student@example.com',
             password='testpass123',
             role='student'
         )
@@ -1111,11 +1105,11 @@ class StudentProfileTests(TestCase):
             school='EMSI',
             field_of_study='3IIR'
         )
-    
+
     def test_student_creation(self):
         self.assertEqual(self.user.is_student(), True)
         self.assertEqual(self.profile.verification_status, 'pending')
-    
+
     def test_skills_list(self):
         self.profile.skills = "Python, Django, React"
         skills = self.profile.skills_list()
@@ -1124,26 +1118,26 @@ class StudentProfileTests(TestCase):
 
 ---
 
-## 🌐 Déploiement
+## 🌐 Deployment
 
-### Déploiement sur VPS Linux (Ubuntu 20.04+)
+### Deploying on Linux VPS (Ubuntu 20.04+)
 
-#### 1. Préparer le Serveur
+#### 1. Prepare the Server
 
 ```bash
-# SSH dans le serveur
+# SSH into the server
 ssh root@your_server_ip
 
-# Mettre à jour le système
+# Update the system
 sudo apt update && sudo apt upgrade -y
 
-# Installer les dépendances
+# Install dependencies
 sudo apt install -y python3-pip python3-venv python3-dev
 sudo apt install -y mysql-server nginx git
 sudo apt install -y supervisor
 ```
 
-#### 2. Cloner le Projet
+#### 2. Clone the Project
 
 ```bash
 cd /home
@@ -1151,7 +1145,7 @@ git clone https://github.com/ladroxd/StuLance.git
 cd StuLance
 ```
 
-#### 3. Créer l'Environnement Virtuel
+#### 3. Create Virtual Environment
 
 ```bash
 python3 -m venv venv
@@ -1160,13 +1154,13 @@ pip install -r requirements.txt
 pip install gunicorn
 ```
 
-#### 4. Configuration Django Production
+#### 4. Django Production Configuration
 
 ```bash
-# Créer fichier .env
+# Create .env file
 nano .env
 
-# Contenu:
+# Content:
 SECRET_KEY=your-production-secret-key
 DEBUG=False
 ALLOWED_HOSTS=yourdomain.com,www.yourdomain.com
@@ -1178,7 +1172,7 @@ DB_HOST=localhost
 DB_PORT=3306
 ```
 
-#### 5. Configurer MySQL
+#### 5. Configure MySQL
 
 ```bash
 sudo mysql
@@ -1189,7 +1183,7 @@ sudo mysql
 > EXIT;
 ```
 
-#### 6. Appliquer les Migrations
+#### 6. Apply Migrations
 
 ```bash
 python manage.py migrate
@@ -1197,17 +1191,17 @@ python manage.py collectstatic --noinput
 python manage.py createsuperuser
 ```
 
-#### 7. Configurer Gunicorn
+#### 7. Configure Gunicorn
 
 ```bash
-# Tester Gunicorn
+# Test Gunicorn
 gunicorn --bind 0.0.0.0:8000 stulance.wsgi:application
 
-# Créer fichier systemd
+# Create systemd file
 sudo nano /etc/systemd/system/stulance.service
 ```
 
-**Contenu du service** :
+**Service file content**:
 ```ini
 [Unit]
 Description=StuLance Gunicorn Application
@@ -1229,19 +1223,19 @@ WantedBy=multi-user.target
 ```
 
 ```bash
-# Activer le service
+# Enable the service
 sudo systemctl daemon-reload
 sudo systemctl enable stulance
 sudo systemctl start stulance
 ```
 
-#### 8. Configurer Nginx
+#### 8. Configure Nginx
 
 ```bash
 sudo nano /etc/nginx/sites-available/stulance
 ```
 
-**Contenu du fichier Nginx** :
+**Nginx file content**:
 ```nginx
 server {
     listen 80;
@@ -1265,13 +1259,13 @@ server {
 ```
 
 ```bash
-# Activer le site
+# Enable the site
 sudo ln -s /etc/nginx/sites-available/stulance /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl restart nginx
 ```
 
-#### 9. SSL avec Let's Encrypt
+#### 9. SSL with Let's Encrypt
 
 ```bash
 sudo apt install -y certbot python3-certbot-nginx
@@ -1282,15 +1276,15 @@ sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
 
 ## 📚 Documentation
 
-### Fichiers de Documentation
+### Documentation Files
 
-- `README.md` - Vue d'ensemble du projet
-- `INSTALLATION.md` - Guide d'installation détaillé
-- `API_DOCS.md` - Documentation API (optionnel)
-- `DEPLOYMENT.md` - Guide de déploiement (optionnel)
-- Code bien commenté avec docstrings
+- `README.md` - Project overview
+- `INSTALLATION.md` - Detailed installation guide
+- `API_DOCS.md` - API documentation (optional)
+- `DEPLOYMENT.md` - Deployment guide (optional)
+- Well-commented code with docstrings
 
-### Ressources Utiles
+### Useful Resources
 
 - [Django Documentation](https://docs.djangoproject.com/en/4.2/)
 - [Django Models](https://docs.djangoproject.com/en/4.2/topics/db/models/)
@@ -1299,137 +1293,123 @@ sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
 - [Django Security](https://docs.djangoproject.com/en/4.2/topics/security/)
 - [Bootstrap 5 Documentation](https://getbootstrap.com/docs/5.0/)
 
+### How to Contribute
 
-
-
-### Comment Contribuer
-
-1. **Fork** le repository
+1. **Fork** the repository
 ```bash
 git clone https://github.com/yourusername/StuLance.git
 ```
 
-2. **Créer une branche** pour votre feature
+2. **Create a branch** for your feature
 ```bash
 git checkout -b feature/YourFeatureName
 ```
 
-3. **Commit** vos changements
+3. **Commit** your changes
 ```bash
 git commit -m "Add your feature description"
 ```
 
-4. **Push** vers votre fork
+4. **Push** to your fork
 ```bash
 git push origin feature/YourFeatureName
 ```
 
-5. **Ouvrir une Pull Request** avec une description détaillée
+5. **Open a Pull Request** with a detailed description
 
-### Standards de Code
+### Code Standards
 
 ```python
-# Noms explicites
-user_profile ✓    # Au lieu de up
-student_missions ✓ # Au lieu de sm
+# Explicit names
+user_profile ✓      # Instead of up
+student_missions ✓  # Instead of sm
 
-# Docstrings sur les fonctions complexes
+# Docstrings on complex functions
 def get_active_missions(user):
     """
-    Retourne les missions actives où l'utilisateur est sélectionné.
-    
+    Returns active missions where the user is selected.
+
     Args:
-        user: L'utilisateur pour lequel chercher les missions
-    
+        user: The user to search missions for
+
     Returns:
-        QuerySet: Missions in_progress avec l'utilisateur sélectionné
+        QuerySet: in_progress missions with the user selected
     """
     return Mission.objects.filter(
         selected_student=user,
         status='in_progress'
     )
 
-# Commentaires pour la logique complexe
-# Rejeter automatiquement les autres candidatures
-Application.objects.filter(mission=mission).exclude(pk=app_id).update(
-    status='rejected'
-)
-
-# Suivre PEP 8
-# - 4 espaces d'indentation
-# - Lignes max 79 caractères
-# - Espaces autour des opérateurs
+# Follow PEP 8
+# - 4 spaces indentation
+# - Max 79 characters per line
+# - Spaces around operators
 ```
 
 ### Issues & Bugs
 
-Si vous trouvez un bug ou avez une suggestion :
+If you find a bug or have a suggestion:
 
-1. Ouvrir une [Issue](https://github.com/ladroxd/StuLance/issues) sur GitHub
-2. Décrire le problème en détail
-3. Fournir les étapes pour reproduire
-4. Inclure des screenshots si possible
+1. Open an [Issue](https://github.com/ladroxd/StuLance/issues) on GitHub
+2. Describe the problem in detail
+3. Provide steps to reproduce
+4. Include screenshots if possible
 
 ---
 
-## 📋 Roadmap Futures
+## 📋 Future Roadmap
 
-### Phase 2 (Court terme)
+### Phase 2 (Short term)
 
-- [ ] Système de paiement intégré (Stripe / CMI)
-  - Transactions sécurisées
-  - Historique des paiements
-  - Factures automatiques
+- [ ] Integrated payment system (Stripe / CMI)
+  - Secure transactions
+  - Payment history
+  - Automatic invoices
 
-- [ ] API REST complète
-  - Endpoints JSON pour mobile
-  - Documentation Swagger/OpenAPI
+- [ ] Full REST API
+  - JSON endpoints for mobile
+  - Swagger/OpenAPI documentation
   - Rate limiting & throttling
 
-- [ ] Système de recommandation
-  - Suggestions de missions par IA
-  - Suggestions d'étudiants par IA
+- [ ] Recommendation system
+  - AI-powered mission suggestions
+  - AI-powered student suggestions
   - ML models
 
-### Phase 3 (Moyen terme)
+### Phase 3 (Medium term)
 
-- [ ] Application mobile native
-  - iOS avec Swift
-  - Android avec Kotlin
+- [ ] Native mobile application
+  - iOS with Swift
+  - Android with Kotlin
   - Push notifications
 
-- [ ] Vérification automatique de cartes étudiantes
+- [ ] Automatic student card verification
   - OCR (Optical Character Recognition)
-  - Reconnaissance faciale (optionnel)
-  - Validation en temps réel
+  - Facial recognition (optional)
+  - Real-time validation
 
-- [ ] Support multi-langue
-  - Arabe (العربية)
-  - Anglais (English)
-  - Français (existant)
+### Phase 4 (Long term)
 
-### Phase 4 (Long terme)
+- [ ] University integration
+  - Moroccan university APIs
+  - Data synchronisation
+  - Official certification
 
-- [ ] Intégration avec les universités
-  - API des universités marocaines
-  - Synchronisation des données
-  - Certification officielle
+- [ ] Accounting & tax management
+  - Invoice generation
+  - Tax calculation
+  - Accounting export
 
-- [ ] Gestion comptable & fiscale
-  - Génération de factures
-  - Calcul de taxes
-  - Export comptable
-
-- [ ] Système de certification
-  - Certificats de complétion
-  - Badges de compétences
-  - Vérification des compétences
+- [ ] Certification system
+  - Completion certificates
+  - Skills badges
+  - Skills verification
 
 ---
 
-## 📄 Licence
+## 📄 License
 
-Ce projet est sous licence **MIT**. Voir [LICENSE](LICENSE) pour les détails.
+This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for details.
 
 ```
 MIT License
@@ -1447,74 +1427,71 @@ copies of the Software...
 
 ## 🤝 Support & Contact
 
-- **Issues GitHub** : [StuLance Issues](https://github.com/ladroxd/StuLance/issues)
-- **Email** : znahairy@gmail.com 
-- **Discord/Slack** : Discord : ladro.   / Telegram :  ladro_xd
+- **GitHub Issues**: [StuLance Issues](https://github.com/ladroxd/StuLance/issues)
+- **Email**: znahairy@gmail.com
+- **Discord**: ladro. / **Telegram**: ladro_xd
 
 ---
 
-## 📊 Statistiques du Projet
+## 📊 Project Statistics
 
 ```
-📁 Dossiers : 10+
-📄 Fichiers Python : 50+
-📋 Lignes de Code : 2000+
-🗄️ Modèles : 8
-🔌 Endpoints : 30+
-⚙️ Fonctionnalités : 25+
-🧪 Tests : En cours
-📝 Documentation : Complète
+📁 Directories: 10+
+📄 Python files: 50+
+📋 Lines of code: 2000+
+🗄️ Models: 8
+🔌 Endpoints: 30+
+⚙️ Features: 25+
+🧪 Tests: In progress
+📝 Documentation: Complete
 ```
 
 ---
 
+## 📅 Version History
 
-
-
-## 📅 Historique des Versions
-
-| Version | Date | Changements |
-|---------|------|-----------|
-| 1.0.0 | Mars 2026 | Version initiale complète |
-| 0.9.0 | Février 2026 | Bêta publique |
-| 0.5.0 | Janvier 2026 | Phase de développement |
+| Version | Date | Changes |
+|---------|------|---------|
+| 1.0.0 | March 2026 | Full initial release |
+| 0.9.0 | February 2026 | Public beta |
+| 0.5.0 | January 2026 | Development phase |
 
 ---
 
-**Dernière mise à jour** : Mai 2026  
-**Statut** : 🟢 Actif & Maintenu  
-**Version Actuelle** : 1.0.0
+**Last updated**: May 2026
+**Status**: 🟢 Active & Maintained
+**Current Version**: 1.0.0
 
 ---
 
-## 🚀 Commencez Maintenant !
+## 🚀 Get Started Now!
 
 ```bash
-# 1. Cloner le projet
+# 1. Clone the project
 git clone https://github.com/ladroxd/StuLance.git
 
-# 2. Installer
+# 2. Install
 cd StuLance
 python -m venv venv
-source venv/bin/activate  # ou venv\Scripts\activate sur Windows
+source venv/bin/activate  # or venv\Scripts\activate on Windows
 pip install -r requirements.txt
 
-# 3. Configurer
+# 3. Configure
 python manage.py migrate
 python manage.py createsuperuser
 
-# 4. Lancer
+# 4. Run
 python manage.py runserver
 
-# 5. Accéder
-# Web : http://127.0.0.1:8000
-# Admin : http://127.0.0.1:8000/admin
+# 5. Access
+# Web:   http://127.0.0.1:8000
+# Admin: http://127.0.0.1:8000/admin
 ```
 
-**Bienvenue sur StuLance ! 🎓💼**
+**Welcome to StuLance! 🎓💼**
 
 ---
 
-### Questions ? Consultez la [Documentation Complète](https://github.com/ladroxd/StuLance/wiki) ou ouvrez une [Issue](https://github.com/ladroxd/StuLance/issues) ! 
+### Questions? Check the [Full Documentation](https://github.com/ladroxd/StuLance/wiki) or open an [Issue](https://github.com/ladroxd/StuLance/issues)!
 
 **Happy Coding! 💻✨**
