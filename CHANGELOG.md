@@ -95,6 +95,26 @@ How can students access freelance opportunities adapted to their academic schedu
 
 ---
 
+## Phase 11 — Performance & Notification Dropdown
+**Commits: `1a8e511` → `9dd676e` — 2026-05-04**
+
+### Performance Fixes
+- Added `CONN_MAX_AGE: 60` to MySQL config — reuses DB connections instead of opening a new TCP connection per request (eliminated 100–300ms per page load)
+- Added `dns-prefetch` hints for Bootstrap, Google Fonts CDNs — browser resolves DNS earlier, reducing first-paint delay
+- Disabled `use_google_fonts_cdn` in Jazzmin — removed redundant CDN request on admin pages
+- Documented: always use `run_local.bat` for dev to avoid Railway DB network latency
+
+### Notification Bell Dropdown
+- Converted navbar bell icon from plain link to Bootstrap dropdown
+- Dropdown shows last 5 notifications with icon, title, message preview, and unread dot indicator
+- Notifications preloaded on page load — instant display on first click (no wait)
+- Badge and dropdown content refresh every 30 seconds automatically
+- "Mark all read" link and "See all notifications" button at bottom of dropdown
+- Fixed Vite closure scoping issue — notification logic moved to inline script in `base.html`
+- New JSON endpoint: `GET /notifications/recent/` returns last 5 notifications + unread count
+
+---
+
 ## Phase 10 — CDC Gap Analysis & Feature Completion
 **Commit: `eec5020` — 2026-05-04**
 

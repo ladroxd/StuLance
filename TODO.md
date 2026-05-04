@@ -2,6 +2,15 @@
 
 ## High Priority
 
+- [ ] **Student Gig / Service posting system**
+  - New `Gig` model: title, description, base_rate (default from `StudentProfile.hourly_rate`), delivery_days, category, skills, is_active
+  - `GigExtra` model: label (e.g. "Revision", "Additional feature"), price, delivery_days — linked to a Gig (one-to-many)
+  - Student can create/edit/delete their gigs from their profile or a dedicated page (`/gigs/`)
+  - Public gig listing page — clients can browse student services (separate from mission listings)
+  - Public gig detail page — shows description, base rate, extras table, student profile card
+  - Client can contact student directly from gig page (via direct message)
+  - Admin can moderate/deactivate gigs
+
 - [ ] **Work delivery / submission system**
   - Student can submit deliverables (file upload or link) from the mission chat/detail page
   - Client can accept or request revision
