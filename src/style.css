@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@300;400;500&family=Poppins:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@300;400;500&family=Poppins:wght@400;600;700;800&display=swap');
 
 /* ── Design Tokens ─────────────────────────────────────── */
 :root {
@@ -785,6 +785,7 @@ footer a:hover {
   background: var(--navy-border);
 }
 
+
 /* Marquee */
 .home-marquee-wrap {
   padding: 20px 0;
@@ -1022,4 +1023,103 @@ footer a:hover {
   .home-stat { padding: 0 16px; }
   .home-stats__divider { display: none; }
   .home-cta__title { font-size: 28px; }
+}
+
+/* Marquee direction for RTL */
+@keyframes marquee-scroll-rtl {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(50%); }
+}
+[dir="rtl"] .home-marquee-track {
+  animation-name: marquee-scroll-rtl;
+}
+
+/* ── Navbar Center Nav ──────────────────────────────────── */
+.navbar-nav-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ── RTL Support ────────────────────────────────────────── */
+[dir="rtl"] body {
+  font-family: 'Cairo', sans-serif;
+}
+
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4,
+[dir="rtl"] h5,
+[dir="rtl"] h6 {
+  font-family: 'Cairo', sans-serif;
+}
+
+[dir="rtl"] .navbar-brand,
+[dir="rtl"] .home-hero__title,
+[dir="rtl"] .home-how__title,
+[dir="rtl"] .home-features__title,
+[dir="rtl"] .home-missions__title,
+[dir="rtl"] .home-cta__title {
+  font-family: 'Cairo', sans-serif;
+}
+
+[dir="rtl"] .btn,
+[dir="rtl"] .nav-link,
+[dir="rtl"] .home-badge,
+[dir="rtl"] .home-step__title,
+[dir="rtl"] .home-step__desc,
+[dir="rtl"] .home-feature-card__title,
+[dir="rtl"] .home-feature-card__desc,
+[dir="rtl"] .home-hero__sub {
+  font-family: 'Cairo', sans-serif;
+}
+
+/* Fix navbar center for RTL */
+[dir="rtl"] .navbar-nav-center {
+  left: auto;
+  right: 50%;
+  transform: translateX(50%);
+}
+
+
+/* RTL navbar: push right-side items to the left */
+[dir="rtl"] .navbar-nav.ms-auto {
+  margin-right: auto !important;
+  margin-left: 0 !important;
+}
+
+/* RTL hero: ensure letter-spacing doesn't hurt Arabic */
+[dir="rtl"] .home-hero__title {
+  letter-spacing: 0;
+}
+[dir="rtl"] .home-stat__label {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* RTL step number alignment */
+[dir="rtl"] .home-step__num {
+  font-family: 'DM Mono', monospace;
+}
+
+/* RTL footer links alignment */
+[dir="rtl"] footer .col-md-6:last-child > div {
+  justify-content: flex-start;
+}
+
+/* Responsive RTL navbar: on mobile the center nav is part of flow */
+@media (max-width: 991px) {
+  .navbar-nav-center {
+    position: static;
+    left: auto;
+    right: auto;
+    transform: none;
+  }
+  [dir="rtl"] .navbar-nav-center {
+    position: static;
+    left: auto;
+    right: auto;
+    transform: none;
+  }
 }

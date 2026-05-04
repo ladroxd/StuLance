@@ -41,6 +41,8 @@ class StudentProfile(models.Model):
     school = models.CharField(max_length=200, blank=True)
     field_of_study = models.CharField(max_length=200, blank=True)
     student_card = models.FileField(upload_to='student_cards/', blank=True, null=True)
+    city = models.CharField(max_length=100, blank=True)
+    hourly_rate = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)
     verification_status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=STATUS_PENDING)
     average_rating = models.FloatField(default=0.0)
     total_missions = models.PositiveIntegerField(default=0)
@@ -82,6 +84,9 @@ class ClientProfile(models.Model):
     bio = models.TextField(blank=True)
     photo = models.ImageField(upload_to='profiles/clients/', blank=True, null=True)
     website = models.URLField(blank=True)
+    city = models.CharField(max_length=100, blank=True)
+    work_types = models.CharField(max_length=200, blank=True)
+    main_field = models.CharField(max_length=100, blank=True)
     average_rating = models.FloatField(default=0.0)
 
     def __str__(self):
