@@ -4,10 +4,11 @@
 
 - [ ] **Student Gig / Service posting system**
   - New `Gig` model: title, description, base_rate (default from `StudentProfile.hourly_rate`), delivery_days, category, skills, is_active
-  - `GigExtra` model: label (e.g. "Revision", "Additional feature"), price, delivery_days — linked to a Gig (one-to-many)
+  - Extras are part of the `Gig` model itself — stored as a JSON field (`extras`: list of `{label, description, price}`) — not a separate model
+  - On the gig page, clients see the base offer + a list of optional extras they can tick (e.g. "Extra revision +50 MAD", "Source files +100 MAD")
   - Student can create/edit/delete their gigs from their profile or a dedicated page (`/gigs/`)
   - Public gig listing page — clients can browse student services (separate from mission listings)
-  - Public gig detail page — shows description, base rate, extras table, student profile card
+  - Public gig detail page — shows description, base rate, extras with checkboxes, student profile card
   - Client can contact student directly from gig page (via direct message)
   - Admin can moderate/deactivate gigs
 
