@@ -259,32 +259,6 @@ def onboarding(request):
     return render(request, 'accounts/onboarding.html', context)
 
 
-def register_student(request):
-    if request.method == 'POST':
-        form = StudentRegisterForm(request.POST, request.FILES)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, 'Compte etudiant cree. En attente de verification.')
-            return redirect('dashboard')
-    else:
-        form = StudentRegisterForm()
-    return render(request, 'accounts/register_student.html', {'form': form})
-
-
-def register_client(request):
-    if request.method == 'POST':
-        form = ClientRegisterForm(request.POST, request.FILES)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, 'Compte client cree avec succes.')
-            return redirect('dashboard')
-    else:
-        form = ClientRegisterForm()
-    return render(request, 'accounts/register_client.html', {'form': form})
-
-
 def login_view(request):
     if request.user.is_authenticated:
         return redirect('dashboard')
