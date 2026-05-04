@@ -48,11 +48,28 @@
                             <i class="bi bi-chat-dots"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link position-relative" href="{% url 'notification_list' %}" id="notif-bell">
-                            <i class="bi bi-bell"></i>
+                    <li class="nav-item dropdown">
+                        <button class="nav-link position-relative bg-transparent border-0" id="notifDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="padding:0.5rem 0;cursor:pointer">
+                            <i class="bi bi-bell" id="notif-bell"></i>
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none" id="notif-badge">0</span>
-                        </a>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="notifDropdown" id="notif-dropdown-menu" style="min-width:320px;max-width:360px">
+                            <li class="px-3 pt-3 pb-2 d-flex justify-content-between align-items-center" style="border-bottom:1px solid rgba(255,255,255,0.08)">
+                                <span class="fw-semibold" style="font-size:14px;color:#f0f0f0">{% trans "Notifications" %}</span>
+                                <a href="{% url 'mark_all_read' %}" style="font-size:12px;color:#888" onclick="event.stopPropagation()">{% trans "Mark all read" %}</a>
+                            </li>
+                            <li id="notif-list">
+                                <div class="text-center py-4" style="font-size:13px;color:#888" id="notif-empty">
+                                    <i class="bi bi-bell-slash d-block mb-1" style="font-size:1.4rem"></i>
+                                    {% trans "No notifications" %}
+                                </div>
+                            </li>
+                            <li style="border-top:1px solid rgba(255,255,255,0.08)">
+                                <a href="{% url 'notification_list' %}" class="dropdown-item text-center py-2" style="font-size:13px;color:#7c3aed">
+                                    {% trans "See all notifications" %} <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="nav-item dropdown ms-3">
                         <button class="nav-link dropdown-toggle bg-transparent border-0" type="button" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="true" style="padding: 0.5rem 0; cursor: pointer;">
@@ -161,6 +178,54 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{% static 'dist/main.js' %}"></script>
 <script>
+    // ── Notification dropdown ────────────────────────────
+    const NOTIF_ICONS = {
+        application:       'bi-file-earmark-person',
+        message:           'bi-chat-dots',
+        mission_accepted:  'bi-check-circle',
+        mission_completed: 'bi-flag',
+    };
+
+    async function loadNotifDropdown() {
+        const list = document.getElementById('notif-list');
+        if (!list) return;
+        try {
+            const res = await fetch('/notifications/recent/', { credentials: 'same-origin' });
+            if (!res.ok) return;
+            const data = await res.json();
+
+            // update badge
+            const badge = document.getElementById('notif-badge');
+            if (badge) {
+                if (data.unread > 0) { badge.textContent = data.unread > 99 ? '99+' : data.unread; badge.classList.remove('d-none'); }
+                else { badge.classList.add('d-none'); }
+            }
+
+            if (!data.notifications.length) {
+                list.innerHTML = '<div class="text-center py-4" style="font-size:13px;color:#888"><i class="bi bi-bell-slash d-block mb-1" style="font-size:1.4rem"></i>Aucune notification</div>';
+                return;
+            }
+
+            list.innerHTML = data.notifications.map(function(n) {
+                var icon = NOTIF_ICONS[n.notif_type] || 'bi-bell';
+                var unreadBg = n.is_read ? '' : 'background:rgba(124,58,237,0.07);';
+                var dot = n.is_read ? '' : '<span style="flex-shrink:0;width:7px;height:7px;border-radius:50%;background:#7c3aed;display:inline-block;margin-left:auto"></span>';
+                var inner = '<div class="d-flex align-items-start gap-2 px-3 py-2" style="' + unreadBg + 'border-bottom:1px solid rgba(255,255,255,0.06)">'
+                    + '<i class="bi ' + icon + ' flex-shrink-0 mt-1" style="font-size:1rem;color:#7c3aed"></i>'
+                    + '<div style="flex:1;min-width:0">'
+                    + '<div class="d-flex align-items-center gap-1">'
+                    + '<span class="text-truncate fw-semibold" style="font-size:13px;color:#f0f0f0">' + n.title + '</span>'
+                    + dot
+                    + '</div>'
+                    + '<div class="text-truncate" style="font-size:12px;color:#aaaaaa">' + n.message + '</div>'
+                    + '</div></div>';
+                return n.link
+                    ? '<a href="/notifications/mark-read/' + n.id + '/" class="text-decoration-none d-block">' + inner + '</a>'
+                    : '<div>' + inner + '</div>';
+            }).join('');
+        } catch(e) {}
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         const dropdownButtons = document.querySelectorAll('[data-bs-toggle="dropdown"]');
         const dropdownInstances = new Map();
@@ -178,9 +243,9 @@
             button.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                
+
                 const currentDropdown = dropdownInstances.get(button.id);
-                
+
                 // Close all other dropdowns
                 dropdownButtons.forEach(function(otherButton) {
                     if (otherButton.id !== button.id) {
@@ -190,23 +255,34 @@
                         }
                     }
                 });
-                
+
                 // Toggle current dropdown
                 if (currentDropdown) {
                     currentDropdown.toggle();
+                }
+
+                // Load notifications when bell is opened
+                if (button.id === 'notifDropdown' && typeof loadNotifDropdown === 'function') {
+                    loadNotifDropdown();
                 }
             });
         });
         
         // Close dropdowns when clicking outside
         document.addEventListener('click', function(e) {
-            if (!e.target.closest('[data-bs-toggle="dropdown"]') && 
+            if (!e.target.closest('[data-bs-toggle="dropdown"]') &&
                 !e.target.closest('.dropdown-menu')) {
                 dropdownInstances.forEach(function(dropdown) {
                     dropdown.hide();
                 });
             }
         });
+
+        // Preload notifications and poll badge
+        if (document.getElementById('notif-badge')) {
+            loadNotifDropdown();
+            setInterval(loadNotifDropdown, 30000);
+        }
     });
 </script>
 {% block extra_js %}{% endblock %}

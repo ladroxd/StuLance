@@ -47,3 +47,21 @@ def mark_all_read(request):
 def unread_count(request):
     count = Notification.objects.filter(user=request.user, is_read=False).count()
     return JsonResponse({'count': count})
+
+
+@login_required
+def recent_notifications(request):
+    notifs = Notification.objects.filter(user=request.user).order_by('-created_at')[:5]
+    data = [
+        {
+            'id': n.pk,
+            'title': n.title,
+            'message': n.message[:80] + ('…' if len(n.message) > 80 else ''),
+            'link': n.link,
+            'is_read': n.is_read,
+            'notif_type': n.notif_type,
+        }
+        for n in notifs
+    ]
+    unread = Notification.objects.filter(user=request.user, is_read=False).count()
+    return JsonResponse({'notifications': data, 'unread': unread})
