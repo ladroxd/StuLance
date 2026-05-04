@@ -378,6 +378,129 @@ msgid "Field of Study"
 msgstr "Filière"
 
 msgid "Student Card"
+msgstr "Carte d'étudiant"
+
+msgid "Join us now  →"
+msgstr "Rejoignez-nous maintenant  →"
+
+msgid "Morocco's #1 Student Talent Platform"
+msgstr "Plateforme #1 au Maroc pour les talents étudiants"
+
+msgid "Where Student Talent"
+msgstr "Où le talent étudiant"
+
+msgid "Meets Opportunity"
+msgstr "Rencontre l'opportunité"
+
+msgid "StuLance connects Morocco's brightest students with companies, startups, and individuals who need real skills — fast, secure, and verified."
+msgstr "StuLance connecte les meilleurs étudiants marocains avec des entreprises, startups et individus qui ont besoin de vrais talents — rapide, sécurisé et vérifié."
+
+msgid "Students"
+msgstr "Étudiants"
+
+msgid "Recruiters"
+msgstr "Recruteurs"
+
+msgid "Projects"
+msgstr "Projets"
+
+msgid "Satisfaction"
+msgstr "Satisfaction"
+
+msgid "For Students"
+msgstr "Pour les étudiants"
+
+msgid "Build your freelance career while studying"
+msgstr "Construisez votre carrière en freelance tout en étudiant"
+
+msgid "Create your profile"
+msgstr "Créez votre profil"
+
+msgid "Verify your student status, add your skills, and upload portfolio pieces"
+msgstr "Vérifiez votre statut d'étudiant, ajoutez vos compétences et téléchargez vos réalisations"
+
+msgid "Get discovered"
+msgstr "Soyez découvert"
+
+msgid "Recruiters find you via skill search, or apply directly to posted projects"
+msgstr "Les recruteurs vous trouvent via la recherche de compétences, ou postulez directement aux projets publiés"
+
+msgid "Deliver & get paid"
+msgstr "Livrez et recevez votre paiement"
+
+msgid "Complete milestones, receive secure payments, build your reputation"
+msgstr "Complétez les étapes, recevez des paiements sécurisés, construisez votre réputation"
+
+msgid "Join as Student →"
+msgstr "Rejoignez en tant qu'étudiant →"
+
+msgid "For Recruiters"
+msgstr "Pour les recruteurs"
+
+msgid "Access verified student talent on demand"
+msgstr "Accédez à des talents étudiants vérifiés à la demande"
+
+msgid "Post a project"
+msgstr "Publiez un projet"
+
+msgid "Describe your project, budget, and required skills in minutes"
+msgstr "Décrivez votre projet, budget et compétences requises en quelques minutes"
+
+msgid "Browse matched talent"
+msgstr "Parcourez les talents correspondants"
+
+msgid "Our AI surfaces the most relevant student profiles for your needs"
+msgstr "Notre IA affiche les profils d'étudiants les plus pertinents pour vos besoins"
+
+msgid "Hire with confidence"
+msgstr "Embauchez en toute confiance"
+
+msgid "All students are verified — pay securely with escrow protection"
+msgstr "Tous les étudiants sont vérifiés — payez en toute sécurité avec protection de séquestre"
+
+msgid "Browse Talent →"
+msgstr "Parcourez les talents →"
+
+msgid "Built for trust & results"
+msgstr "Construit pour la confiance et les résultats"
+
+msgid "Verified Student Profiles"
+msgstr "Profils d'étudiants vérifiés"
+
+msgid "Every student is verified through their university ID, ensuring authentic talent."
+msgstr "Chaque étudiant est vérifié par son ID universitaire, garantissant un talent authentique."
+
+msgid "Secure Escrow Payments"
+msgstr "Paiements en séquestre sécurisé"
+
+msgid "Funds are held in escrow until project milestones are delivered and approved."
+msgstr "Les fonds sont bloqués en séquestre jusqu'à ce que les étapes du projet soient livrées et approuvées."
+
+msgid "Skill-Matched AI"
+msgstr "IA correspondant aux compétences"
+
+msgid "Our matching engine connects recruiters to the most relevant student profiles."
+msgstr "Notre moteur d'appairage connecte les recruteurs aux profils d'étudiants les plus pertinents."
+
+msgid "Real Portfolio Work"
+msgstr "Travail de portefeuille réel"
+
+msgid "Students showcase live projects, not just CVs — see the work before you hire."
+msgstr "Les étudiants présentent des projets en direct, pas seulement des CV — voyez le travail avant d'embaucher."
+
+msgid "Featured Missions"
+msgstr "Missions en vedette"
+
+msgid "Ready to launch your future?"
+msgstr "Prêt à lancer votre avenir ?"
+
+msgid "Join thousands of students already building real careers."
+msgstr "Rejoignez des milliers d'étudiants qui construisent déjà de vraies carrières."
+
+msgid "Create Your Profile — It's Free"
+msgstr "Créez votre profil — C'est gratuit"
+
+msgid "Student Card"
 msgstr "Carte étudiante"
 
 msgid "Student card (PDF or image)"

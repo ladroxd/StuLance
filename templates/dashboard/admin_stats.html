@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Platform Statistics" %} — StuLance{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h3 class="mb-1">{% trans "Platform Statistics" %} <i class="bi bi-bar-chart-line" style="color:var(--accent)"></i></h3>
+        <p class="text-muted mb-0" style="font-size:14px">{% trans "Real-time overview of StuLance activity." %}</p>
+    </div>
+    <a href="/admin/" class="btn btn-ghost btn-sm"><i class="bi bi-shield-lock"></i> {% trans "Admin Panel" %}</a>
+</div>
+
+<!-- ── Users ───────────────────────────────────────────── -->
+<h5 class="mb-3">{% trans "Users" %}</h5>
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="card text-center">
+            <div class="card-body py-3">
+                <div class="fs-2 fw-bold" style="color:var(--accent);font-family:'DM Mono',monospace">{{ total_students }}</div>
+                <div class="text-muted" style="font-size:13px">{% trans "Students" %}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card text-center">
+            <div class="card-body py-3">
+                <div class="fs-2 fw-bold" style="color:#6366f1;font-family:'DM Mono',monospace">{{ total_clients }}</div>
+                <div class="text-muted" style="font-size:13px">{% trans "Recruiters" %}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card text-center">
+            <div class="card-body py-3">
+                <div class="fs-2 fw-bold" style="color:#10b981;font-family:'DM Mono',monospace">{{ verified_students }}</div>
+                <div class="text-muted" style="font-size:13px">{% trans "Verified Students" %}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card text-center {% if pending_verifications > 0 %}border-warning{% endif %}">
+            <div class="card-body py-3">
+                <div class="fs-2 fw-bold" style="color:#f59e0b;font-family:'DM Mono',monospace">{{ pending_verifications }}</div>
+                <div class="text-muted" style="font-size:13px">{% trans "Pending Verifications" %}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── Missions ────────────────────────────────────────── -->
+<h5 class="mb-3">{% trans "Missions" %}</h5>
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="card text-center">
+            <div class="card-body py-3">
+                <div class="fs-2 fw-bold" style="font-family:'DM Mono',monospace">{{ total_missions }}</div>
+                <div class="text-muted" style="font-size:13px">{% trans "Total Missions" %}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card text-center">
+            <div class="card-body py-3">
+                <div class="fs-2 fw-bold" style="color:var(--accent);font-family:'DM Mono',monospace">{{ open_missions }}</div>
+                <div class="text-muted" style="font-size:13px">{% trans "Open" %}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card text-center">
+            <div class="card-body py-3">
+                <div class="fs-2 fw-bold" style="color:#f59e0b;font-family:'DM Mono',monospace">{{ in_progress_missions }}</div>
+                <div class="text-muted" style="font-size:13px">{% trans "In Progress" %}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card text-center">
+            <div class="card-body py-3">
+                <div class="fs-2 fw-bold" style="color:#10b981;font-family:'DM Mono',monospace">{{ completed_missions }}</div>
+                <div class="text-muted" style="font-size:13px">{% trans "Completed" %}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── Activity & Finance ──────────────────────────────── -->
+<h5 class="mb-3">{% trans "Activity & Finance" %}</h5>
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-4">
+        <div class="card text-center">
+            <div class="card-body py-3">
+                <div class="fs-2 fw-bold" style="color:#6366f1;font-family:'DM Mono',monospace">{{ total_applications }}</div>
+                <div class="text-muted" style="font-size:13px">{% trans "Total Applications" %}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-4">
+        <div class="card text-center">
+            <div class="card-body py-3">
+                <div class="fs-2 fw-bold" style="color:#0ea5e9;font-family:'DM Mono',monospace">{{ avg_rating }} <i class="bi bi-star-fill" style="font-size:1rem"></i></div>
+                <div class="text-muted" style="font-size:13px">{% trans "Avg. Rating" %}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-4">
+        <div class="card text-center" style="background:linear-gradient(135deg,#10b981,#059669);border:none">
+            <div class="card-body py-3">
+                <div class="fs-2 fw-bold text-white" style="font-family:'DM Mono',monospace">{{ total_budget_completed|floatformat:0 }} MAD</div>
+                <div class="text-white opacity-75" style="font-size:13px">{% trans "Total Value Completed" %}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── Top Categories ─────────────────────────────────── -->
+{% if top_categories %}
+<h5 class="mb-3">{% trans "Top Categories" %}</h5>
+<div class="card">
+    <div class="card-body p-0">
+        <table class="table mb-0">
+            <thead>
+                <tr>
+                    <th>{% trans "Category" %}</th>
+                    <th class="text-end">{% trans "Missions" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cat in top_categories %}
+                <tr>
+                    <td>
+                        {% if cat.icon %}<i class="bi bi-{{ cat.icon }} me-2" style="color:var(--accent)"></i>{% endif %}
+                        {{ cat.name }}
+                    </td>
+                    <td class="text-end fw-bold">{{ cat.mission_count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,3 @@
+@echo off
+echo Running with RAILWAY MySQL database...
+python manage.py runserver

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
-from .models import Mission, Application, Review, Category
+from .models import Mission, Application, Review, Category, Report
 
 
 @admin.register(Category)
@@ -125,3 +125,46 @@ class ReviewAdmin(admin.ModelAdmin):
         empty = '☆' * (5 - obj.rating)
         return format_html('<span style="color:#ffc107;font-size:16px">{}</span><span style="color:#ccc;font-size:16px">{}</span>', filled, empty)
     stars.short_description = 'Rating'
+
+
+@admin.register(Report)
+class ReportAdmin(admin.ModelAdmin):
+    list_display = ['reporter', 'target', 'reason', 'status_badge', 'created_at']
+    list_filter = ['status', 'reason', 'created_at']
+    search_fields = ['reporter__username', 'reported_mission__title', 'reported_user__username']
+    readonly_fields = ['reporter', 'reported_mission', 'reported_user', 'reason', 'description', 'created_at']
+    list_per_page = 25
+    date_hierarchy = 'created_at'
+    actions = ['mark_reviewed', 'mark_dismissed']
+
+    def target(self, obj):
+        if obj.reported_mission:
+            return format_html('<i class="bi bi-briefcase"></i> Mission: <strong>{}</strong>', obj.reported_mission.title)
+        if obj.reported_user:
+            return format_html('<i class="bi bi-person"></i> Profil: <strong>{}</strong>', obj.reported_user.username)
+        return '—'
+    target.short_description = 'Cible'
+
+    def status_badge(self, obj):
+        colors = {
+            'pending':   ('#ffc107', '⏳ En attente'),
+            'reviewed':  ('#198754', '✔ Traite'),
+            'dismissed': ('#6c757d', '✘ Rejete'),
+        }
+        color, label = colors.get(obj.status, ('#6c757d', obj.status))
+        text = '#000' if obj.status == 'pending' else '#fff'
+        return format_html(
+            '<span style="background:{};color:{};padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600">{}</span>',
+            color, text, label
+        )
+    status_badge.short_description = 'Statut'
+
+    @admin.action(description='✔ Marquer comme traite')
+    def mark_reviewed(self, request, queryset):
+        updated = queryset.update(status='reviewed')
+        self.message_user(request, f'{updated} signalement(s) marque(s) comme traite(s).')
+
+    @admin.action(description='✘ Rejeter les signalements')
+    def mark_dismissed(self, request, queryset):
+        updated = queryset.update(status='dismissed')
+        self.message_user(request, f'{updated} signalement(s) rejete(s).')

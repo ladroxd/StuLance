@@ -33,6 +33,13 @@
                     {% endfor %}
                 </div>
                 {% endif %}
+                {% if user.is_authenticated and user != profile.user %}
+                <div class="mt-3">
+                    <a href="{% url 'report_user' profile.user.pk %}" class="btn btn-ghost btn-sm text-danger">
+                        <i class="bi bi-flag"></i> {% trans "Report" %}
+                    </a>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -377,6 +377,126 @@ msgstr "المدرسة"
 msgid "Field of Study"
 msgstr "التخصص"
 
+msgid "Join us now  →"
+msgstr "انضم إلينا الآن  →"
+
+msgid "Morocco's #1 Student Talent Platform"
+msgstr "منصة الموهبة الطلابية رقم 1 في المغرب"
+
+msgid "Where Student Talent"
+msgstr "حيث يلتقي موهبة الطلاب"
+
+msgid "Meets Opportunity"
+msgstr "بالفرصة"
+
+msgid "StuLance connects Morocco's brightest students with companies, startups, and individuals who need real skills — fast, secure, and verified."
+msgstr "تربط StuLance ألمع الطلاب المغاربة مع الشركات والشركات الناشئة والأفراد الذين يحتاجون إلى مهارات حقيقية — بسرعة وأمان والتحقق."
+
+msgid "Students"
+msgstr "الطلاب"
+
+msgid "Recruiters"
+msgstr "المجندون"
+
+msgid "Projects"
+msgstr "المشاريع"
+
+msgid "Satisfaction"
+msgstr "الرضا"
+
+msgid "For Students"
+msgstr "للطلاب"
+
+msgid "Build your freelance career while studying"
+msgstr "ابن حياتك المهنية بالعمل الحر أثناء الدراسة"
+
+msgid "Create your profile"
+msgstr "أنشئ ملفك الشخصي"
+
+msgid "Verify your student status, add your skills, and upload portfolio pieces"
+msgstr "تحقق من حالتك الطلابية، وأضف مهاراتك، وقم بتحميل عينات من محفظتك"
+
+msgid "Get discovered"
+msgstr "اتركهم يكتشفونك"
+
+msgid "Recruiters find you via skill search, or apply directly to posted projects"
+msgstr "يجد المجندون عليك من خلال بحث المهارات، أو تقدم مباشرة للمشاريع المنشورة"
+
+msgid "Deliver & get paid"
+msgstr "قدم واحصل على الدفع"
+
+msgid "Complete milestones, receive secure payments, build your reputation"
+msgstr "أكمل المراحل، استقبل الدفعات الآمنة، بناء سمعتك"
+
+msgid "Join as Student →"
+msgstr "انضم كطالب →"
+
+msgid "For Recruiters"
+msgstr "للمجندين"
+
+msgid "Access verified student talent on demand"
+msgstr "الوصول إلى مواهب الطلاب المتحقق منها عند الطلب"
+
+msgid "Post a project"
+msgstr "نشر مشروع"
+
+msgid "Describe your project, budget, and required skills in minutes"
+msgstr "صف مشروعك والميزانية والمهارات المطلوبة في دقائق"
+
+msgid "Browse matched talent"
+msgstr "استعرض المواهب المتطابقة"
+
+msgid "Our AI surfaces the most relevant student profiles for your needs"
+msgstr "يعرض ذكاؤنا الاصطناعي أكثر ملفات الطلاب ملاءمة لاحتياجاتك"
+
+msgid "Hire with confidence"
+msgstr "استأجر بثقة"
+
+msgid "All students are verified — pay securely with escrow protection"
+msgstr "تم التحقق من جميع الطلاب — ادفع بأمان مع حماية الضمان"
+
+msgid "Browse Talent →"
+msgstr "استعرض المواهب →"
+
+msgid "Built for trust & results"
+msgstr "مبني للثقة والنتائج"
+
+msgid "Verified Student Profiles"
+msgstr "ملفات الطلاب المتحقق منها"
+
+msgid "Every student is verified through their university ID, ensuring authentic talent."
+msgstr "يتم التحقق من كل طالب من خلال هويته الجامعية، مما يضمن موهبة حقيقية."
+
+msgid "Secure Escrow Payments"
+msgstr "دفعات ضمان آمنة"
+
+msgid "Funds are held in escrow until project milestones are delivered and approved."
+msgstr "يتم الاحتفاظ بالأموال في الضمان حتى يتم تسليم مراحل المشروع والموافقة عليها."
+
+msgid "Skill-Matched AI"
+msgstr "الذكاء الاصطناعي المطابق للمهارات"
+
+msgid "Our matching engine connects recruiters to the most relevant student profiles."
+msgstr "يربط محرك المطابقة لدينا المجندين بملفات الطلاب الأكثر ملاءمة."
+
+msgid "Real Portfolio Work"
+msgstr "عمل المحفظة الحقيقي"
+
+msgid "Students showcase live projects, not just CVs — see the work before you hire."
+msgstr "يعرض الطلاب المشاريع الحية، وليس فقط السير الذاتية — شاهد العمل قبل التوظيف."
+
+msgid "Featured Missions"
+msgstr "المهام المميزة"
+
+msgid "Ready to launch your future?"
+msgstr "هل أنت مستعد لإطلاق مستقبلك؟"
+
+msgid "Join thousands of students already building real careers."
+msgstr "انضم إلى آلاف الطلاب الذين يبنون حياتهم المهنية الحقيقية بالفعل."
+
+msgid "Create Your Profile — It's Free"
+msgstr "أنشئ ملفك الشخصي — إنه مجاني"
+
 msgid "Student Card"
 msgstr "بطاقة الطالب"
 

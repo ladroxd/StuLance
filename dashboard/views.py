@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
-from missions.models import Mission, Application
+from django.db.models import Sum, Count, Avg
+from missions.models import Mission, Application, Review
+from accounts.models import User, StudentProfile
 
 
 @login_required
@@ -10,11 +13,13 @@ def dashboard(request):
         applications = Application.objects.filter(student=user).select_related('mission', 'mission__client')
         active_missions = Mission.objects.filter(selected_student=user, status='in_progress')
         completed_missions = Mission.objects.filter(selected_student=user, status='completed')
+        total_earnings = completed_missions.aggregate(total=Sum('budget'))['total'] or 0
         profile = user.student_profile
         context = {
             'applications': applications,
             'active_missions': active_missions,
             'completed_missions': completed_missions,
+            'total_earnings': total_earnings,
             'profile': profile,
         }
         return render(request, 'dashboard/student.html', context)
@@ -28,3 +33,39 @@ def dashboard(request):
         }
         return render(request, 'dashboard/client.html', context)
     return redirect('home')
+
+
+@staff_member_required
+def admin_stats(request):
+    total_students = User.objects.filter(role='student').count()
+    total_clients = User.objects.filter(role='client').count()
+    total_missions = Mission.objects.count()
+    open_missions = Mission.objects.filter(status='open').count()
+    in_progress_missions = Mission.objects.filter(status='in_progress').count()
+    completed_missions = Mission.objects.filter(status='completed').count()
+    total_applications = Application.objects.count()
+    total_reviews = Review.objects.count()
+    avg_rating = Review.objects.aggregate(avg=Avg('rating'))['avg'] or 0
+    total_budget_completed = Mission.objects.filter(status='completed').aggregate(total=Sum('budget'))['total'] or 0
+    verified_students = StudentProfile.objects.filter(verification_status='verified').count()
+    pending_verifications = StudentProfile.objects.filter(verification_status='pending').count()
+
+    from missions.models import Category
+    top_categories = Category.objects.annotate(mission_count=Count('missions')).order_by('-mission_count')[:5]
+
+    context = {
+        'total_students': total_students,
+        'total_clients': total_clients,
+        'total_missions': total_missions,
+        'open_missions': open_missions,
+        'in_progress_missions': in_progress_missions,
+        'completed_missions': completed_missions,
+        'total_applications': total_applications,
+        'total_reviews': total_reviews,
+        'avg_rating': round(avg_rating, 2),
+        'total_budget_completed': total_budget_completed,
+        'verified_students': verified_students,
+        'pending_verifications': pending_verifications,
+        'top_categories': top_categories,
+    }
+    return render(request, 'dashboard/admin_stats.html', context)

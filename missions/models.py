@@ -73,6 +73,43 @@ class Application(models.Model):
         return f"{self.student.username} -> {self.mission.title}"
 
 
+class Report(models.Model):
+    REASON_SPAM = 'spam'
+    REASON_INAPPROPRIATE = 'inappropriate'
+    REASON_FAKE = 'fake'
+    REASON_OTHER = 'other'
+    REASON_CHOICES = [
+        (REASON_SPAM, 'Spam ou arnaque'),
+        (REASON_INAPPROPRIATE, 'Contenu inapproprie'),
+        (REASON_FAKE, 'Faux profil / fausse mission'),
+        (REASON_OTHER, 'Autre'),
+    ]
+
+    STATUS_PENDING = 'pending'
+    STATUS_REVIEWED = 'reviewed'
+    STATUS_DISMISSED = 'dismissed'
+    STATUS_CHOICES = [
+        (STATUS_PENDING, 'En attente'),
+        (STATUS_REVIEWED, 'Traite'),
+        (STATUS_DISMISSED, 'Rejete'),
+    ]
+
+    reporter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reports_made')
+    reported_mission = models.ForeignKey(Mission, on_delete=models.CASCADE, null=True, blank=True, related_name='reports')
+    reported_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True, related_name='reports_received')
+    reason = models.CharField(max_length=20, choices=REASON_CHOICES)
+    description = models.TextField(blank=True, help_text='Details supplementaires (optionnel)')
+    status = models.CharField(max_length=12, choices=STATUS_CHOICES, default=STATUS_PENDING)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        target = self.reported_mission or self.reported_user
+        return f"Signalement de {self.reporter.username} → {target}"
+
+
 class Review(models.Model):
     mission = models.ForeignKey(Mission, on_delete=models.CASCADE, related_name='reviews')
     reviewer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviews_given')

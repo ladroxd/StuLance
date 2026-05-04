@@ -105,6 +105,15 @@
                 </ul>
             </div>
         </div>
+        {% if user.is_authenticated and user != mission.client %}
+        <div class="card shadow mb-3 border-danger border-opacity-25">
+            <div class="card-body text-center py-2">
+                <a href="{% url 'report_mission' mission.pk %}" class="btn btn-ghost btn-sm text-danger">
+                    <i class="bi bi-flag"></i> {% trans "Report this mission" %}
+                </a>
+            </div>
+        </div>
+        {% endif %}
         <div class="card shadow">
             <div class="card-body">
                 <h6 class="card-title">{% trans "Recruiter" %}</h6>

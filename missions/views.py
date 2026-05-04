@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
-from .models import Mission, Application, Review, Category
+from .models import Mission, Application, Review, Category, Report
 from .forms import MissionForm, ApplicationForm, ReviewForm
 from notifications.utils import create_notification
 
@@ -204,6 +204,67 @@ def leave_review(request, pk):
     else:
         form = ReviewForm()
     return render(request, 'missions/review_form.html', {'form': form, 'mission': mission})
+
+
+@login_required
+def report_mission(request, pk):
+    mission = get_object_or_404(Mission, pk=pk)
+    if mission.client == request.user:
+        messages.error(request, 'Vous ne pouvez pas signaler votre propre mission.')
+        return redirect('mission_detail', pk=pk)
+    if Report.objects.filter(reporter=request.user, reported_mission=mission).exists():
+        messages.warning(request, 'Vous avez deja signale cette mission.')
+        return redirect('mission_detail', pk=pk)
+    if request.method == 'POST':
+        reason = request.POST.get('reason')
+        description = request.POST.get('description', '')
+        if reason in dict(Report.REASON_CHOICES):
+            Report.objects.create(
+                reporter=request.user,
+                reported_mission=mission,
+                reason=reason,
+                description=description,
+            )
+            messages.success(request, 'Signalement envoye. Notre equipe examinera cette mission.')
+        return redirect('mission_detail', pk=pk)
+    return render(request, 'missions/report_form.html', {
+        'target_label': mission.title,
+        'reasons': Report.REASON_CHOICES,
+        'cancel_url': f'/missions/{pk}/',
+        'submit_url': f'/missions/{pk}/report/',
+    })
+
+
+@login_required
+def report_user(request, pk):
+    from accounts.models import User as UserModel
+    reported = get_object_or_404(UserModel, pk=pk)
+    if reported == request.user:
+        messages.error(request, 'Vous ne pouvez pas vous signaler vous-meme.')
+        return redirect('home')
+    if Report.objects.filter(reporter=request.user, reported_user=reported).exists():
+        messages.warning(request, 'Vous avez deja signale cet utilisateur.')
+        return redirect('home')
+    if request.method == 'POST':
+        reason = request.POST.get('reason')
+        description = request.POST.get('description', '')
+        if reason in dict(Report.REASON_CHOICES):
+            Report.objects.create(
+                reporter=request.user,
+                reported_user=reported,
+                reason=reason,
+                description=description,
+            )
+            messages.success(request, 'Signalement envoye. Notre equipe examinera ce profil.')
+        cancel = request.POST.get('cancel_url', '/')
+        return redirect(cancel)
+    cancel_url = request.META.get('HTTP_REFERER', '/')
+    return render(request, 'missions/report_form.html', {
+        'target_label': reported.get_full_name() or reported.username,
+        'reasons': Report.REASON_CHOICES,
+        'cancel_url': cancel_url,
+        'submit_url': f'/missions/report-user/{pk}/',
+    })
 
 
 def _update_rating(user):

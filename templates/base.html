@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}StuLance{% endblock %}</title>
     {% load static %}
+    <link rel="icon" type="image/png" href="{% static 'images/Logo Variants/logo_neon.png' %}">
     {% if CURRENT_LANG == 'ar' %}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
     {% else %}
@@ -56,6 +57,9 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                             <li><a class="dropdown-item" href="{% if user.is_staff %}/admin/{% else %}{% url 'dashboard' %}{% endif %}"><i class="bi bi-speedometer2"></i> {% trans "Dashboard" %}</a></li>
+                            {% if user.is_staff %}
+                            <li><a class="dropdown-item" href="{% url 'admin_stats' %}"><i class="bi bi-bar-chart-line"></i> {% trans "Statistics" %}</a></li>
+                            {% endif %}
                             {% if user.role == 'student' %}
                             <li><a class="dropdown-item" href="{% url 'student_profile' %}"><i class="bi bi-person"></i> {% trans "My Profile" %}</a></li>
                             {% endif %}
