@@ -87,12 +87,47 @@ How can students access freelance opportunities adapted to their academic schedu
 ---
 
 ## Phase 9 — Database Migration (SQLite → MySQL)
-**Today**
 
 - Migrated from local SQLite to **Railway cloud MySQL**
 - Exported existing data via `dumpdata`, imported via `loaddata`
 - App now runs against a persistent cloud database
 - Added `logo_neon.png` as browser favicon
+
+---
+
+## Phase 10 — CDC Gap Analysis & Feature Completion
+**Commit: `eec5020` — 2026-05-04**
+
+### CDC Compliance Review
+- Performed full audit of the project against the Refined CDC (v1.2)
+- Identified and implemented all missing required features (F8 earnings, F11 stats, moderation)
+
+### Student Dashboard — Earnings ("Mes Gains")
+- Added total earnings calculation: sum of `budget` across all completed missions where the student was selected
+- Displayed as a green gradient earnings banner (in MAD) below the stat cards
+- Added **Mission History** section listing all completed missions with date and budget
+
+### Admin Statistics Page (`/dashboard/admin/stats/`)
+- New staff-only page with platform-wide metrics:
+  - Total students, recruiters, verified students, pending verifications
+  - Mission breakdown: open / in progress / completed / total
+  - Total applications, average platform rating, total value of completed missions (MAD)
+  - Top 5 categories by mission count
+- Linked from the navbar dropdown for staff users under "Statistics"
+
+### Report / Flag System
+- New `Report` model with: reporter, target (mission or user profile), reason, description, status (pending / reviewed / dismissed)
+- Duplicate report prevention per reporter/target pair
+- **Report a mission** button on mission detail page (hidden from mission owner)
+- **Report a profile** button on student public profile page (hidden from own profile)
+- Shared `report_form.html` with radio reason selector (spam / inappropriate / fake / other) and optional description
+- Admin panel entry with colored status badges and bulk actions: "Marquer comme traite" / "Rejeter"
+- Migration: `missions/0002_report.py`
+
+### Other
+- Added `TODO.md` tracking pending features and improvements
+- Added logo variants and project assets to `static/images/`
+- Added `run_local.bat` and `run_prod.bat` convenience scripts
 
 ---
 
