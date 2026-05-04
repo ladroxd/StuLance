@@ -50,7 +50,7 @@ JAZZMIN_SETTINGS = {
     "related_modal_active": True,
     "custom_css": None,
     "custom_js": None,
-    "use_google_fonts_cdn": True,
+    "use_google_fonts_cdn": False,
     "show_ui_builder": False,
     "changeform_format": "horizontal_tabs",
     "language_chooser": False,
@@ -153,6 +153,7 @@ else:
             'PASSWORD': 'giJgSTeGVIuFYUnxLFTwgsnpmrlVOWBI',
             'HOST': 'ballast.proxy.rlwy.net',
             'PORT': '17471',
+            'CONN_MAX_AGE': 60,
         }
     }
 
