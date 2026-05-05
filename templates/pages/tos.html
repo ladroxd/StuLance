@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Terms of Service" %} — StuLance{% endblock %}
+{% block content %}
+<div class="container py-5" style="max-width: 860px;">
+    <h1 class="fw-bold mb-2">{% trans "Terms of Service" %}</h1>
+    <p class="text-muted mb-5" style="font-size:13px;">{% trans "Last updated: May 2026" %}</p>
+
+    <section class="mb-5">
+        <h5 class="fw-semibold mb-2">1. {% trans "Acceptance of Terms" %}</h5>
+        <p>{% trans "By creating an account or using StuLance, you agree to be bound by these Terms of Service. If you do not agree, please do not use the platform." %}</p>
+    </section>
+
+    <section class="mb-5">
+        <h5 class="fw-semibold mb-2">2. {% trans "Eligibility" %}</h5>
+        <p>{% trans "StuLance is designed for students enrolled in Moroccan higher education institutions and clients seeking student talent. You must be at least 16 years old to register." %}</p>
+    </section>
+
+    <section class="mb-5">
+        <h5 class="fw-semibold mb-2">3. {% trans "User Accounts" %}</h5>
+        <p>{% trans "You are responsible for maintaining the confidentiality of your account credentials. You agree not to share your account or impersonate another user." %}</p>
+    </section>
+
+    <section class="mb-5">
+        <h5 class="fw-semibold mb-2">4. {% trans "Missions & Gigs" %}</h5>
+        <p>{% trans "Clients post missions describing the work they need. Students may apply or offer services via Gigs. StuLance facilitates the connection but is not a party to any agreement between users." %}</p>
+    </section>
+
+    <section class="mb-5">
+        <h5 class="fw-semibold mb-2">5. {% trans "Prohibited Conduct" %}</h5>
+        <ul>
+            <li>{% trans "Posting false, misleading, or fraudulent content" %}</li>
+            <li>{% trans "Harassing, threatening, or abusing other users" %}</li>
+            <li>{% trans "Attempting to circumvent the platform to avoid fees or tracking" %}</li>
+            <li>{% trans "Uploading malware or any harmful code" %}</li>
+        </ul>
+    </section>
+
+    <section class="mb-5">
+        <h5 class="fw-semibold mb-2">6. {% trans "Intellectual Property" %}</h5>
+        <p>{% trans "Content you post on StuLance remains yours. By posting, you grant StuLance a non-exclusive licence to display it on the platform. You must not post content that infringes third-party rights." %}</p>
+    </section>
+
+    <section class="mb-5">
+        <h5 class="fw-semibold mb-2">7. {% trans "Limitation of Liability" %}</h5>
+        <p>{% trans "StuLance is provided 'as is'. We are not liable for any indirect, incidental, or consequential damages arising from use of the platform." %}</p>
+    </section>
+
+    <section class="mb-5">
+        <h5 class="fw-semibold mb-2">8. {% trans "Changes to Terms" %}</h5>
+        <p>{% trans "We may update these terms from time to time. Continued use of StuLance after changes constitutes acceptance of the revised terms." %}</p>
+    </section>
+
+    <section>
+        <h5 class="fw-semibold mb-2">9. {% trans "Contact" %}</h5>
+        <p>{% trans "Questions about these terms?" %} <a href="{% url 'contact' %}">{% trans "Contact us" %}</a>.</p>
+    </section>
+</div>
+{% endblock %}

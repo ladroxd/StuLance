@@ -1,3 +1,7 @@
+import { createElement } from 'react';
+import { createRoot } from 'react-dom/client';
+import { CinematicFooter } from './components/CinematicFooter.jsx';
+
 // Notification badge polling
 async function updateNotifBadge() {
   try {
@@ -18,4 +22,10 @@ async function updateNotifBadge() {
 if (document.getElementById('notif-bell')) {
   updateNotifBadge();
   setInterval(updateNotifBadge, 30000);
+}
+
+// ── Cinematic Footer ─────────────────────────────────────
+const footerRoot = document.getElementById('cinematic-footer-root');
+if (footerRoot) {
+  createRoot(footerRoot).render(createElement(CinematicFooter));
 }

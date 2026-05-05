@@ -549,22 +549,11 @@ a:hover {
 }
 
 /* ── Footer ─────────────────────────────────────────────── */
-footer {
-  margin-top: auto;
-  background: var(--navy-mid);
-  border-top: 1px solid var(--navy-border);
-  color: var(--text-muted);
-  padding: 2rem 0;
+#cinematic-footer-root {
+  display: block;
 }
 
-footer a {
-  color: var(--text-muted);
-  transition: color var(--transition);
-}
-
-footer a:hover {
-  color: var(--text);
-}
+/* RTL footer links alignment */
 
 /* ── Utility Classes ────────────────────────────────────── */
 .text-muted {

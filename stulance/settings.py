@@ -102,6 +102,7 @@ INSTALLED_APPS = [
     'dashboard',
     'messaging',
     'notifications',
+    'gigs',
 ]
 
 MIDDLEWARE = [

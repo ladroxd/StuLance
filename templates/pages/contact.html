@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Contact Us" %} — StuLance{% endblock %}
+{% block content %}
+<div class="container py-5" style="max-width: 680px;">
+    <h1 class="fw-bold mb-2">{% trans "Contact Us" %}</h1>
+    <p class="text-muted mb-5">{% trans "We usually respond within 24 hours." %}</p>
+
+    {% if success %}
+    <div class="alert alert-success d-flex align-items-center gap-2 mb-4">
+        <i class="bi bi-check-circle-fill"></i>
+        {% trans "Your message has been sent. We'll get back to you soon!" %}
+    </div>
+    {% endif %}
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label fw-semibold">{% trans "Full Name" %}</label>
+            <input type="text" name="name" class="form-control {% if form.name.errors %}is-invalid{% endif %}"
+                   placeholder="{% trans 'Your name' %}"
+                   value="{{ form.name.value|default:'' }}" required>
+            {% if form.name.errors %}<div class="invalid-feedback">{{ form.name.errors.0 }}</div>{% endif %}
+        </div>
+        <div class="mb-3">
+            <label class="form-label fw-semibold">{% trans "Email Address" %}</label>
+            <input type="email" name="email" class="form-control {% if form.email.errors %}is-invalid{% endif %}"
+                   placeholder="{% trans 'your@email.com' %}"
+                   value="{{ form.email.value|default:'' }}" required>
+            {% if form.email.errors %}<div class="invalid-feedback">{{ form.email.errors.0 }}</div>{% endif %}
+        </div>
+        <div class="mb-3">
+            <label class="form-label fw-semibold">{% trans "Subject" %}</label>
+            <select name="subject" class="form-select">
+                <option value="general">{% trans "General Inquiry" %}</option>
+                <option value="bug">{% trans "Report a Bug" %}</option>
+                <option value="account">{% trans "Account Issue" %}</option>
+                <option value="billing">{% trans "Billing / Payment" %}</option>
+                <option value="other">{% trans "Other" %}</option>
+            </select>
+        </div>
+        <div class="mb-4">
+            <label class="form-label fw-semibold">{% trans "Message" %}</label>
+            <textarea name="message" rows="5" class="form-control {% if form.message.errors %}is-invalid{% endif %}"
+                      placeholder="{% trans 'Describe your issue or question...' %}" required>{{ form.message.value|default:'' }}</textarea>
+            {% if form.message.errors %}<div class="invalid-feedback">{{ form.message.errors.0 }}</div>{% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary px-4">
+            <i class="bi bi-send"></i> {% trans "Send Message" %}
+        </button>
+    </form>
+
+    <hr class="my-5">
+    <div class="d-flex flex-wrap gap-4">
+        <div>
+            <p class="fw-semibold mb-1"><i class="bi bi-envelope me-1"></i> {% trans "Email" %}</p>
+            <a href="mailto:contact@stulance.com" class="text-decoration-none">contact@stulance.com</a>
+        </div>
+        <div>
+            <p class="fw-semibold mb-1"><i class="bi bi-geo-alt me-1"></i> {% trans "Location" %}</p>
+            <span class="text-muted">Casablanca, Morocco — EMSI</span>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Help Center" %} — StuLance{% endblock %}
+{% block content %}
+<div class="container py-5" style="max-width: 860px;">
+    <h1 class="fw-bold mb-2">{% trans "Help Center" %}</h1>
+    <p class="text-muted mb-5">{% trans "Find answers to the most common questions about StuLance." %}</p>
+
+    <!-- Getting Started -->
+    <h5 class="fw-semibold mb-3">{% trans "Getting Started" %}</h5>
+    <div class="accordion mb-5" id="accordionStart">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q1">
+                    {% trans "What is StuLance?" %}
+                </button>
+            </h2>
+            <div id="q1" class="accordion-collapse collapse" data-bs-parent="#accordionStart">
+                <div class="accordion-body">
+                    {% trans "StuLance is a freelancing platform connecting Moroccan students with clients who need talent for short-term missions or ongoing gigs." %}
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q2">
+                    {% trans "How do I create an account?" %}
+                </button>
+            </h2>
+            <div id="q2" class="accordion-collapse collapse" data-bs-parent="#accordionStart">
+                <div class="accordion-body">
+                    {% trans "Click Sign Up in the navbar, choose your role (Student or Client), fill in your details, and you're ready to go." %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- For Students -->
+    <h5 class="fw-semibold mb-3">{% trans "For Students" %}</h5>
+    <div class="accordion mb-5" id="accordionStudents">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q3">
+                    {% trans "How do I apply for a mission?" %}
+                </button>
+            </h2>
+            <div id="q3" class="accordion-collapse collapse" data-bs-parent="#accordionStudents">
+                <div class="accordion-body">
+                    {% trans "Browse the Missions page, click on a mission that interests you, and submit your application with a cover message and your availability." %}
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q4">
+                    {% trans "What is a Gig?" %}
+                </button>
+            </h2>
+            <div id="q4" class="accordion-collapse collapse" data-bs-parent="#accordionStudents">
+                <div class="accordion-body">
+                    {% trans "A Gig is a service you offer proactively — you define the title, description, price, and delivery time. Clients can browse Talent and order your Gig directly." %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- For Clients -->
+    <h5 class="fw-semibold mb-3">{% trans "For Clients" %}</h5>
+    <div class="accordion mb-5" id="accordionClients">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q5">
+                    {% trans "How do I post a mission?" %}
+                </button>
+            </h2>
+            <div id="q5" class="accordion-collapse collapse" data-bs-parent="#accordionClients">
+                <div class="accordion-body">
+                    {% trans "Go to your Dashboard and click 'Post a Mission'. Fill in the title, description, budget, and deadline, then publish." %}
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q6">
+                    {% trans "How do I contact a student?" %}
+                </button>
+            </h2>
+            <div id="q6" class="accordion-collapse collapse" data-bs-parent="#accordionClients">
+                <div class="accordion-body">
+                    {% trans "Once a student applies or you find a Gig you like, you can open a direct message conversation through the Messages section." %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p class="text-muted">{% trans "Still have questions?" %} <a href="{% url 'contact' %}">{% trans "Contact our support team." %}</a></p>
+</div>
+{% endblock %}

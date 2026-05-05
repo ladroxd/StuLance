@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{{ gig.title }} — StuLance{% endblock %}
+{% block content %}
+
+<div class="row">
+    <!-- ── Main ──────────────────────────────────────────── -->
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-body p-4">
+                {% if user == gig.student and gig.status != 'approved' %}
+                <div class="alert {% if gig.status == 'pending' %}alert-warning{% else %}alert-danger{% endif %} mb-3" style="font-size:13px">
+                    {% if gig.status == 'pending' %}
+                    <i class="bi bi-hourglass-split me-1"></i> {% trans "This service is pending admin approval and is not yet visible to clients." %}
+                    {% else %}
+                    <i class="bi bi-x-circle me-1"></i> {% trans "This service was rejected by an admin and is not visible to clients." %}
+                    {% endif %}
+                </div>
+                {% endif %}
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        {% if gig.category %}
+                        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary mb-2">{{ gig.category.name }}</span>
+                        {% endif %}
+                        <h2 class="mb-0">{{ gig.title }}</h2>
+                    </div>
+                    {% if user == gig.student %}
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'gig_edit' gig.pk %}" class="btn btn-ghost btn-sm"><i class="bi bi-pencil"></i></a>
+                        <a href="{% url 'gig_delete' gig.pk %}" class="btn btn-ghost btn-sm text-danger"><i class="bi bi-trash"></i></a>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <p class="lead" style="white-space:pre-line">{{ gig.description }}</p>
+
+                {% if gig.skills_list %}
+                <div class="mb-4">
+                    <h6>{% trans "Skills" %}</h6>
+                    <div class="d-flex flex-wrap gap-1">
+                        {% for skill in gig.skills_list %}
+                        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary">{{ skill }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- ── Base Offer ───────────────────────── -->
+                <div class="card mb-3" style="border:1px solid rgba(124,58,237,0.3);background:rgba(124,58,237,0.05)">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fw-semibold mb-1">{% trans "Base Service" %}</div>
+                            <div class="text-muted small"><i class="bi bi-clock me-1"></i>{% trans "Delivered in" %} {{ gig.delivery_days }} {% trans "day(s)" %}</div>
+                        </div>
+                        <div class="text-end">
+                            <div class="fw-bold fs-5" style="color:var(--accent);font-family:'DM Mono',monospace">{{ gig.base_rate }} MAD</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── Extras ───────────────────────────── -->
+                {% if gig.extras %}
+                <h5 class="mb-3">{% trans "Optional Extras" %}</h5>
+                <div class="d-flex flex-column gap-2" id="extras-list">
+                    {% for extra in gig.extras %}
+                    <label class="card mb-0" style="cursor:pointer" for="extra-{{ forloop.counter }}">
+                        <div class="card-body d-flex align-items-start gap-3 py-3">
+                            <input class="form-check-input mt-1 extra-check flex-shrink-0" type="checkbox" id="extra-{{ forloop.counter }}" data-price="{{ extra.price }}">
+                            <div class="flex-grow-1">
+                                <div class="fw-semibold">{{ extra.label }}</div>
+                                {% if extra.description %}
+                                <div class="text-muted small">{{ extra.description }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="fw-bold text-nowrap" style="color:var(--accent);font-family:'DM Mono',monospace">+{{ extra.price }} MAD</div>
+                        </div>
+                    </label>
+                    {% endfor %}
+                </div>
+
+                <!-- ── Total ────────────────────────────── -->
+                <div class="card mt-3" style="border:1px solid rgba(16,185,129,0.3);background:rgba(16,185,129,0.05)">
+                    <div class="card-body d-flex justify-content-between align-items-center py-3">
+                        <span class="fw-semibold">{% trans "Total" %}</span>
+                        <span class="fw-bold fs-5" id="total-price" style="color:#10b981;font-family:'DM Mono',monospace">{{ gig.base_rate }} MAD</span>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Sidebar ────────────────────────────────────────── -->
+    <div class="col-md-4">
+        <!-- Student card -->
+        <div class="card mb-3">
+            <div class="card-body text-center">
+                {% with profile=gig.student.student_profile %}
+                {% if profile.photo %}
+                <img src="{{ profile.photo.url }}" class="rounded-circle mb-3" width="80" height="80" style="object-fit:cover">
+                {% else %}
+                <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width:80px;height:80px">
+                    <i class="bi bi-person fs-3 text-primary"></i>
+                </div>
+                {% endif %}
+                <h6 class="mb-0">{{ gig.student.get_full_name|default:gig.student.username }}</h6>
+                <div class="text-muted small mb-1">{{ profile.school }}</div>
+                <div class="text-warning small mb-3">
+                    {{ profile.average_rating|floatformat:1 }} <i class="bi bi-star-fill"></i>
+                    <span class="text-muted ms-1">({{ profile.total_missions }} {% trans "missions" %})</span>
+                </div>
+                <a href="{% url 'student_profile_detail' profile.pk %}" class="btn btn-ghost btn-sm w-100 mb-2">
+                    <i class="bi bi-person"></i> {% trans "View Profile" %}
+                </a>
+                {% if user.is_authenticated and user != gig.student %}
+                <a href="{% url 'new_conversation' %}?user={{ gig.student.pk }}" class="btn btn-primary btn-sm w-100">
+                    <i class="bi bi-chat-dots"></i> {% trans "Contact" %}
+                </a>
+                {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+
+        <!-- Details -->
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">{% trans "Details" %}</h6>
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2"><i class="bi bi-cash text-success"></i> {% trans "Base rate:" %} <strong>{{ gig.base_rate }} MAD</strong></li>
+                    <li class="mb-2"><i class="bi bi-clock text-primary"></i> {% trans "Delivery:" %} <strong>{{ gig.delivery_days }} {% trans "day(s)" %}</strong></li>
+                    {% if gig.extras %}
+                    <li class="mb-2"><i class="bi bi-plus-circle text-warning"></i> <strong>{{ gig.extras|length }}</strong> {% trans "optional extra(s)" %}</li>
+                    {% endif %}
+                    <li><i class="bi bi-calendar text-secondary"></i> {% trans "Posted:" %} {{ gig.created_at|date:"d/m/Y" }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var base = parseFloat('{{ gig.base_rate }}');
+    var totalEl = document.getElementById('total-price');
+    if (!totalEl) return;
+    document.querySelectorAll('.extra-check').forEach(function (cb) {
+        cb.addEventListener('change', function () {
+            var total = base;
+            document.querySelectorAll('.extra-check:checked').forEach(function (c) {
+                total += parseFloat(c.dataset.price);
+            });
+            totalEl.textContent = total.toFixed(2) + ' MAD';
+        });
+    });
+});
+</script>
+
+{% endblock %}

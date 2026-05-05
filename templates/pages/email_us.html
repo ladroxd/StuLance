@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}Email Us — StuLance{% endblock %}
+{% block content %}
+<div class="d-flex flex-column align-items-center justify-content-center text-center py-5" style="min-height: 60vh;">
+
+    <p class="text-muted mb-2" style="font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600;">
+        {% trans "We're here" %}
+    </p>
+    <h1 class="fw-black mb-3" style="font-size: clamp(2.2rem, 6vw, 4rem); letter-spacing: -0.03em;">
+        {% trans "Email us at anytime" %} <span style="color: var(--accent);">!</span>
+    </h1>
+    <p class="text-muted mb-5" style="max-width: 480px; font-size: 15px; line-height: 1.7;">
+        {% trans "Whether you have a question, a suggestion, or just want to say hi — drop us a line and we'll get back to you as soon as we can." %}
+    </p>
+
+    <div class="d-flex flex-column gap-4" style="width: 100%; max-width: 560px;">
+
+        <div class="p-4 rounded-3" style="background: var(--navy-card); border: 1px solid var(--navy-border);">
+            <p class="text-muted mb-1" style="font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700;">
+                {% trans "Need Help?" %}
+            </p>
+            <a href="mailto:support@stulance.app" class="text-decoration-none fw-bold" style="font-size: clamp(1.3rem, 3vw, 2rem); color: var(--text); letter-spacing: -0.02em; transition: color 0.2s;">
+                support@stulance.app
+            </a>
+        </div>
+
+        <div class="p-4 rounded-3" style="background: var(--navy-card); border: 1px solid var(--navy-border);">
+            <p class="text-muted mb-1" style="font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700;">
+                {% trans "Wanna tell us something?" %}
+            </p>
+            <a href="mailto:contact@stulance.app" class="text-decoration-none fw-bold" style="font-size: clamp(1.3rem, 3vw, 2rem); color: var(--text); letter-spacing: -0.02em; transition: color 0.2s;">
+                contact@stulance.app
+            </a>
+        </div>
+
+    </div>
+
+    <div class="mt-5 pt-3 d-flex align-items-center gap-2" style="opacity: 0.5;">
+        {% load static %}
+        <img src="{% static 'images/Logo Variants/logo_purple_neon.png' %}" alt="StuLance Logo" style="height: 32px; width: auto;">
+        <span class="fw-bold" style="font-size: 1.1rem; letter-spacing: 0.02em;">STU<span style="color: var(--accent);">LANCE</span></span>
+    </div>
+
+</div>
+{% endblock %}

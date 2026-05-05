@@ -8,9 +8,14 @@
         <h3 class="mb-1">{% trans "Hello," %} {{ user.get_full_name }} <i class="bi bi-mortarboard" style="color:var(--accent)"></i></h3>
         <p class="text-muted mb-0" style="font-size:14px">{% trans "Here's what's happening with your freelance work." %}</p>
     </div>
-    <a href="{% url 'mission_list' %}" class="btn btn-primary">
-        <i class="bi bi-search"></i> {% trans "Find Missions" %}
-    </a>
+    <div class="d-flex gap-2">
+        <a href="{% url 'gig_create' %}" class="btn btn-ghost btn-sm">
+            <i class="bi bi-grid-1x2"></i> {% trans "Post a Service" %}
+        </a>
+        <a href="{% url 'mission_list' %}" class="btn btn-primary">
+            <i class="bi bi-search"></i> {% trans "Find Missions" %}
+        </a>
+    </div>
 </div>
 
 <!-- ── Stat Cards ─────────────────────────────────────── -->
@@ -59,6 +64,39 @@
         <i class="bi bi-cash-coin text-white opacity-50" style="font-size:2.5rem"></i>
     </div>
 </div>
+
+<!-- ── My Services ────────────────────────────────────── -->
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h5 class="mb-0">{% trans "My Services" %}</h5>
+    <a href="{% url 'my_gigs' %}" class="btn btn-ghost btn-sm" style="font-size:12px">{% trans "See all" %} <i class="bi bi-arrow-right"></i></a>
+</div>
+{% if my_gigs %}
+<div class="row g-2 mb-4">
+    {% for gig in my_gigs|slice:":3" %}
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body py-3">
+                <div class="fw-semibold mb-1" style="font-size:14px">
+                    <a href="{% url 'gig_detail' gig.pk %}" class="text-decoration-none" style="color:var(--text)">{{ gig.title|truncatechars:40 }}</a>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                    <span style="font-family:'DM Mono',monospace;font-size:13px;color:var(--accent)">{{ gig.base_rate }} MAD</span>
+                    {% if gig.is_active %}<span class="badge bg-success" style="font-size:10px">{% trans "Active" %}</span>
+                    {% else %}<span class="badge bg-secondary" style="font-size:10px">{% trans "Inactive" %}</span>{% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="card mb-4">
+    <div class="card-body text-center py-3">
+        <p class="text-muted mb-2" style="font-size:13px">{% trans "No services posted yet." %}</p>
+        <a href="{% url 'gig_create' %}" class="btn btn-primary btn-sm">{% trans "Post your first service" %}</a>
+    </div>
+</div>
+{% endif %}
 
 <!-- ── Active Missions ────────────────────────────────── -->
 {% if active_missions %}

@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Sum, Count, Avg
 from missions.models import Mission, Application, Review
 from accounts.models import User, StudentProfile
+from gigs.models import Gig
 
 
 @login_required
@@ -15,12 +16,14 @@ def dashboard(request):
         completed_missions = Mission.objects.filter(selected_student=user, status='completed')
         total_earnings = completed_missions.aggregate(total=Sum('budget'))['total'] or 0
         profile = user.student_profile
+        my_gigs = Gig.objects.filter(student=user)
         context = {
             'applications': applications,
             'active_missions': active_missions,
             'completed_missions': completed_missions,
             'total_earnings': total_earnings,
             'profile': profile,
+            'my_gigs': my_gigs,
         }
         return render(request, 'dashboard/student.html', context)
     elif user.is_client():

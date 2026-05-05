@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Delete Service" %} — StuLance{% endblock %}
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card border-danger border-opacity-25">
+            <div class="card-body p-4 text-center">
+                <i class="bi bi-trash fs-1 text-danger mb-3 d-block"></i>
+                <h5 class="mb-2">{% trans "Delete this service?" %}</h5>
+                <p class="text-muted mb-4">«{{ gig.title }}»</p>
+                <form method="post" class="d-flex gap-2 justify-content-center">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">{% trans "Yes, delete" %}</button>
+                    <a href="{% url 'gig_detail' gig.pk %}" class="btn btn-ghost">{% trans "Cancel" %}</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
