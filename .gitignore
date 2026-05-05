@@ -13,3 +13,5 @@ media_uploads/
 *.mo
 node_modules/
 static/dist/
+stulance/settings.py
+data.json
