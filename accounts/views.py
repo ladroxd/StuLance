@@ -146,6 +146,8 @@ def onboarding(request):
                     errors['password1'] = 'Password must be at least 8 characters.'
                 elif f['password1'] != f['password2']:
                     errors['password2'] = 'Passwords do not match.'
+                if not request.POST.get('tos_accepted'):
+                    errors['tos_accepted'] = 'You must accept the Terms of Service.'
                 if not errors:
                     ob_data.update({k: v for k, v in f.items() if k not in ('password1', 'password2')})
                     ob_data['password'] = f['password1']
@@ -181,6 +183,8 @@ def onboarding(request):
                     errors['password1'] = 'Password must be at least 8 characters.'
                 elif f['password1'] != f['password2']:
                     errors['password2'] = 'Passwords do not match.'
+                if not request.POST.get('tos_accepted'):
+                    errors['tos_accepted'] = 'You must accept the Terms of Service.'
                 if not errors:
                     base = f['company_name'].lower().replace(' ', '_')[:20]
                     username = base

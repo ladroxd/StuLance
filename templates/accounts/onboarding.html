@@ -321,6 +321,14 @@
                 <textarea name="bio" class="ob-input" placeholder="Tell recruiters what you're about in a few sentences...">{{ ob_data.bio|default:'' }}</textarea>
             </div>
 
+            <div class="ob-field" style="margin-top:8px;">
+                <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:13px;color:#888;line-height:1.5;">
+                    <input type="checkbox" name="tos_accepted" required style="margin-top:3px;accent-color:#7c3aed;flex-shrink:0;">
+                    <span>I have read and agree to the <a href="/tos/" target="_blank" style="color:#7c3aed;text-decoration:underline;">Terms of Service</a></span>
+                </label>
+                {% if errors.tos_accepted %}<span class="ob-error-msg">{{ errors.tos_accepted }}</span>{% endif %}
+            </div>
+
             <div class="ob-actions">
                 <button type="submit" name="action" value="back" class="ob-back">← Back</button>
                 <button type="submit" class="ob-continue">Continue →</button>
@@ -378,6 +386,14 @@
                     <input type="password" name="password2" class="ob-input {% if errors.password2 %}error{% endif %}" placeholder="Repeat your password" autocomplete="new-password">
                     {% if errors.password2 %}<span class="ob-error-msg">{{ errors.password2 }}</span>{% endif %}
                 </div>
+            </div>
+
+            <div class="ob-field" style="margin-top:8px;">
+                <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:13px;color:#888;line-height:1.5;">
+                    <input type="checkbox" name="tos_accepted" required style="margin-top:3px;accent-color:#7c3aed;flex-shrink:0;">
+                    <span>I have read and agree to the <a href="/tos/" target="_blank" style="color:#7c3aed;text-decoration:underline;">Terms of Service</a></span>
+                </label>
+                {% if errors.tos_accepted %}<span class="ob-error-msg">{{ errors.tos_accepted }}</span>{% endif %}
             </div>
 
             <div class="ob-actions">
