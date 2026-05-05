@@ -1,6 +1,7 @@
 import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
 import { CinematicFooter } from './components/CinematicFooter.jsx';
+import { FeaturedMissions } from './components/MissionGlassCard.jsx';
 
 // Notification badge polling
 async function updateNotifBadge() {
@@ -22,6 +23,14 @@ async function updateNotifBadge() {
 if (document.getElementById('notif-bell')) {
   updateNotifBadge();
   setInterval(updateNotifBadge, 30000);
+}
+
+// ── Featured Missions ────────────────────────────────────
+const missionsRoot = document.getElementById('featured-missions-root');
+if (missionsRoot) {
+  const dataEl = document.getElementById('featured-missions-data');
+  const missions = dataEl ? JSON.parse(dataEl.textContent) : [];
+  createRoot(missionsRoot).render(createElement(FeaturedMissions, { missions }));
 }
 
 // ── Cinematic Footer ─────────────────────────────────────

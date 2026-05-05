@@ -271,16 +271,16 @@ export function CinematicFooter() {
 
               {/* Secondary text links */}
               <div className="flex flex-wrap justify-center gap-2 md:gap-4 w-full mt-2">
-                <MagneticButton as="a" href="/help/" className="footer-glass-pill px-4 py-2 rounded-full text-[#666] font-medium text-[11px] hover:text-[#f0f0f0]">
+                <MagneticButton as="a" href="/help/" className="footer-glass-pill px-4 py-2 rounded-full text-[11px]" style={{color:'#999',fontWeight:'700'}}>
                   Help
                 </MagneticButton>
-                <MagneticButton as="a" href="/tos/" className="footer-glass-pill px-4 py-2 rounded-full text-[#666] font-medium text-[11px] hover:text-[#f0f0f0]">
+                <MagneticButton as="a" href="/tos/" className="footer-glass-pill px-4 py-2 rounded-full text-[11px]" style={{color:'#999',fontWeight:'700'}}>
                   Terms of Service
                 </MagneticButton>
-                <MagneticButton as="a" href="/contact/" className="footer-glass-pill px-4 py-2 rounded-full text-[#666] font-medium text-[11px] hover:text-[#f0f0f0]">
+                <MagneticButton as="a" href="/contact/" className="footer-glass-pill px-4 py-2 rounded-full text-[11px]" style={{color:'#999',fontWeight:'700'}}>
                   Contact
                 </MagneticButton>
-                <MagneticButton as="a" href="/email-us/" className="footer-glass-pill px-4 py-2 rounded-full text-[#666] font-medium text-[11px] hover:text-[#f0f0f0]">
+                <MagneticButton as="a" href="/email-us/" className="footer-glass-pill px-4 py-2 rounded-full text-[11px]" style={{color:'#999',fontWeight:'700'}}>
                   Email Us
                 </MagneticButton>
               </div>

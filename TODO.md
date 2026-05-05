@@ -2,15 +2,12 @@
 
 ## High Priority
 
-- [ ] **Student Gig / Service posting system**
-  - New `Gig` model: title, description, base_rate (default from `StudentProfile.hourly_rate`), delivery_days, category, skills, is_active
-  - Extras are part of the `Gig` model itself — stored as a JSON field (`extras`: list of `{label, description, price}`) — not a separate model
-  - On the gig page, clients see the base offer + a list of optional extras they can tick (e.g. "Extra revision +50 MAD", "Source files +100 MAD")
-  - Student can create/edit/delete their gigs from their profile or a dedicated page (`/gigs/`)
-  - Public gig listing page — clients can browse student services (separate from mission listings)
-  - Public gig detail page — shows description, base rate, extras with checkboxes, student profile card
-  - Client can contact student directly from gig page (via direct message)
-  - Admin can moderate/deactivate gigs
+- [x] **Student Gig / Service posting system**
+  - Gig model with extras as JSON field, base_rate, delivery_days, category, skills
+  - Student create/edit/delete from `/gigs/my/`
+  - Public gig list with search/filter, public gig detail with extras checkboxes
+  - Client can contact student directly from gig page via direct message
+  - Admin moderation (approve/reject) with status flow
 
 - [ ] **Work delivery / submission system**
   - Student can submit deliverables (file upload or link) from the mission chat/detail page
@@ -32,6 +29,20 @@
 
 - [ ] **Cache category list**
   - Categories are queried on every mission list load — use `django.core.cache` or template fragment cache
+
+## Pre-Traffic UI Polish (do before first real user testing)
+
+- [ ] **Client identity on featured mission cards (home page)**
+  - Show company logo/avatar + company name on each glass card so visitors know who posted it
+  - Source from `mission.client.company_name` and `mission.client.logo` (or fallback initials avatar)
+  - Pass via the JSON data blob already injected by the Django template
+
+- [ ] **General UI refinements before traffic**
+  - Review card spacing, font sizes, and contrast on home page for readability
+  - Ensure mobile layout of featured missions grid stacks cleanly (1 col on small screens)
+  - Check hover states and CTA buttons are consistent across mission cards, gig cards, and navbar
+  - Verify footer links are visible on all screen sizes
+  - Spot-check dark mode contrast for badges, muted text, and glass card borders
 
 ## UX / Frontend
 

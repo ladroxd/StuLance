@@ -53,6 +53,29 @@
             {% for mission in missions %}
             <div class="col-md-6">
                 <div class="card h-100 shadow-sm hover-shadow">
+                    <!-- Thumbnail -->
+                    {% with cat=mission.category.name|lower %}
+                    <div class="d-flex align-items-center justify-content-center"
+                         style="height:80px; background:linear-gradient(135deg,rgba(124,58,237,0.15),rgba(124,58,237,0.05)); border-bottom:1px solid rgba(124,58,237,0.15);">
+                        {% if "web" in cat or "front" in cat or "back" in cat %}
+                            <i class="bi bi-code-slash fs-2" style="color:var(--accent);opacity:.7;"></i>
+                        {% elif "design" in cat or "ui" in cat or "ux" in cat %}
+                            <i class="bi bi-palette fs-2" style="color:var(--accent);opacity:.7;"></i>
+                        {% elif "mobile" in cat or "android" in cat or "ios" in cat %}
+                            <i class="bi bi-phone fs-2" style="color:var(--accent);opacity:.7;"></i>
+                        {% elif "data" in cat or "ai" in cat or "ml" in cat %}
+                            <i class="bi bi-bar-chart-line fs-2" style="color:var(--accent);opacity:.7;"></i>
+                        {% elif "video" in cat or "motion" in cat %}
+                            <i class="bi bi-camera-video fs-2" style="color:var(--accent);opacity:.7;"></i>
+                        {% elif "write" in cat or "content" in cat or "copy" in cat %}
+                            <i class="bi bi-pencil-square fs-2" style="color:var(--accent);opacity:.7;"></i>
+                        {% elif "market" in cat or "social" in cat or "seo" in cat %}
+                            <i class="bi bi-megaphone fs-2" style="color:var(--accent);opacity:.7;"></i>
+                        {% else %}
+                            <i class="bi bi-briefcase fs-2" style="color:var(--accent);opacity:.7;"></i>
+                        {% endif %}
+                    </div>
+                    {% endwith %}
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-2">
                             <span class="badge bg-primary">{{ mission.category }}</span>

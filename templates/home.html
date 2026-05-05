@@ -100,6 +100,20 @@
     </div>
 </div>
 
+<!-- ── Featured Missions ─────────────────────────────────── -->
+{% if missions %}
+<section class="home-missions">
+    <div class="home-section-inner">
+        <h2 class="home-missions__title">{% trans "Featured Missions" %}</h2>
+        <script id="featured-missions-data" type="application/json">[{% for mission in missions %}{% if not forloop.first %},{% endif %}{"pk":{{ mission.pk }},"title":"{{ mission.title|escapejs }}","description":"{{ mission.description|truncatewords:20|escapejs }}","category":"{{ mission.category|escapejs }}","budget":{{ mission.budget }},"deadline_days":{{ mission.deadline_days }},"applications_count":{{ mission.applications.count }},"skills":[{% for skill in mission.skills_list|slice:":3" %}{% if not forloop.first %},{% endif %}"{{ skill|escapejs }}"{% endfor %}]}{% endfor %}]</script>
+        <div id="featured-missions-root"></div>
+        <div class="text-center mt-5">
+            <a href="{% url 'mission_list' %}" class="btn btn-primary">{% trans "View All Missions" %} <i class="bi bi-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
 <!-- ── How It Works ──────────────────────────────────────── -->
 <section class="home-how">
     <div class="home-section-inner">
@@ -192,43 +206,6 @@
         </div>
     </div>
 </section>
-
-<!-- ── Featured Missions ─────────────────────────────────── -->
-{% if missions %}
-<section class="home-missions">
-    <div class="home-section-inner">
-        <h2 class="home-missions__title">{% trans "Featured Missions" %}</h2>
-        <div class="home-missions__grid">
-            {% for mission in missions %}
-            <a href="{% url 'mission_detail' mission.pk %}" class="text-decoration-none">
-                <div class="glass-card home-mission-card">
-                    <div class="home-mission-card__top">
-                        <span class="badge bg-primary">{{ mission.category }}</span>
-                        <span class="text-muted" style="font-size:13px"><i class="bi bi-clock"></i> {{ mission.deadline_days }} {% trans "days" %}</span>
-                    </div>
-                    <h5 class="home-mission-card__title">{{ mission.title }}</h5>
-                    <p class="home-mission-card__desc">{{ mission.description|truncatewords:15 }}</p>
-                    {% if mission.skills_required %}
-                    <div class="home-mission-card__skills">
-                        {% for skill in mission.skills_list|slice:":3" %}
-                            <span class="badge bg-secondary">{{ skill }}</span>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
-                    <div class="home-mission-card__footer">
-                        <strong style="color: var(--accent); font-family: 'DM Mono', monospace;">{{ mission.budget }} MAD</strong>
-                        <span class="btn btn-primary btn-sm">{% trans "Apply Now" %}</span>
-                    </div>
-                </div>
-            </a>
-            {% endfor %}
-        </div>
-        <div class="text-center mt-5">
-            <a href="{% url 'mission_list' %}" class="btn btn-primary">{% trans "View All Missions" %} <i class="bi bi-arrow-right"></i></a>
-        </div>
-    </div>
-</section>
-{% endif %}
 
 <!-- ── CTA Band ───────────────────────────────────────────── -->
 <section class="home-cta">
