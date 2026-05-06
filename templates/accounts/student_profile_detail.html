@@ -14,6 +14,7 @@
                     </div>
                 {% endif %}
                 <h4>{{ profile.user.get_full_name }}</h4>
+                <p class="mb-1" style="font-size:13px;color:var(--accent);">@{{ profile.user.username }}</p>
                 <p class="text-muted">{{ profile.school }}</p>
                 <p class="text-muted small">{{ profile.field_of_study }}</p>
                 <div class="d-flex justify-content-around text-center mb-3">
