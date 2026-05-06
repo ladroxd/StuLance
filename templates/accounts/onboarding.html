@@ -587,6 +587,7 @@ function selectRole(card) {
     document.getElementById('role-input').value = card.dataset.role;
     document.getElementById('ob-btn').disabled = false;
     updateStepLabels(card.dataset.role);
+    if (typeof _playKick === 'function') _playKick();
 }
 document.addEventListener('DOMContentLoaded', function() {
     const cards = document.querySelectorAll('.ob-card');
@@ -652,5 +653,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (selected) selectField(selected);
 });
 </script>
+{% load static %}
+<script src="{% static 'dist/main.js' %}"></script>
 </body>
 </html>

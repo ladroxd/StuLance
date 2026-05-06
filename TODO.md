@@ -9,7 +9,7 @@
   - Client can contact student directly from gig page via direct message
   - Admin moderation (approve/reject) with status flow
 
-- [ ] **Work delivery / submission system**
+- [x] **Work delivery / submission system**
   - Student can submit deliverables (file upload or link) from the mission chat/detail page
   - Client can accept or request revision
   - Submission triggers notification to client

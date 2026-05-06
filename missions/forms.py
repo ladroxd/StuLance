@@ -1,5 +1,5 @@
 from django import forms
-from .models import Mission, Application, Review
+from .models import Mission, Application, Review, Submission
 
 
 class MissionForm(forms.ModelForm):
@@ -32,6 +32,27 @@ class ApplicationForm(forms.ModelForm):
         labels = {
             'cover_letter': 'Lettre de motivation',
         }
+
+
+class SubmissionForm(forms.ModelForm):
+    class Meta:
+        model = Submission
+        fields = ['file', 'link', 'message']
+        widgets = {
+            'message': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Decrivez ce que vous livrez...'}),
+            'link': forms.URLInput(attrs={'placeholder': 'https://github.com/...'}),
+        }
+        labels = {
+            'file': 'Fichier (optionnel)',
+            'link': 'Lien (optionnel)',
+            'message': 'Message',
+        }
+
+    def clean(self):
+        cleaned = super().clean()
+        if not cleaned.get('file') and not cleaned.get('link'):
+            raise forms.ValidationError('Fournissez au moins un fichier ou un lien.')
+        return cleaned
 
 
 class ReviewForm(forms.ModelForm):

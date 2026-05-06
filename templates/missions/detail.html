@@ -64,6 +64,46 @@
                     </a>
                     {% endif %}
                 {% endif %}
+
+                {% if submission_form %}
+                <div class="card mt-4 border-primary border-opacity-25">
+                    <div class="card-header"><h6 class="mb-0"><i class="bi bi-upload"></i>
+                        {% if submission and submission.status == 'revision' %}
+                        {% trans "Submit Revision" %}
+                        {% else %}
+                        {% trans "Submit Deliverable" %}
+                        {% endif %}
+                    </h6></div>
+                    <div class="card-body">
+                        {% if submission and submission.status == 'revision' %}
+                        <div class="alert alert-warning py-2"><i class="bi bi-arrow-repeat"></i> {% trans "The client requested a revision." %}</div>
+                        {% endif %}
+                        <form method="post" action="{% url 'submit_mission' mission.pk %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label class="form-label">{{ submission_form.file.label }}</label>
+                                {{ submission_form.file }}
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">{{ submission_form.link.label }}</label>
+                                {{ submission_form.link }}
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">{{ submission_form.message.label }}</label>
+                                {{ submission_form.message }}
+                            </div>
+                            {% if submission_form.non_field_errors %}
+                            <div class="alert alert-danger py-2">{{ submission_form.non_field_errors }}</div>
+                            {% endif %}
+                            <button type="submit" class="btn btn-primary"><i class="bi bi-send"></i> {% trans "Send" %}</button>
+                        </form>
+                    </div>
+                </div>
+                {% elif submission and submission.status == 'pending' %}
+                <div class="alert alert-info mt-4"><i class="bi bi-clock"></i> {% trans "Deliverable sent — awaiting client review." %}</div>
+                {% elif submission and submission.status == 'accepted' %}
+                <div class="alert alert-success mt-4"><i class="bi bi-check-circle"></i> {% trans "Deliverable accepted!" %}</div>
+                {% endif %}
             </div>
         </div>
 
@@ -105,6 +145,41 @@
                 </ul>
             </div>
         </div>
+        {% if submissions %}
+        <div class="card shadow mb-3">
+            <div class="card-header"><h6 class="mb-0"><i class="bi bi-inbox"></i> {% trans "Deliverables" %}</h6></div>
+            <div class="card-body p-0">
+                {% for sub in submissions %}
+                <div class="p-3 {% if not forloop.last %}border-bottom{% endif %}">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <small class="text-muted">{{ sub.created_at|date:"d/m/Y H:i" }}</small>
+                        <span class="badge {% if sub.status == 'accepted' %}bg-success{% elif sub.status == 'revision' %}bg-warning text-dark{% else %}bg-secondary{% endif %}">
+                            {{ sub.get_status_display }}
+                        </span>
+                    </div>
+                    {% if sub.message %}<p class="small mb-1">{{ sub.message }}</p>{% endif %}
+                    {% if sub.link %}<a href="{{ sub.link }}" target="_blank" class="small"><i class="bi bi-link-45deg"></i> {% trans "Link" %}</a>{% endif %}
+                    {% if sub.file %}<a href="{{ sub.file.url }}" class="small ms-2"><i class="bi bi-file-earmark"></i> {% trans "File" %}</a>{% endif %}
+                    {% if sub.status == 'pending' %}
+                    <div class="d-flex gap-2 mt-2">
+                        <form method="post" action="{% url 'accept_submission' sub.pk %}">
+                            {% csrf_token %}
+                            <button class="btn btn-success btn-sm"><i class="bi bi-check"></i> {% trans "Accept" %}</button>
+                        </form>
+                        <form method="post" action="{% url 'request_revision' sub.pk %}">
+                            {% csrf_token %}
+                            <button class="btn btn-warning btn-sm"><i class="bi bi-arrow-repeat"></i> {% trans "Request Revision" %}</button>
+                        </form>
+                    </div>
+                    {% endif %}
+                </div>
+                {% empty %}
+                <p class="text-muted small p-3 mb-0">{% trans "No deliverables yet." %}</p>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
         {% if user.is_authenticated and user != mission.client %}
         <div class="card shadow mb-3 border-danger border-opacity-25">
             <div class="card-body text-center py-2">
@@ -118,11 +193,15 @@
             <div class="card-body">
                 <h6 class="card-title">{% trans "Recruiter" %}</h6>
                 {% with profile=mission.client.client_profile %}
+                    {% if profile and profile.pk %}
                     <a href="{% url 'client_profile_detail' profile.pk %}" class="text-decoration-none">
                         <strong>{{ profile }}</strong>
                     </a>
                     <div class="text-muted small">{{ profile.get_client_type_display }}</div>
                     <div class="text-warning small">{{ profile.average_rating|floatformat:1 }} <i class="bi bi-star-fill"></i></div>
+                    {% else %}
+                    <span class="text-muted">{{ mission.client.get_full_name|default:mission.client.username }}</span>
+                    {% endif %}
                 {% endwith %}
             </div>
         </div>

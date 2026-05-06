@@ -110,6 +110,31 @@ class Report(models.Model):
         return f"Signalement de {self.reporter.username} → {target}"
 
 
+class Submission(models.Model):
+    STATUS_PENDING = 'pending'
+    STATUS_ACCEPTED = 'accepted'
+    STATUS_REVISION = 'revision'
+    STATUS_CHOICES = [
+        (STATUS_PENDING, 'En attente'),
+        (STATUS_ACCEPTED, 'Accepte'),
+        (STATUS_REVISION, 'Revision demandee'),
+    ]
+
+    mission = models.ForeignKey(Mission, on_delete=models.CASCADE, related_name='submissions')
+    student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='submissions')
+    file = models.FileField(upload_to='submissions/', blank=True, null=True)
+    link = models.URLField(blank=True)
+    message = models.TextField(blank=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=STATUS_PENDING)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"Livraison de {self.student.username} pour {self.mission.title}"
+
+
 class Review(models.Model):
     mission = models.ForeignKey(Mission, on_delete=models.CASCADE, related_name='reviews')
     reviewer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviews_given')

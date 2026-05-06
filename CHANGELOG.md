@@ -151,6 +151,18 @@ How can students access freelance opportunities adapted to their academic schedu
 
 ---
 
+## Phase 12 — Work Delivery / Submission System
+**2026-05-06**
+
+- Added `Submission` model (`missions/0003_submission.py`) with fields: mission, student, file upload, link, message, status (`pending` / `accepted` / `revision`)
+- Student sees a submit form on in-progress mission detail page (file + link + message, at least one required)
+- Client sees all deliverables in a sidebar card with **Accept** and **Request Revision** buttons
+- Accepting/requesting revision triggers an in-app notification to the student
+- If revision requested, form reappears for the student to resubmit
+- Migrated to Railway cloud DB
+
+---
+
 ## Current Stack
 
 | Layer | Tech |

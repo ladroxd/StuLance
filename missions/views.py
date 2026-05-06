@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
-from .models import Mission, Application, Review, Category, Report
-from .forms import MissionForm, ApplicationForm, ReviewForm
+from .models import Mission, Application, Review, Category, Report, Submission
+from .forms import MissionForm, ApplicationForm, ReviewForm, SubmissionForm
 from notifications.utils import create_notification
 
 
@@ -38,14 +38,24 @@ def mission_detail(request, pk):
     mission = get_object_or_404(Mission, pk=pk)
     has_applied = False
     user_application = None
+    submission = None
+    submission_form = None
     if request.user.is_authenticated and request.user.is_student():
         user_application = Application.objects.filter(mission=mission, student=request.user).first()
         has_applied = user_application is not None
+        if mission.status == 'in_progress' and mission.selected_student == request.user:
+            submission = mission.submissions.first()
+            if not submission or submission.status == 'revision':
+                submission_form = SubmissionForm()
+    submissions = mission.submissions.select_related('student') if request.user.is_authenticated and request.user == mission.client else None
     reviews = mission.reviews.select_related('reviewer')
     return render(request, 'missions/detail.html', {
         'mission': mission,
         'has_applied': has_applied,
         'user_application': user_application,
+        'submission': submission,
+        'submission_form': submission_form,
+        'submissions': submissions,
         'reviews': reviews,
     })
 
@@ -265,6 +275,62 @@ def report_user(request, pk):
         'cancel_url': cancel_url,
         'submit_url': f'/missions/report-user/{pk}/',
     })
+
+
+@login_required
+def submit_mission(request, pk):
+    mission = get_object_or_404(Mission, pk=pk, status='in_progress', selected_student=request.user)
+    if request.method == 'POST':
+        form = SubmissionForm(request.POST, request.FILES)
+        if form.is_valid():
+            sub = form.save(commit=False)
+            sub.mission = mission
+            sub.student = request.user
+            sub.status = Submission.STATUS_PENDING
+            sub.save()
+            create_notification(
+                user=mission.client,
+                notif_type='submission',
+                title='Nouvelle livraison',
+                message=f'{request.user.get_full_name()} a soumis une livraison pour "{mission.title}"',
+                link=f'/missions/{mission.pk}/',
+            )
+            messages.success(request, 'Livraison envoyee au client.')
+    return redirect('mission_detail', pk=pk)
+
+
+@login_required
+def accept_submission(request, pk):
+    submission = get_object_or_404(Submission, pk=pk, mission__client=request.user)
+    if request.method == 'POST':
+        submission.status = Submission.STATUS_ACCEPTED
+        submission.save()
+        create_notification(
+            user=submission.student,
+            notif_type='submission_accepted',
+            title='Livraison acceptee',
+            message=f'Votre livraison pour "{submission.mission.title}" a ete acceptee !',
+            link=f'/missions/{submission.mission.pk}/',
+        )
+        messages.success(request, 'Livraison acceptee.')
+    return redirect('mission_detail', pk=submission.mission.pk)
+
+
+@login_required
+def request_revision(request, pk):
+    submission = get_object_or_404(Submission, pk=pk, mission__client=request.user)
+    if request.method == 'POST':
+        submission.status = Submission.STATUS_REVISION
+        submission.save()
+        create_notification(
+            user=submission.student,
+            notif_type='submission_revision',
+            title='Revision demandee',
+            message=f'Le client a demande une revision pour "{submission.mission.title}".',
+            link=f'/missions/{submission.mission.pk}/',
+        )
+        messages.warning(request, 'Revision demandee.')
+    return redirect('mission_detail', pk=submission.mission.pk)
 
 
 def _update_rating(user):
