@@ -5,7 +5,7 @@ from missions.models import Mission, Category
 
 
 def home(request):
-    missions = Mission.objects.filter(status='open').order_by('-created_at')[:6]
+    missions = Mission.objects.filter(status='open').select_related('client', 'client__client_profile', 'category').order_by('-created_at')[:6]
     categories = Category.objects.all()
     return render(request, 'home.html', {'missions': missions, 'categories': categories})
 

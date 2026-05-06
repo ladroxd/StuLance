@@ -64,6 +64,13 @@
 - [ ] **Direct messaging (peer-to-peer)**
   - Already built — wire up properly once added to CDC
 
+## UI / Theme
+
+- [ ] **Light / dark theme switch**
+  - Add a toggle in the navbar to switch between light and dark mode
+  - Persist user preference via `localStorage`
+  - Adapt all glass cards, backgrounds, text colors, and navbar for light mode
+
 ## Admin / Moderation
 
 - [ ] **Pending verifications alert**

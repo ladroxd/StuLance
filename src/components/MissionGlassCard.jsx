@@ -1,28 +1,46 @@
 import { createElement as h, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const CATEGORY_ICONS = {
-  web: 'bi-code-slash',
-  front: 'bi-code-slash',
-  back: 'bi-code-slash',
-  design: 'bi-palette',
-  ui: 'bi-palette',
-  ux: 'bi-palette',
-  mobile: 'bi-phone',
-  android: 'bi-phone',
-  ios: 'bi-phone',
-  data: 'bi-bar-chart-line',
-  ai: 'bi-bar-chart-line',
-  ml: 'bi-bar-chart-line',
-  video: 'bi-camera-video',
-  motion: 'bi-camera-video',
-  write: 'bi-pencil-square',
-  content: 'bi-pencil-square',
-  copy: 'bi-pencil-square',
-  market: 'bi-megaphone',
-  social: 'bi-megaphone',
-  seo: 'bi-megaphone',
+const CATEGORY_IMAGES = {
+  web:     'photo-1627398242454-45a1465c2479', // code on screen
+  front:   'photo-1627398242454-45a1465c2479',
+  back:    'photo-1558494949-ef010cbdcc31', // server rack
+  design:  'photo-1561070791-2526d30994b5', // design tools
+  ui:      'photo-1561070791-2526d30994b5',
+  ux:      'photo-1561070791-2526d30994b5',
+  mobile:  'photo-1512941937669-90a1b58e7e9c', // mobile phone
+  android: 'photo-1512941937669-90a1b58e7e9c',
+  ios:     'photo-1512941937669-90a1b58e7e9c',
+  data:    'photo-1551288049-bebda4e38f71', // data charts
+  ai:      'photo-1677442135703-1787eea5ce01', // AI abstract
+  ml:      'photo-1677442135703-1787eea5ce01',
+  video:   'photo-1574717024653-61fd2cf4d44d', // camera/film
+  motion:  'photo-1574717024653-61fd2cf4d44d',
+  write:   'photo-1455390582262-044cdead277a', // writing
+  content: 'photo-1455390582262-044cdead277a',
+  copy:    'photo-1455390582262-044cdead277a',
+  market:  'photo-1533750349088-cd871a92f312', // marketing
+  social:  'photo-1611162617213-7d7a39e9b1d7', // social media
+  seo:     'photo-1533750349088-cd871a92f312',
 };
+
+const CATEGORY_ICONS = {
+  web: 'bi-code-slash', front: 'bi-code-slash', back: 'bi-code-slash',
+  design: 'bi-palette', ui: 'bi-palette', ux: 'bi-palette',
+  mobile: 'bi-phone', android: 'bi-phone', ios: 'bi-phone',
+  data: 'bi-bar-chart-line', ai: 'bi-bar-chart-line', ml: 'bi-bar-chart-line',
+  video: 'bi-camera-video', motion: 'bi-camera-video',
+  write: 'bi-pencil-square', content: 'bi-pencil-square', copy: 'bi-pencil-square',
+  market: 'bi-megaphone', social: 'bi-megaphone', seo: 'bi-megaphone',
+};
+
+function getCategoryImage(categoryName = '') {
+  const lower = categoryName.toLowerCase();
+  for (const [key, id] of Object.entries(CATEGORY_IMAGES)) {
+    if (lower.includes(key)) return `https://images.unsplash.com/${id}?w=480&q=75&fit=crop&auto=format`;
+  }
+  return `https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=480&q=75&fit=crop&auto=format`; // default office
+}
 
 function getCategoryIcon(categoryName = '') {
   const lower = categoryName.toLowerCase();
@@ -34,6 +52,7 @@ function getCategoryIcon(categoryName = '') {
 
 function MissionCard({ mission, index }) {
   const icon = getCategoryIcon(mission.category);
+  const image = getCategoryImage(mission.category);
 
   return h(motion.div, {
     key: mission.pk,
@@ -64,7 +83,9 @@ function MissionCard({ mission, index }) {
           style: {
             position: 'relative',
             height: '140px',
-            background: 'linear-gradient(135deg, rgba(124,58,237,0.18) 0%, rgba(124,58,237,0.06) 100%)',
+            backgroundImage: `url(${image})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -73,7 +94,7 @@ function MissionCard({ mission, index }) {
         },
           h('i', {
             className: `bi ${icon}`,
-            style: { fontSize: '2.8rem', color: 'var(--accent, #7c3aed)', opacity: 0.65 },
+            style: { fontSize: '2.2rem', color: '#fff', opacity: 0.9, position: 'relative', zIndex: 1, filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.6))' },
           }),
           /* gradient overlay */
           h('div', {
@@ -112,6 +133,7 @@ function MissionCard({ mission, index }) {
               alignItems: 'center',
               justifyContent: 'center',
               transition: 'opacity 0.3s',
+              zIndex: 2,
             },
           },
             h(motion.span, {
@@ -179,6 +201,30 @@ function MissionCard({ mission, index }) {
             ),
           ),
 
+          /* Client identity */
+          mission.company_name && h('div', {
+            style: { display: 'flex', alignItems: 'center', gap: '8px' },
+          },
+            h('div', {
+              style: {
+                width: '24px',
+                height: '24px',
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, #7c3aed, #a78bfa)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '10px',
+                fontWeight: 700,
+                color: '#fff',
+                flexShrink: 0,
+              },
+            }, mission.company_name.charAt(0).toUpperCase()),
+            h('span', {
+              style: { fontSize: '12px', color: '#aaa', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
+            }, mission.company_name),
+          ),
+
           /* Footer */
           h('div', {
             style: {
@@ -200,10 +246,7 @@ function MissionCard({ mission, index }) {
               ),
             ),
             h('span', {
-              style: {
-                fontSize: '11px',
-                color: '#666',
-              },
+              style: { fontSize: '11px', color: '#666' },
             },
               h('i', { className: 'bi bi-people me-1' }),
               `${mission.applications_count} applicant${mission.applications_count !== 1 ? 's' : ''}`,
