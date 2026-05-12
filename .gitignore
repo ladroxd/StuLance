@@ -5,13 +5,10 @@ __pycache__/
 .env
 venv/
 .vscode/
-.claude/
 !Media/
-StuLance.zip
 .gitignore
 media_uploads/
 *.mo
-node_modules/
 static/dist/
 stulance/settings.py
 data.json

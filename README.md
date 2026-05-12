@@ -364,74 +364,68 @@ python manage.py runserver
 
 ## 🔧 Configuration
 
-### Environment Variables (.env)
+`settings.py` is not committed to the repo because it contains secrets. Follow these steps to set it up locally.
 
-Create a `.env` file at the project root:
-
-```env
-# Django Configuration
-SECRET_KEY=your-long-secret-key-here
-DEBUG=True
-ALLOWED_HOSTS=localhost,127.0.0.1
-
-# Database (SQLite - default)
-DB_ENGINE=django.db.backends.sqlite3
-
-# Database (MySQL - production)
-# DB_ENGINE=django.db.backends.mysql
-# DB_NAME=stulance_db
-# DB_USER=root
-# DB_PASSWORD=your_password
-# DB_HOST=localhost
-# DB_PORT=3306
-
-# Email (optional)
-EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
-EMAIL_HOST=smtp.gmail.com
-EMAIL_PORT=587
-EMAIL_USE_TLS=True
-EMAIL_HOST_USER=your_email@gmail.com
-EMAIL_HOST_PASSWORD=your_app_password
-
-# AWS S3 (optional - production)
-USE_S3=False
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
-AWS_STORAGE_BUCKET_NAME=
-```
-
-### MySQL Configuration (Production)
+### Step 1: Copy the example settings file
 
 ```bash
-# 1. Create the database
+cp stulance/settings.example.py stulance/settings.py
+```
+
+On Windows:
+```powershell
+copy stulance\settings.example.py stulance\settings.py
+```
+
+### Step 2: Create the `.env` file
+
+Create a `.env` file at the project root (next to `manage.py`):
+
+**Quick start with SQLite (recommended for local dev):**
+
+```env
+SECRET_KEY=replace-this-with-a-long-random-string
+DEBUG=True
+ALLOWED_HOSTS=localhost,127.0.0.1
+USE_LOCAL_DB=1
+```
+
+**With MySQL (production / team setup):**
+
+```env
+SECRET_KEY=replace-this-with-a-long-random-string
+DEBUG=False
+ALLOWED_HOSTS=localhost,127.0.0.1
+USE_LOCAL_DB=0
+DB_NAME=stulance_db
+DB_USER=root
+DB_PASSWORD=your_mysql_password
+DB_HOST=localhost
+DB_PORT=3306
+```
+
+> **Generating a SECRET_KEY**: run this once and paste the output into `.env`:
+> ```bash
+> python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+> ```
+
+### Step 3: Apply migrations and run
+
+```bash
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver
+```
+
+### MySQL Setup (if not using SQLite)
+
+```bash
 mysql -u root -p
 > CREATE DATABASE stulance_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 > EXIT;
-
-# 2. Update .env with MySQL credentials
-
-# 3. Apply migrations
-python manage.py migrate
-
-# 4. Create superuser
-python manage.py createsuperuser
 ```
 
-### .gitignore (already included)
-
-```
-*.pyc
-__pycache__/
-*.sqlite3
-.env
-venv/
-.vscode/
-.idea/
-*.log
-.DS_Store
-/staticfiles/
-/media_uploads/
-```
+Then set `USE_LOCAL_DB=0` and fill in the `DB_*` variables in your `.env`.
 
 ---
 
@@ -1476,14 +1470,18 @@ python -m venv venv
 source venv/bin/activate  # or venv\Scripts\activate on Windows
 pip install -r requirements.txt
 
-# 3. Configure
+# 3. Configure settings
+cp stulance/settings.example.py stulance/settings.py
+# Create .env at project root — see Configuration section above
+
+# 4. Setup database
 python manage.py migrate
 python manage.py createsuperuser
 
-# 4. Run
+# 5. Run
 python manage.py runserver
 
-# 5. Access
+# 6. Access
 # Web:   http://127.0.0.1:8000
 # Admin: http://127.0.0.1:8000/admin
 ```
