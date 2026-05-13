@@ -105,7 +105,7 @@
 <section class="home-missions">
     <div class="home-section-inner">
         <h2 class="home-missions__title">{% trans "Featured Missions" %}</h2>
-        <script id="featured-missions-data" type="application/json">[{% for mission in missions %}{% if not forloop.first %},{% endif %}{"pk":{{ mission.pk }},"title":"{{ mission.title|escapejs }}","description":"{{ mission.description|truncatewords:20|escapejs }}","category":"{{ mission.category|escapejs }}","budget":{{ mission.budget }},"deadline_days":{{ mission.deadline_days }},"applications_count":{{ mission.applications.count }},"skills":[{% for skill in mission.skills_list|slice:":3" %}{% if not forloop.first %},{% endif %}"{{ skill|escapejs }}"{% endfor %}],"company_name":"{{ mission.client.client_profile.company_name|default:mission.client.get_full_name|default:mission.client.username|escapejs }}"}{% endfor %}]</script>
+        <script id="featured-missions-data" type="application/json">{{ missions_json|safe }}</script>
         <div id="featured-missions-root"></div>
         <div class="text-center mt-5">
             <a href="{% url 'mission_list' %}" class="btn btn-primary">{% trans "View All Missions" %} <i class="bi bi-arrow-right"></i></a>

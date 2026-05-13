@@ -1111,3 +1111,71 @@ a:hover {
     transform: none;
   }
 }
+
+/* ── Light Mode ─────────────────────────────────────────── */
+[data-theme="light"] {
+  --navy: #f0f2f5;
+  --navy-mid: #ffffff;
+  --navy-card: #fafafa;
+  --navy-border: #dde1e7;
+  --text: #111111;
+  --text-muted: #555555;
+  --text-dim: #aaaaaa;
+  --glass-bg: rgba(255, 255, 255, 0.88);
+  --glass-border: rgba(200, 200, 200, 0.85);
+  --shadow-sm: 0 2px 20px rgba(0, 0, 0, 0.06);
+  --shadow: 0 0 30px rgba(124, 58, 237, 0.1), 0 2px 20px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .navbar-glass::before {
+  background: rgba(255, 255, 255, 0.94);
+}
+
+[data-theme="light"] .form-control,
+[data-theme="light"] .form-select {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: #d1d5db !important;
+}
+
+[data-theme="light"] .form-control:focus,
+[data-theme="light"] .form-select:focus {
+  background: #ffffff !important;
+}
+
+[data-theme="light"] .message.received {
+  background: rgba(240, 242, 245, 0.95);
+  border-color: var(--navy-border);
+}
+
+[data-theme="light"] .home-features {
+  background: rgba(230, 232, 236, 0.5);
+  border-color: var(--navy-border);
+}
+
+[data-theme="light"] .home-marquee-pill {
+  background: rgba(225, 228, 234, 0.75);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: #c8ccd4;
+}
+
+[data-theme="light"] .btn-close {
+  filter: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='%23111111' d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") !important;
+}
+
+[data-theme="light"] #notif-dropdown-menu {
+  color: #111111;
+}
+[data-theme="light"] #notif-dropdown-menu .fw-semibold {
+  color: #111111 !important;
+}
+[data-theme="light"] #notif-dropdown-menu .text-truncate {
+  color: #555555 !important;
+}
+[data-theme="light"] #notif-dropdown-menu #notif-empty {
+  color: #888888 !important;
+}

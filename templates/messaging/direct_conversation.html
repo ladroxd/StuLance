@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n static %}
+{% block django_messages %}{% endblock %}
 {% block title %}{% trans "Chat with" %} {{ other.get_full_name|default:other.username }}{% endblock %}
 {% block content %}
 <div class="row justify-content-center">
@@ -19,10 +20,10 @@
                     <i class="bi bi-arrow-left"></i> {% trans "Inbox" %}
                 </a>
             </div>
-            <div class="card-body" id="chat-box" style="height:450px;overflow-y:auto;background:#f8f9fa;">
+            <div class="card-body" id="chat-box" style="height:450px;overflow-y:auto;background:var(--navy);">
                 {% for msg in messages %}
                 <div class="d-flex {% if msg.sender == request.user %}justify-content-end{% endif %} mb-2">
-                    <div class="p-2 px-3 rounded-3 {% if msg.sender == request.user %}bg-primary text-white{% else %}bg-white border{% endif %}" style="max-width:70%">
+                    <div class="p-2 px-3 rounded-3 {% if msg.sender == request.user %}bg-primary text-white{% else %}message received{% endif %}" style="max-width:70%">
                         <div>{{ msg.content }}</div>
                         <div class="small {% if msg.sender == request.user %}text-white-50{% else %}text-muted{% endif %} text-end mt-1">{{ msg.sent_at|date:"H:i" }}</div>
                     </div>
@@ -51,6 +52,8 @@ const input = document.getElementById('msg-input');
 const sendUrl = "{% url 'direct_send' conv.pk %}";
 const pollUrl = "{% url 'direct_poll' conv.pk %}";
 const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+const msgSound = new Audio("{% static 'sounds/message.mp3' %}");
+msgSound.volume = 0.3;
 
 let lastId = {{ messages.last.pk|default:0 }};
 chatBox.scrollTop = chatBox.scrollHeight;
@@ -60,6 +63,8 @@ form.addEventListener('submit', async (e) => {
     const content = input.value.trim();
     if (!content) return;
     input.value = '';
+    msgSound.currentTime = 0;
+    msgSound.play().catch(() => {});
     const res = await fetch(sendUrl, {
         method: 'POST',
         headers: {'X-CSRFToken': csrfToken, 'Content-Type': 'application/x-www-form-urlencoded'},

@@ -7,4 +7,5 @@ urlpatterns = [
     path('mark-all-read/', views.mark_all_read, name='mark_all_read'),
     path('unread-count/', views.unread_count, name='unread_count'),
     path('recent/', views.recent_notifications, name='recent_notifications'),
+    path('stream/', views.notification_stream, name='notification_stream'),
 ]

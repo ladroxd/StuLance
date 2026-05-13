@@ -1,6 +1,8 @@
+import json
+import time
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
+from django.http import JsonResponse, StreamingHttpResponse
 from .models import Notification
 
 
@@ -41,6 +43,43 @@ def mark_read(request, pk):
 def mark_all_read(request):
     Notification.objects.filter(user=request.user, is_read=False).update(is_read=True)
     return redirect('notification_list')
+
+
+@login_required
+def notification_stream(request):
+    def event_stream(user_id):
+        last_count = None
+        last_id = None
+        deadline = time.time() + 55  # reconnect every ~55s; frees dev server threads
+        while time.time() < deadline:
+            try:
+                unread = Notification.objects.filter(user_id=user_id, is_read=False).count()
+                latest = Notification.objects.filter(user_id=user_id).order_by('-pk').first()
+                latest_id = latest.pk if latest else None
+
+                if last_count is None:
+                    payload = json.dumps({'unread': unread, 'new': False})
+                    yield f'data: {payload}\n\n'
+                elif unread > last_count or (latest_id and latest_id != last_id):
+                    payload = json.dumps({'unread': unread, 'new': True})
+                    yield f'data: {payload}\n\n'
+                elif unread != last_count:
+                    payload = json.dumps({'unread': unread, 'new': False})
+                    yield f'data: {payload}\n\n'
+
+                last_count = unread
+                last_id = latest_id
+                time.sleep(2)
+            except Exception:
+                break
+
+    response = StreamingHttpResponse(
+        event_stream(request.user.pk),
+        content_type='text/event-stream',
+    )
+    response['Cache-Control'] = 'no-cache'
+    response['X-Accel-Buffering'] = 'no'
+    return response
 
 
 @login_required

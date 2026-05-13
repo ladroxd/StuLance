@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n static %}
+{% block django_messages %}{% endblock %}
 {% block title %}{% trans "Messaging" %} — {{ mission.title }}{% endblock %}
 {% block content %}
 <div class="row justify-content-center">
@@ -47,6 +48,8 @@ const input = document.getElementById('msg-input');
 const sendUrl = "{% url 'send_message' mission.pk %}";
 const pollUrl = "{% url 'poll_messages' mission.pk %}";
 const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+const msgSound = new Audio("{% static 'sounds/message.mp3' %}");
+msgSound.volume = 0.3;
 
 let lastId = {{ messages.last.pk|default:0 }};
 
@@ -57,6 +60,8 @@ form.addEventListener('submit', async (e) => {
     const content = input.value.trim();
     if (!content) return;
     input.value = '';
+    msgSound.currentTime = 0;
+    msgSound.play().catch(() => {});
     const res = await fetch(sendUrl, {
         method: 'POST',
         headers: {'X-CSRFToken': csrfToken, 'Content-Type': 'application/x-www-form-urlencoded'},

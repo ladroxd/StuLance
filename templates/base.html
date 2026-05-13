@@ -21,6 +21,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link href="{% static 'dist/main.css' %}" rel="stylesheet">
+    <script>(function(){var t=localStorage.getItem('stulance-theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');}());</script>
 </head>
 <body class="d-flex flex-column min-vh-100">
 <!-- ── Navbar ─────────────────────────────────────────── -->
@@ -112,6 +113,12 @@
                     </li>
                 {% endif %}
                 
+                <li class="nav-item ms-2">
+                    <button id="theme-toggle" class="nav-link bg-transparent border-0" style="padding:0.5rem 0;cursor:pointer" title="Toggle theme">
+                        <i id="theme-icon" class="bi bi-sun"></i>
+                    </button>
+                </li>
+
                 <li class="nav-item dropdown ms-2">
                     <button class="nav-link dropdown-toggle bg-transparent border-0" type="button" id="langDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="true" style="padding: 0.5rem 0; cursor: pointer;">
                         {% if CURRENT_LANG == 'ar' %}العربية
@@ -153,19 +160,37 @@
 <!-- ── Main Content ─────────────────────────────────── -->
 {% block full_content %}
 <div class="container flex-grow-1 my-4">
+    {% block django_messages %}
     {% for message in messages %}
         <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
             {{ message }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     {% endfor %}
+    {% endblock %}
     {% block content %}{% endblock %}
 </div>
 {% endblock %}
 
 <!-- ── Footer ────────────────────────────────────────── -->
 {% block footer %}
-<div id="cinematic-footer-root"></div>
+<div id="cinematic-footer-root"
+  data-t-tagline="{% trans 'Ready to launch your career?' %}"
+  data-t-get-started="{% trans 'Get Started' %}"
+  data-t-browse-missions="{% trans 'Browse Missions' %}"
+  data-t-explore-talent="{% trans 'Explore Talent' %}"
+  data-t-help="{% trans 'Help' %}"
+  data-t-tos="{% trans 'Terms of Service' %}"
+  data-t-contact="{% trans 'Contact' %}"
+  data-t-email-us="{% trans 'Email Us' %}"
+  data-t-copyright="{% trans '© 2026 StuLance. All rights reserved.' %}"
+  data-t-m1="{% trans 'Find Student Talent' %}"
+  data-t-m2="{% trans 'Post a Mission' %}"
+  data-t-m3="{% trans 'Launch Your Gig' %}"
+  data-t-m4="{% trans 'Hire Smart' %}"
+  data-t-m5="{% trans 'Built for Students' %}"
+  data-t-m6="{% trans 'Join the Future of Work' %}"
+></div>
 {% endblock %}
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -179,6 +204,23 @@
         mission_completed: 'bi-flag',
     };
 
+    const kickSound = new Audio("{% static 'sounds/ClickKick.wav' %}");
+    kickSound.volume = 0.35;
+    document.addEventListener('click', function (e) {
+        const el = e.target.closest('a, button, [role="button"], .btn, input[type="submit"], input[type="button"], label[for]');
+        if (!el || el.closest('#msg-form')) return;
+        kickSound.currentTime = 0;
+        kickSound.play().catch(() => {});
+    });
+
+    const notifSound = new Audio("{% static 'sounds/notification.mp3' %}");
+    notifSound.volume = 0.3;
+    // Unlock audio on first user interaction so SSE-triggered play() is allowed
+    document.addEventListener('click', function unlock() {
+        notifSound.play().then(() => { notifSound.pause(); notifSound.currentTime = 0; }).catch(() => {});
+        document.removeEventListener('click', unlock);
+    }, { once: true });
+
     async function loadNotifDropdown() {
         const list = document.getElementById('notif-list');
         if (!list) return;
@@ -186,13 +228,6 @@
             const res = await fetch('/notifications/recent/', { credentials: 'same-origin' });
             if (!res.ok) return;
             const data = await res.json();
-
-            // update badge
-            const badge = document.getElementById('notif-badge');
-            if (badge) {
-                if (data.unread > 0) { badge.textContent = data.unread > 99 ? '99+' : data.unread; badge.classList.remove('d-none'); }
-                else { badge.classList.add('d-none'); }
-            }
 
             if (!data.notifications.length) {
                 list.innerHTML = '<div class="text-center py-4" style="font-size:13px;color:#888"><i class="bi bi-bell-slash d-block mb-1" style="font-size:1.4rem"></i>Aucune notification</div>';
@@ -218,6 +253,27 @@
             }).join('');
         } catch(e) {}
     }
+
+    // ── Theme toggle ─────────────────────────────────────────
+    (function() {
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            var icon = document.getElementById('theme-icon');
+            if (icon) icon.className = theme === 'light' ? 'bi bi-moon-stars' : 'bi bi-sun';
+        }
+        var saved = localStorage.getItem('stulance-theme') || 'dark';
+        applyTheme(saved);
+        document.addEventListener('DOMContentLoaded', function() {
+            var btn = document.getElementById('theme-toggle');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var current = document.documentElement.getAttribute('data-theme') || 'dark';
+                var next = current === 'light' ? 'dark' : 'light';
+                localStorage.setItem('stulance-theme', next);
+                applyTheme(next);
+            });
+        });
+    })();
 
     document.addEventListener('DOMContentLoaded', function() {
         const dropdownButtons = document.querySelectorAll('[data-bs-toggle="dropdown"]');
@@ -271,10 +327,25 @@
             }
         });
 
-        // Preload notifications and poll badge
+        // SSE — real-time notification badge
         if (document.getElementById('notif-badge')) {
             loadNotifDropdown();
-            setInterval(loadNotifDropdown, 30000);
+
+            const sse = new EventSource('/notifications/stream/');
+            sse.onmessage = function(e) {
+                const data = JSON.parse(e.data);
+                const badge = document.getElementById('notif-badge');
+                if (badge) {
+                    if (data.unread > 0) { badge.textContent = data.unread > 99 ? '99+' : data.unread; badge.classList.remove('d-none'); }
+                    else { badge.classList.add('d-none'); }
+                }
+                if (data.new) {
+                    notifSound.currentTime = 0;
+                    notifSound.play().catch(() => {});
+                    loadNotifDropdown();
+                }
+            };
+            sse.onerror = function() { sse.close(); };
         }
     });
 </script>

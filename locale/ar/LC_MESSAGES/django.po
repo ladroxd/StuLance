@@ -682,3 +682,48 @@ msgstr "أنشئ ملفك الشخصي — مجاناً"
 
 msgid "Moroccan Student Freelance Hub"
 msgstr "مركز العمل الحر للطلاب المغاربة"
+
+msgid "Ready to launch your career?"
+msgstr "مستعد لإطلاق مسيرتك المهنية؟"
+
+msgid "Get Started"
+msgstr "ابدأ الآن"
+
+msgid "Browse Missions"
+msgstr "تصفح المهام"
+
+msgid "Explore Talent"
+msgstr "اكتشف المواهب"
+
+msgid "Help"
+msgstr "المساعدة"
+
+msgid "Terms of Service"
+msgstr "شروط الخدمة"
+
+msgid "Contact"
+msgstr "تواصل معنا"
+
+msgid "Email Us"
+msgstr "راسلنا"
+
+msgid "© 2026 StuLance. All rights reserved."
+msgstr "© 2026 StuLance. جميع الحقوق محفوظة."
+
+msgid "Find Student Talent"
+msgstr "ابحث عن مواهب الطلاب"
+
+msgid "Post a Mission"
+msgstr "نشر مهمة"
+
+msgid "Launch Your Gig"
+msgstr "أطلق خدمتك"
+
+msgid "Hire Smart"
+msgstr "وظّف بذكاء"
+
+msgid "Built for Students"
+msgstr "مصمم للطلاب"
+
+msgid "Join the Future of Work"
+msgstr "انضم إلى مستقبل العمل"

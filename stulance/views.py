@@ -1,13 +1,39 @@
+import json
 from django import forms
 from django.shortcuts import render, redirect
+from django.utils.text import Truncator
 
 from missions.models import Mission, Category
 
 
 def home(request):
-    missions = Mission.objects.filter(status='open').select_related('client', 'client__client_profile', 'category').order_by('-created_at')[:6]
+    missions_qs = Mission.objects.filter(status='open').select_related('client', 'client__client_profile', 'category').order_by('-created_at')[:6]
     categories = Category.objects.all()
-    return render(request, 'home.html', {'missions': missions, 'categories': categories})
+
+    missions_json = json.dumps([
+        {
+            'pk': m.pk,
+            'title': m.title,
+            'description': Truncator(m.description).words(20),
+            'category': str(m.category) if m.category else '',
+            'budget': float(m.budget),
+            'deadline_days': m.deadline_days,
+            'applications_count': m.applications.count(),
+            'skills': (m.skills_required or '').split(',')[:3] if m.skills_required else [],
+            'company_name': (
+                m.client.client_profile.company_name
+                or m.client.get_full_name()
+                or m.client.username
+            ) if hasattr(m.client, 'client_profile') else m.client.username,
+        }
+        for m in missions_qs
+    ], ensure_ascii=False)
+
+    return render(request, 'home.html', {
+        'missions': missions_qs,
+        'categories': categories,
+        'missions_json': missions_json,
+    })
 
 
 def tos(request):

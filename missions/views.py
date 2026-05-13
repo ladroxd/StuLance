@@ -1,14 +1,16 @@
+import json
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
+from django.utils.text import Truncator
 from .models import Mission, Application, Review, Category, Report, Submission
 from .forms import MissionForm, ApplicationForm, ReviewForm, SubmissionForm
 from notifications.utils import create_notification
 
 
 def mission_list(request):
-    qs = Mission.objects.filter(status='open').select_related('client', 'category')
+    qs = Mission.objects.filter(status='open').select_related('client', 'client__client_profile', 'category')
     q = request.GET.get('q', '')
     category_id = request.GET.get('category', '')
     budget_min = request.GET.get('budget_min', '')
@@ -27,8 +29,29 @@ def mission_list(request):
         qs = qs.filter(deadline_days__lte=duration)
 
     categories = Category.objects.all()
+
+    missions_json = json.dumps([
+        {
+            'pk': m.pk,
+            'title': m.title,
+            'description': Truncator(m.description).words(20),
+            'category': str(m.category) if m.category else '',
+            'budget': float(m.budget),
+            'deadline_days': m.deadline_days,
+            'applications_count': m.applications.count(),
+            'skills': [s.strip() for s in (m.skills_required or '').split(',') if s.strip()][:3],
+            'company_name': (
+                m.client.client_profile.company_name
+                or m.client.get_full_name()
+                or m.client.username
+            ) if hasattr(m.client, 'client_profile') else m.client.username,
+        }
+        for m in qs
+    ], ensure_ascii=False)
+
     return render(request, 'missions/list.html', {
         'missions': qs,
+        'missions_json': missions_json,
         'categories': categories,
         'q': q,
     })

@@ -1,5 +1,12 @@
 # StuLance — TODO
 
+## Next — ASAP
+
+- [x] **Light / Dark theme switch**
+  - Add a toggle in the navbar to switch between light and dark mode
+  - Persist user preference via `localStorage`
+  - Adapt all glass cards, backgrounds, text colors, and navbar for light mode
+
 ## High Priority
 
 - [x] **Student Gig / Service posting system**
@@ -17,9 +24,8 @@
 
 ## Performance
 
-- [ ] **Reduce messaging poll delay**
-  - Current AJAX polling interval is likely 3s — profile and tune
-  - Consider switching to SSE (Server-Sent Events) to eliminate polling overhead entirely
+- [x] **Reduce messaging poll delay**
+  - Replaced notification polling entirely with SSE (`/notifications/stream/`) — server pushes within ~1 second, zero wasted requests
 
 - [ ] **Paginate mission list**
   - Currently loads all open missions at once — add pagination (20 per page)
@@ -29,6 +35,18 @@
 
 - [ ] **Cache category list**
   - Categories are queried on every mission list load — use `django.core.cache` or template fragment cache
+
+## Bug Fixes
+
+- [x] **Footer missing on FR / AR language pages**
+  - Root cause: malformed JSON in home template (`|escapejs` producing `\'` for apostrophes) crashed `main.js` before footer could mount
+  - Fixed: JSON now serialized in view with `json.dumps()`, crash guards added in `app.js`
+  - Footer positioning changed from `fixed` to `absolute` to remove scroll-depth dependency
+  - Footer strings now passed via `data-t-*` attributes and translated via `{% trans %}`
+
+- [x] **Chat box white background in direct messages**
+  - Direct conversation chatbox used Bootstrap's `#f8f9fa` background and `bg-white border` bubble
+  - Fixed: chatbox now uses `var(--navy)`, received bubbles use `.message.received` theme class
 
 ## Pre-Traffic UI Polish (do before first real user testing)
 
@@ -66,10 +84,16 @@
 
 ## UI / Theme
 
-- [ ] **Light / dark theme switch**
-  - Add a toggle in the navbar to switch between light and dark mode
-  - Persist user preference via `localStorage`
-  - Adapt all glass cards, backgrounds, text colors, and navbar for light mode
+## Production Phase
+
+- [ ] **Switch from `runserver` to Gunicorn with gevent workers**
+  - Do NOT use `python manage.py runserver` in production
+  - Run the following command instead:
+    ```bash
+    gunicorn stulance.wsgi:application -c gunicorn.conf.py
+    ```
+  - Config is already set up in `gunicorn.conf.py` (gevent workers, 1000 connections per worker)
+  - Set `DEBUG=False` and configure `ALLOWED_HOSTS` in `.env` before launching
 
 ## Admin / Moderation
 

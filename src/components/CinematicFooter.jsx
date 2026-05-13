@@ -166,21 +166,44 @@ MagneticButton.displayName = "MagneticButton";
 // -------------------------------------------------------------------------
 // 3. MARQUEE ITEM
 // -------------------------------------------------------------------------
-const MarqueeItem = () => (
+const MarqueeItem = ({ t }) => (
   <div className="flex items-center space-x-12 px-6">
-    <span>Find Student Talent</span> <span className="text-purple-400/60">✦</span>
-    <span>Post a Mission</span> <span className="text-purple-300/60">✦</span>
-    <span>Launch Your Gig</span> <span className="text-purple-400/60">✦</span>
-    <span>Hire Smart</span> <span className="text-purple-300/60">✦</span>
-    <span>Built for Students</span> <span className="text-purple-400/60">✦</span>
-    <span>Join the Future of Work</span> <span className="text-purple-300/60">✦</span>
+    <span>{t.m1}</span> <span className="text-purple-400/60">✦</span>
+    <span>{t.m2}</span> <span className="text-purple-300/60">✦</span>
+    <span>{t.m3}</span> <span className="text-purple-400/60">✦</span>
+    <span>{t.m4}</span> <span className="text-purple-300/60">✦</span>
+    <span>{t.m5}</span> <span className="text-purple-400/60">✦</span>
+    <span>{t.m6}</span> <span className="text-purple-300/60">✦</span>
   </div>
 );
 
 // -------------------------------------------------------------------------
 // 4. MAIN COMPONENT
 // -------------------------------------------------------------------------
+function getT() {
+  const el = document.getElementById('cinematic-footer-root');
+  const d = el ? el.dataset : {};
+  return {
+    tagline:        d.tTagline        || 'Ready to launch your career?',
+    getStarted:     d.tGetStarted     || 'Get Started',
+    browseMissions: d.tBrowseMissions || 'Browse Missions',
+    exploreTalent:  d.tExploreTalent  || 'Explore Talent',
+    help:           d.tHelp           || 'Help',
+    tos:            d.tTos            || 'Terms of Service',
+    contact:        d.tContact        || 'Contact',
+    emailUs:        d.tEmailUs        || 'Email Us',
+    copyright:      d.tCopyright      || '© 2026 StuLance. All rights reserved.',
+    m1: d.tM1 || 'Find Student Talent',
+    m2: d.tM2 || 'Post a Mission',
+    m3: d.tM3 || 'Launch Your Gig',
+    m4: d.tM4 || 'Hire Smart',
+    m5: d.tM5 || 'Built for Students',
+    m6: d.tM6 || 'Join the Future of Work',
+  };
+}
+
 export function CinematicFooter() {
+  const t = getT();
   const wrapperRef = useRef(null);
   const giantTextRef = useRef(null);
   const headingRef = useRef(null);
@@ -219,12 +242,10 @@ export function CinematicFooter() {
     <>
       <style dangerouslySetInnerHTML={{ __html: STYLES }} />
 
-      <div
+      <footer
         ref={wrapperRef}
-        className="relative h-screen w-full"
-        style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
+        className="relative flex min-h-screen w-full flex-col justify-between overflow-hidden bg-[#0a0a0a] text-[#f0f0f0] cinematic-footer-wrapper"
       >
-        <footer className="fixed bottom-0 left-0 flex h-screen w-full flex-col justify-between overflow-hidden bg-[#0a0a0a] text-[#f0f0f0] cinematic-footer-wrapper">
 
           {/* Aurora + Grid */}
           <div className="footer-aurora absolute left-1/2 top-1/2 h-[60vh] w-[80vw] -translate-x-1/2 -translate-y-1/2 animate-footer-breathe rounded-[50%] blur-[80px] pointer-events-none z-0" />
@@ -241,8 +262,8 @@ export function CinematicFooter() {
           {/* Diagonal Marquee */}
           <div className="absolute top-12 left-0 w-full overflow-hidden border-y border-white/[0.07] bg-black/60 backdrop-blur-md py-4 z-10 -rotate-2 scale-110 shadow-2xl">
             <div className="flex w-max animate-footer-scroll-marquee text-xs font-bold tracking-[0.3em] text-[#888] uppercase">
-              <MarqueeItem />
-              <MarqueeItem />
+              <MarqueeItem t={t} />
+              <MarqueeItem t={t} />
             </div>
           </div>
 
@@ -252,36 +273,36 @@ export function CinematicFooter() {
               ref={headingRef}
               className="text-5xl md:text-8xl font-black footer-text-glow tracking-tighter mb-12 text-center"
             >
-              Ready to launch your career?
+              {t.tagline}
             </h2>
 
             <div ref={linksRef} className="flex flex-col items-center gap-6 w-full">
               {/* Primary pills */}
               <div className="flex flex-wrap justify-center gap-4 w-full">
                 <MagneticButton as="a" href="/accounts/onboarding/" className="footer-glass-pill px-8 py-4 rounded-full text-[#f0f0f0] font-bold text-sm md:text-base flex items-center gap-3">
-                  <span>↗</span><span>Get Started</span>
+                  <span>↗</span><span>{t.getStarted}</span>
                 </MagneticButton>
                 <MagneticButton as="a" href="/missions/" className="footer-glass-pill px-8 py-4 rounded-full text-[#f0f0f0] font-bold text-sm md:text-base flex items-center gap-3">
-                  <i className="bi bi-briefcase" /><span>Browse Missions</span>
+                  <i className="bi bi-briefcase" /><span>{t.browseMissions}</span>
                 </MagneticButton>
                 <MagneticButton as="a" href="/gigs/" className="footer-glass-pill px-8 py-4 rounded-full text-[#f0f0f0] font-bold text-sm md:text-base flex items-center gap-3">
-                  <i className="bi bi-stars" /><span>Explore Talent</span>
+                  <i className="bi bi-stars" /><span>{t.exploreTalent}</span>
                 </MagneticButton>
               </div>
 
               {/* Secondary text links */}
               <div className="flex flex-wrap justify-center gap-2 md:gap-4 w-full mt-2">
                 <MagneticButton as="a" href="/help/" className="footer-glass-pill px-4 py-2 rounded-full text-[11px]" style={{color:'#999',fontWeight:'700'}}>
-                  Help
+                  {t.help}
                 </MagneticButton>
                 <MagneticButton as="a" href="/tos/" className="footer-glass-pill px-4 py-2 rounded-full text-[11px]" style={{color:'#999',fontWeight:'700'}}>
-                  Terms of Service
+                  {t.tos}
                 </MagneticButton>
                 <MagneticButton as="a" href="/contact/" className="footer-glass-pill px-4 py-2 rounded-full text-[11px]" style={{color:'#999',fontWeight:'700'}}>
-                  Contact
+                  {t.contact}
                 </MagneticButton>
                 <MagneticButton as="a" href="/email-us/" className="footer-glass-pill px-4 py-2 rounded-full text-[11px]" style={{color:'#999',fontWeight:'700'}}>
-                  Email Us
+                  {t.emailUs}
                 </MagneticButton>
               </div>
             </div>
@@ -290,7 +311,7 @@ export function CinematicFooter() {
           {/* Bottom Bar */}
           <div className="relative z-20 w-full pb-8 px-6 md:px-12 flex flex-row items-center justify-between gap-6">
             <div className="text-[#888] text-[10px] md:text-xs font-semibold tracking-widest uppercase">
-              © 2026 StuLance. All rights reserved.
+              {t.copyright}
             </div>
 
             <MagneticButton
@@ -304,8 +325,7 @@ export function CinematicFooter() {
             </MagneticButton>
           </div>
 
-        </footer>
-      </div>
+      </footer>
     </>
   );
 }

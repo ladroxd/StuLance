@@ -163,6 +163,85 @@ How can students access freelance opportunities adapted to their academic schedu
 
 ---
 
+## Phase 13 — Sound System, SSE Notifications & Performance Tooling
+**2026-05-07**
+
+### Sound System
+- Added `message.mp3` (on send) to both mission chat and direct message pages
+- Added `notification.mp3` (on new notification) triggered site-wide via SSE
+- Kick click sound restored everywhere except the chat send button
+- All sounds lowered to comfortable volume (kick gain `0.18`, mp3s at `30%`)
+- Fixed browser autoplay policy issue — message sound plays before `await fetch()` to stay within user gesture; notification sound pre-unlocked on first page click
+- Removed kick sound from `src/app.js` React entry (was being compiled into bundle silently)
+
+### SSE — Real-Time Notifications
+- Replaced 30-second notification polling with **Server-Sent Events** (`/notifications/stream/`)
+- Server pushes badge update within ~1 second of a new notification
+- `new: true` flag in SSE payload triggers notification sound only when unread count increases
+- Dropdown auto-refreshes on new notification event
+- Zero wasted requests when nothing changes
+
+### Performance & Production Readiness
+- Installed and configured **Django Debug Toolbar** for dev query profiling
+- Installed **Gunicorn + gevent** async workers — handles thousands of concurrent SSE connections without blocking
+- Added `gunicorn.conf.py` with gevent worker class, `workers = cpu_count * 2 + 1`, `worker_connections = 1000`
+- Added `requirements.txt`
+- Documented production run command in `TODO.md` and Notion ("Production Preparation Phase" page)
+
+### Bug Fixes
+- Suppressed Django flash messages on chat pages (were showing useless send/receive alerts in the chat UI)
+- Wrapped flash messages in `{% block django_messages %}` so individual pages can override
+
+---
+
+## Phase 14 — i18n Footer, Chat Theme & Bug Fixes
+**2026-05-07**
+
+### Footer — Full i18n Support
+- Footer React component now reads all display strings from `data-t-*` attributes on the root div
+- `base.html` passes all footer strings through Django's `{% trans %}` tag — translated server-side before React mounts
+- FR and AR `.po` files updated with all footer strings (marquee, buttons, links, copyright)
+- `.mo` files recompiled via Babel
+
+### Footer — Visibility Fix Across All Languages
+- Root cause of missing footer on FR/AR: home template was manually building JSON with `|escapejs` which produces `\'` for apostrophes — invalid JSON that crashed `main.js` entirely before the footer could mount
+- Fixed: JSON now serialized in the view with `json.dumps(ensure_ascii=False)`, guaranteeing valid output
+- Added `try/catch` guards in `app.js` around both the missions mount and footer mount so one failure never blocks the other
+- Footer positioning changed from `position: fixed` (clip-path scroll-reveal trick) to `position: absolute` — now visible on all pages regardless of scroll depth or content length
+
+### Chat — Dark Theme
+- Direct message chatbox background changed from Bootstrap `#f8f9fa` to `var(--navy)`
+- Received message bubbles changed from `bg-white border` to `.message.received` (dark glass style matching the rest of the UI)
+- Mission chat was already themed — only direct conversation needed fixing
+
+---
+
+## Phase 15 — SSE Stability & Click Sound Fix
+**2026-05-07**
+
+### SSE Thread Exhaustion Fix
+- SSE stream now has a 55-second lifetime — stream closes and browser auto-reconnects
+- Prevents dev server thread pool exhaustion when multiple tabs are open simultaneously (each open tab held a thread indefinitely before; now threads are freed every ~55s)
+- Reduced DB poll interval inside the stream from 1s → 2s (halves queries, still fast enough for notifications)
+
+### Click Sound Debounce
+- Added 150ms debounce to `_playKick()` using `AudioContext.currentTime`
+- Prevents overlapping oscillators caused by rapid/double clicks, which produced a distorted beating artifact
+- Oscillators now never fire within 150ms of each other regardless of click speed
+
+---
+
+## Phase 16 — Black & White Theme
+**2026-05-13**
+
+### Light / Dark Mode Toggle
+- Added a black and white (light/dark) theme switch to the navbar
+- User preference persisted via `localStorage` — choice survives page reloads and navigation
+- All glass cards, backgrounds, text colors, and navbar adapted for light mode
+- CSS variables updated to support both themes across all pages
+
+---
+
 ## Current Stack
 
 | Layer | Tech |
@@ -173,5 +252,5 @@ How can students access freelance opportunities adapted to their academic schedu
 | Admin | django-jazzmin |
 | i18n | Django i18n — EN / FR / AR |
 | Auth | Custom User model (role-based) |
-| Realtime | AJAX polling (messaging & notifications) |
+| Realtime | SSE (notifications), AJAX polling (messaging) |
 | API | Django REST Framework |
