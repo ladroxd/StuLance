@@ -1,7 +1,6 @@
 Django==4.2.30
 django-debug-toolbar==6.3.0
 django-jazzmin==3.0.4
-django-vite==3.1.0
 djangorestframework==3.17.1
 gevent==26.4.0
 greenlet==3.5.0
@@ -12,3 +11,7 @@ polib==1.2.0
 python-decouple==3.8
 tzdata==2026.2
 babel==2.18.0
+asgiref==3.11.1
+sqlparse==0.5.5
+zope.event==6.2
+zope.interface==8.4
