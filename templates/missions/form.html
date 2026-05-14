@@ -1,29 +1,248 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% block title %}{{ action }} — StuLance{% endblock %}
+
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card shadow">
-            <div class="card-body p-4">
-                <h4 class="mb-4"><i class="bi bi-briefcase-fill text-primary"></i> {{ action }}</h4>
-                <form method="post">
-                    {% csrf_token %}
-                    {% for field in form %}
-                    <div class="mb-3">
-                        <label class="form-label">{{ field.label }}{% if field.field.required %} <span class="text-danger">*</span>{% endif %}</label>
-                        {{ field }}
-                        {% for error in field.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
-                        {% if field.help_text %}<div class="form-text">{{ field.help_text }}</div>{% endif %}
-                    </div>
-                    {% endfor %}
-                    <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-primary">{{ action }}</button>
-                        <a href="{% url 'mission_list' %}" class="btn btn-outline-secondary">{% trans "Cancel" %}</a>
-                    </div>
-                </form>
-            </div>
-        </div>
+  <div class="col-lg-8 col-md-10">
+
+    <div class="d-flex align-items-center gap-3 mb-4">
+      <div class="mf-icon">
+        <i class="bi bi-briefcase-fill"></i>
+      </div>
+      <div>
+        <h3 class="mb-0 fw-bold" style="color:var(--text-primary);">{{ action }}</h3>
+        <p class="mb-0 small" style="color:var(--text-muted);">{% trans "Fill in the details below to post your mission." %}</p>
+      </div>
     </div>
+
+    <form method="post">
+      {% csrf_token %}
+
+      <!-- Basic info -->
+      <div class="mf-section mb-4">
+        <div class="mf-section-header">
+          <i class="bi bi-info-circle"></i> {% trans "Mission Info" %}
+        </div>
+        <div class="mf-section-body">
+          <div class="mb-3">
+            <label class="form-label mf-label">{{ form.title.label }} <span class="text-danger">*</span></label>
+            {{ form.title }}
+            {% for e in form.title.errors %}<div class="mf-error">{{ e }}</div>{% endfor %}
+          </div>
+          <div class="mb-3">
+            <label class="form-label mf-label">{{ form.category.label }} <span class="text-danger">*</span></label>
+            {{ form.category }}
+            {% for e in form.category.errors %}<div class="mf-error">{{ e }}</div>{% endfor %}
+          </div>
+          <div class="mb-0">
+            <label class="form-label mf-label">{{ form.description.label }} <span class="text-danger">*</span></label>
+            {{ form.description }}
+            {% for e in form.description.errors %}<div class="mf-error">{{ e }}</div>{% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills -->
+      <div class="mf-section mb-4">
+        <div class="mf-section-header">
+          <i class="bi bi-tools"></i> {% trans "Skills Required" %}
+        </div>
+        <div class="mf-section-body">
+          <label class="form-label mf-label">{{ form.skills_required.label }}</label>
+
+          {# Tag input — the hidden real field holds the comma-separated value #}
+          <div class="sk-tag-box" id="skillTagBox">
+            <div class="sk-tags" id="skillTags"></div>
+            <input type="text" class="sk-tag-input" id="skillTyping"
+                   placeholder="{% trans 'Type a skill and press Enter or comma…' %}"
+                   autocomplete="off">
+          </div>
+          {# Keep the real Django field hidden so the form still submits correctly #}
+          <div style="display:none">{{ form.skills_required }}</div>
+          {% for e in form.skills_required.errors %}<div class="mf-error">{{ e }}</div>{% endfor %}
+          <p class="mf-hint">{% trans "Press Enter or comma to add each skill. Click a tag to remove it." %}</p>
+        </div>
+      </div>
+
+      <!-- Budget & deadline -->
+      <div class="mf-section mb-4">
+        <div class="mf-section-header">
+          <i class="bi bi-coin"></i> {% trans "Budget & Timeline" %}
+        </div>
+        <div class="mf-section-body">
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label class="form-label mf-label">{{ form.budget.label }} <span class="text-danger">*</span></label>
+              <div class="mf-input-group">
+                <span class="mf-input-addon">MAD</span>
+                {{ form.budget }}
+              </div>
+              {% for e in form.budget.errors %}<div class="mf-error">{{ e }}</div>{% endfor %}
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label mf-label">{{ form.deadline_days.label }} <span class="text-danger">*</span></label>
+              <div class="mf-input-group">
+                {{ form.deadline_days }}
+                <span class="mf-input-addon-right">{% trans "days" %}</span>
+              </div>
+              {% for e in form.deadline_days.errors %}<div class="mf-error">{{ e }}</div>{% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex gap-3 justify-content-end">
+        <a href="{% url 'mission_list' %}" class="btn mf-btn-cancel">
+          <i class="bi bi-x-lg me-1"></i>{% trans "Cancel" %}
+        </a>
+        <button type="submit" class="btn mf-btn-submit">
+          <i class="bi bi-check-lg me-1"></i>{{ action }}
+        </button>
+      </div>
+
+    </form>
+  </div>
 </div>
+
+<style>
+.mf-icon {
+  width:48px;height:48px;
+  background:var(--accent-light);
+  border:1px solid var(--accent);
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;color:var(--accent);flex-shrink:0;
+}
+.mf-section {
+  background:var(--navy-card);
+  border:1px solid var(--navy-border);
+  border-radius:14px;overflow:hidden;
+  transition:border-color .2s;
+}
+.mf-section:focus-within { border-color:var(--accent); }
+.mf-section-header {
+  padding:12px 20px;
+  font-size:.8rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--accent);background:var(--accent-glow2);
+  border-bottom:1px solid var(--navy-border);
+  display:flex;align-items:center;gap:8px;
+}
+.mf-section-body { padding:20px; }
+.mf-label { font-size:.85rem;font-weight:500;color:var(--text-secondary,#ccc);margin-bottom:6px; }
+.mf-hint  { font-size:.75rem;color:var(--text-muted,#888);margin-top:6px;margin-bottom:0; }
+.mf-error { font-size:.78rem;color:#f87171;margin-top:4px; }
+.mf-input-group {
+  display:flex;align-items:stretch;
+  border:1.5px solid var(--navy-border);
+  border-radius:8px;overflow:hidden;
+  background:var(--navy-mid);
+  transition:border-color .2s;
+}
+.mf-input-group:focus-within { border-color:var(--accent); }
+.mf-input-group .form-control {
+  border:none!important;border-radius:0!important;background:transparent!important;
+  box-shadow:none!important;flex:1;
+}
+.mf-input-addon, .mf-input-addon-right {
+  padding:0 14px;
+  display:flex;align-items:center;
+  font-size:.82rem;font-weight:600;
+  color:var(--accent);
+  background:var(--accent-glow2);
+  border-right:1px solid var(--navy-border);
+  white-space:nowrap;
+}
+.mf-input-addon-right {
+  border-right:none;border-left:1px solid var(--navy-border);
+}
+.mf-btn-submit {
+  background:var(--accent);color:#fff;border:none;
+  padding:10px 28px;border-radius:10px;font-weight:600;font-size:.9rem;
+  transition:background .2s,transform .1s;
+}
+.mf-btn-submit:hover { background:var(--accent-dim);color:#fff;transform:translateY(-1px); }
+.mf-btn-cancel {
+  background:transparent;color:var(--text-muted,#888);
+  border:1px solid var(--navy-border);
+  padding:10px 24px;border-radius:10px;font-weight:500;font-size:.9rem;
+  transition:border-color .2s,color .2s;
+}
+.mf-btn-cancel:hover { border-color:var(--accent);color:var(--accent); }
+
+/* Skill tag input */
+.sk-tag-box {
+  display:flex;flex-wrap:wrap;gap:6px;align-items:center;
+  min-height:44px;padding:8px 12px;
+  background:var(--navy-mid);
+  border:1.5px solid var(--navy-border);
+  border-radius:8px;cursor:text;
+  transition:border-color .2s;
+}
+.sk-tag-box:focus-within { border-color:var(--accent); }
+.sk-tag {
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--accent-light);color:var(--accent);
+  border:1px solid rgba(124,58,237,.35);
+  border-radius:999px;padding:2px 12px;
+  font-size:.8rem;font-weight:600;
+  cursor:pointer;transition:background .15s;
+  user-select:none;
+}
+.sk-tag:hover { background:rgba(124,58,237,.22); }
+.sk-tag-x { font-size:.7rem;opacity:.7; }
+.sk-tag-input {
+  border:none;outline:none;background:transparent;
+  color:var(--text-primary);font-size:.88rem;
+  flex:1;min-width:140px;padding:0;
+}
+.sk-tag-input::placeholder { color:var(--text-muted,#888); }
+</style>
+
+<script>
+(function(){
+  const box    = document.getElementById('skillTagBox');
+  const tagsEl = document.getElementById('skillTags');
+  const typing = document.getElementById('skillTyping');
+  const hidden = document.getElementById('id_skills_required');
+  if (!box || !typing || !hidden) return;
+
+  let tags = hidden.value ? hidden.value.split(',').map(s => s.trim()).filter(Boolean) : [];
+
+  function render() {
+    tagsEl.innerHTML = '';
+    tags.forEach((t, i) => {
+      const span = document.createElement('span');
+      span.className = 'sk-tag';
+      span.innerHTML = t + ' <span class="sk-tag-x">✕</span>';
+      span.addEventListener('click', () => { tags.splice(i, 1); render(); });
+      tagsEl.appendChild(span);
+    });
+    hidden.value = tags.join(', ');
+  }
+
+  function addTag(raw) {
+    raw.split(',').map(s => s.trim()).filter(Boolean).forEach(s => {
+      if (s && !tags.includes(s)) tags.push(s);
+    });
+    typing.value = '';
+    render();
+  }
+
+  typing.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); addTag(typing.value); }
+    if (e.key === ',' )    { e.preventDefault(); addTag(typing.value); }
+    if (e.key === 'Backspace' && typing.value === '' && tags.length) {
+      tags.pop(); render();
+    }
+  });
+
+  typing.addEventListener('blur', () => { if (typing.value.trim()) addTag(typing.value); });
+
+  // Clicking anywhere in the box focuses the input
+  box.addEventListener('click', () => typing.focus());
+
+  render(); // populate from existing value on edit
+})();
+</script>
 {% endblock %}

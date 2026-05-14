@@ -1,29 +1,271 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% block title %}{% trans "Apply" %} — {{ mission.title }}{% endblock %}
+
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-md-7">
-        <div class="card shadow">
-            <div class="card-body p-4">
-                <h4 class="mb-1"><i class="bi bi-send text-primary"></i> {% trans "Apply" %}</h4>
-                <p class="text-muted mb-4">{% trans "Mission:" %} <strong>{{ mission.title }}</strong> — {{ mission.budget }} MAD</p>
-                <form method="post">
-                    {% csrf_token %}
-                    {% for field in form %}
-                    <div class="mb-3">
-                        <label class="form-label">{{ field.label }}</label>
-                        {{ field }}
-                        {% for error in field.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
-                    </div>
-                    {% endfor %}
-                    <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-success">{% trans "Submit Application" %}</button>
-                        <a href="{% url 'mission_detail' mission.pk %}" class="btn btn-outline-secondary">{% trans "Cancel" %}</a>
-                    </div>
-                </form>
-            </div>
+  <div class="col-lg-7 col-md-9">
+
+    <!-- Mission context card -->
+    <div class="ap-mission-card mb-4">
+      <div class="ap-mission-icon">
+        <i class="bi bi-briefcase"></i>
+      </div>
+      <div class="flex-grow-1">
+        <p class="ap-mission-label mb-1">{% trans "Applying for" %}</p>
+        <h5 class="mb-0 fw-bold" style="color:var(--text-primary);">{{ mission.title }}</h5>
+        <div class="d-flex gap-3 mt-2 flex-wrap">
+          <span class="ap-chip"><i class="bi bi-coin me-1"></i>{{ mission.budget }} MAD</span>
+          {% if mission.deadline_days %}
+          <span class="ap-chip"><i class="bi bi-clock me-1"></i>{{ mission.deadline_days }} {% trans "days" %}</span>
+          {% endif %}
+          {% if mission.category %}
+          <span class="ap-chip"><i class="bi bi-tag me-1"></i>{{ mission.category }}</span>
+          {% endif %}
         </div>
+      </div>
     </div>
+
+    <!-- Cover letter form -->
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="ap-section mb-4">
+        <div class="ap-section-header">
+          <i class="bi bi-pen"></i> {% trans "Cover Letter" %}
+        </div>
+        <div class="ap-section-body">
+          <label class="form-label ap-label">
+            {% trans "Introduce yourself and make your case" %} <span class="text-danger">*</span>
+          </label>
+          {{ form.cover_letter }}
+          {% for e in form.cover_letter.errors %}<div class="ap-error">{{ e }}</div>{% endfor %}
+          <p class="ap-hint">{% trans "Tip: mention relevant experience, why this mission fits you, and your expected timeline." %}</p>
+        </div>
+      </div>
+
+      <!-- Negotiation -->
+      <div class="ap-section mb-4">
+        <div class="ap-section-header">
+          <i class="bi bi-arrow-left-right"></i> {% trans "Negotiate Terms" %}
+          <span class="ap-optional-badge">{% trans "Optional" %}</span>
+        </div>
+        <div class="ap-section-body">
+          <p class="ap-hint mb-3" style="font-size:.85rem;">
+            {% trans "The recruiter posted" %}
+            <strong style="color:var(--accent);">{{ mission.budget }} MAD</strong>
+            {% trans "and" %}
+            <strong style="color:var(--accent);">{{ mission.deadline_days }} {% trans "days" %}</strong>.
+            {% trans "If you have a different offer, enter it below. Leave blank to accept as-is." %}
+          </p>
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label class="form-label ap-label">{{ form.proposed_budget.label }}</label>
+              <div class="ap-neg-group">
+                <span class="ap-neg-addon">MAD</span>
+                {{ form.proposed_budget }}
+              </div>
+              {% for e in form.proposed_budget.errors %}<div class="ap-error">{{ e }}</div>{% endfor %}
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label ap-label">{{ form.proposed_days.label }}</label>
+              <div class="ap-neg-group">
+                {{ form.proposed_days }}
+                <span class="ap-neg-addon-right">{% trans "days" %}</span>
+              </div>
+              {% for e in form.proposed_days.errors %}<div class="ap-error">{{ e }}</div>{% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Supporting documents -->
+      <div class="ap-section mb-4">
+        <div class="ap-section-header">
+          <i class="bi bi-paperclip"></i> {% trans "Supporting Documents" %}
+          <span class="ap-optional-badge">{% trans "Optional" %}</span>
+        </div>
+        <div class="ap-section-body">
+          <div class="ap-upload-zone" id="uploadZone">
+            <div class="ap-upload-icon" id="uploadIcon">
+              <i class="bi bi-cloud-arrow-up"></i>
+            </div>
+            <p class="ap-upload-title" id="uploadTitle">{% trans "Attach a file" %}</p>
+            <p class="ap-upload-sub">{% trans "Portfolio, case study, CV, or any relevant work sample" %}</p>
+            <p class="ap-upload-types">PDF, DOC, DOCX, ZIP, PNG, JPG — {% trans "max 10 MB" %}</p>
+            {{ form.attachment }}
+          </div>
+          {% for e in form.attachment.errors %}<div class="ap-error mt-2">{{ e }}</div>{% endfor %}
+        </div>
+      </div>
+
+      <div class="d-flex gap-3 justify-content-end">
+        <a href="{% url 'mission_detail' mission.pk %}" class="btn ap-btn-cancel">
+          <i class="bi bi-x-lg me-1"></i>{% trans "Cancel" %}
+        </a>
+        <button type="submit" class="btn ap-btn-submit">
+          <i class="bi bi-send me-1"></i>{% trans "Submit Application" %}
+        </button>
+      </div>
+
+    </form>
+  </div>
 </div>
+
+<style>
+.ap-mission-card {
+  background:var(--navy-card);
+  border:1px solid var(--accent);
+  border-radius:14px;
+  padding:20px;
+  display:flex;align-items:flex-start;gap:16px;
+}
+.ap-mission-icon {
+  width:44px;height:44px;flex-shrink:0;
+  background:var(--accent-light);border:1px solid var(--accent);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;color:var(--accent);
+}
+.ap-mission-label { font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--accent); }
+.ap-chip {
+  font-size:.78rem;font-weight:500;
+  background:var(--accent-glow2);color:var(--accent);
+  border:1px solid var(--accent-light);
+  border-radius:999px;padding:2px 12px;
+  display:inline-flex;align-items:center;
+}
+.ap-section {
+  background:var(--navy-card);
+  border:1px solid var(--navy-border);
+  border-radius:14px;overflow:hidden;
+  transition:border-color .2s;
+}
+.ap-section:focus-within { border-color:var(--accent); }
+.ap-section-header {
+  padding:12px 20px;
+  font-size:.8rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--accent);background:var(--accent-glow2);
+  border-bottom:1px solid var(--navy-border);
+  display:flex;align-items:center;gap:8px;
+}
+.ap-section-body { padding:20px; }
+.ap-label  { font-size:.85rem;font-weight:500;color:var(--text-secondary,#ccc);margin-bottom:6px; }
+.ap-hint   { font-size:.75rem;color:var(--text-muted,#888);margin-top:8px;margin-bottom:0; }
+.ap-error  { font-size:.78rem;color:#f87171;margin-top:4px; }
+.ap-btn-submit {
+  background:var(--accent);color:#fff;border:none;
+  padding:10px 28px;border-radius:10px;font-weight:600;font-size:.9rem;
+  transition:background .2s,transform .1s;
+}
+.ap-btn-submit:hover { background:var(--accent-dim);color:#fff;transform:translateY(-1px); }
+.ap-btn-cancel {
+  background:transparent;color:var(--text-muted,#888);
+  border:1px solid var(--navy-border);
+  padding:10px 24px;border-radius:10px;font-weight:500;font-size:.9rem;
+  transition:border-color .2s,color .2s;
+}
+.ap-btn-cancel:hover { border-color:var(--accent);color:var(--accent); }
+
+/* Negotiation input groups */
+.ap-neg-group {
+  display:flex;align-items:stretch;
+  border:1.5px solid var(--navy-border);border-radius:8px;overflow:hidden;
+  background:var(--navy-mid);transition:border-color .2s;
+}
+.ap-neg-group:focus-within { border-color:var(--accent); }
+.ap-neg-group .form-control {
+  border:none!important;border-radius:0!important;background:transparent!important;
+  box-shadow:none!important;flex:1;
+}
+.ap-neg-addon, .ap-neg-addon-right {
+  padding:0 14px;display:flex;align-items:center;
+  font-size:.82rem;font-weight:600;color:var(--accent);
+  background:var(--accent-glow2);white-space:nowrap;
+  border-right:1px solid var(--navy-border);
+}
+.ap-neg-addon-right { border-right:none;border-left:1px solid var(--navy-border); }
+
+/* Upload zone */
+.ap-optional-badge {
+  margin-left:auto;
+  font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;
+  background:var(--navy-border);color:var(--text-muted,#888);
+  padding:2px 10px;border-radius:999px;
+}
+.ap-upload-zone {
+  border:2px dashed var(--navy-border);
+  border-radius:12px;
+  padding:28px 20px;
+  text-align:center;
+  cursor:pointer;
+  transition:border-color .2s, background .2s;
+  position:relative;
+}
+.ap-upload-zone:hover,
+.ap-upload-zone.dragover { border-color:var(--accent);background:var(--accent-glow2); }
+.ap-upload-zone input[type=file] {
+  position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;
+}
+.ap-upload-icon {
+  font-size:2rem;color:var(--accent);margin-bottom:8px;
+  transition:transform .2s;
+}
+.ap-upload-zone:hover .ap-upload-icon { transform:translateY(-3px); }
+.ap-upload-title {
+  font-size:.95rem;font-weight:600;
+  color:var(--text-primary);margin:0 0 4px;
+}
+.ap-upload-sub {
+  font-size:.82rem;color:var(--text-muted,#888);margin:0 0 4px;
+}
+.ap-upload-types {
+  font-size:.75rem;color:var(--text-dim,#666);margin:0;
+}
+.ap-file-chosen {
+  display:flex;align-items:center;gap:10px;
+  background:var(--accent-light);border:1px solid var(--accent);
+  border-radius:8px;padding:10px 14px;margin-top:12px;
+}
+.ap-file-chosen i { color:var(--accent);font-size:1.1rem; }
+.ap-file-name { font-size:.85rem;font-weight:500;color:var(--accent);word-break:break-all; }
+</style>
+
+<script>
+(function(){
+  const input = document.querySelector('input[name="attachment"]');
+  const zone  = document.getElementById('uploadZone');
+  const title = document.getElementById('uploadTitle');
+  if (!input || !zone) return;
+
+  function showFile(name) {
+    let preview = zone.querySelector('.ap-file-chosen');
+    if (!preview) {
+      preview = document.createElement('div');
+      preview.className = 'ap-file-chosen';
+      zone.appendChild(preview);
+    }
+    preview.innerHTML = '<i class="bi bi-file-earmark-check"></i><span class="ap-file-name">' + name + '</span>';
+    title.textContent = '{% trans "File selected" %}';
+  }
+
+  input.addEventListener('change', function() {
+    if (this.files && this.files[0]) showFile(this.files[0].name);
+  });
+
+  zone.addEventListener('dragover', function(e) {
+    e.preventDefault(); this.classList.add('dragover');
+  });
+  zone.addEventListener('dragleave', function() {
+    this.classList.remove('dragover');
+  });
+  zone.addEventListener('drop', function(e) {
+    e.preventDefault(); this.classList.remove('dragover');
+    if (e.dataTransfer.files[0]) {
+      input.files = e.dataTransfer.files;
+      showFile(e.dataTransfer.files[0].name);
+    }
+  });
+})();
+</script>
 {% endblock %}

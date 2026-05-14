@@ -304,7 +304,7 @@ def student_profile_detail(request, pk):
 
 
 def client_profile_detail(request, pk):
-    profile = get_object_or_404(ClientProfile, pk=pk)
+    profile = get_object_or_404(ClientProfile, user__pk=pk)
     return render(request, 'accounts/client_profile_detail.html', {'profile': profile})
 
 

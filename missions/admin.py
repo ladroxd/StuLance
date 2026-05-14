@@ -89,8 +89,9 @@ class MissionAdmin(admin.ModelAdmin):
                 create_notification(
                     user=mission.selected_student,
                     notif_type='mission_completed',
-                    title='Mission approuvée — fonds libérés',
-                    message=f'L\'admin a approuvé la mission "{mission.title}". Les fonds vous ont été attribués.',
+                    title_key='mission_approved',
+                    message_key='mission_approved',
+                    params={'mission': mission.title},
                     link=f'/missions/{mission.pk}/',
                 )
             count += 1

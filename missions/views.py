@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
 from django.utils.text import Truncator
+from django.utils.translation import gettext_lazy as _
 from .models import Mission, Application, Review, Category, Report, Submission
 from .forms import MissionForm, ApplicationForm, ReviewForm, SubmissionForm
 from notifications.utils import create_notification
@@ -135,7 +136,7 @@ def apply_mission(request, pk):
         messages.warning(request, 'Vous avez deja postule a cette mission.')
         return redirect('mission_detail', pk=pk)
     if request.method == 'POST':
-        form = ApplicationForm(request.POST)
+        form = ApplicationForm(request.POST, request.FILES)
         if form.is_valid():
             app = form.save(commit=False)
             app.mission = mission
@@ -144,8 +145,9 @@ def apply_mission(request, pk):
             create_notification(
                 user=mission.client,
                 notif_type='application',
-                title='Nouvelle candidature',
-                message=f'{request.user.get_full_name()} a postule a votre mission "{mission.title}"',
+                title_key='new_application',
+                message_key='new_application',
+                params={'name': request.user.get_full_name(), 'mission': mission.title},
                 link=f'/missions/{mission.pk}/applications/',
             )
             messages.success(request, 'Candidature envoyee.')
@@ -176,8 +178,9 @@ def accept_application(request, pk):
         create_notification(
             user=application.student,
             notif_type='mission_accepted',
-            title='Candidature acceptee',
-            message=f'Votre candidature pour "{mission.title}" a ete acceptee !',
+            title_key='app_accepted',
+            message_key='app_accepted',
+            params={'mission': mission.title},
             link=f'/missions/{mission.pk}/',
         )
         messages.success(request, 'Candidature acceptee. Mission en cours.')
@@ -207,8 +210,9 @@ def complete_mission(request, pk):
             create_notification(
                 user=mission.selected_student,
                 notif_type='mission_completed',
-                title='Mission terminee',
-                message=f'La mission "{mission.title}" a ete marquee comme terminee.',
+                title_key='mission_completed',
+                message_key='mission_completed',
+                params={'mission': mission.title},
                 link=f'/missions/{mission.pk}/review/',
             )
         messages.success(request, 'Mission cloturee.')
@@ -219,6 +223,9 @@ def complete_mission(request, pk):
 @login_required
 def leave_review(request, pk):
     mission = get_object_or_404(Mission, pk=pk, status='completed')
+    if request.user != mission.client and request.user != mission.selected_student:
+        messages.error(request, 'Vous n\'etes pas autorise a laisser un avis pour cette mission.')
+        return redirect('mission_detail', pk=pk)
     already_reviewed = Review.objects.filter(mission=mission, reviewer=request.user).exists()
     if already_reviewed:
         messages.info(request, 'Vous avez deja laisse un avis.')
@@ -314,8 +321,9 @@ def submit_mission(request, pk):
             create_notification(
                 user=mission.client,
                 notif_type='submission',
-                title='Nouvelle livraison',
-                message=f'{request.user.get_full_name()} a soumis une livraison pour "{mission.title}"',
+                title_key='new_delivery',
+                message_key='new_delivery',
+                params={'name': request.user.get_full_name(), 'mission': mission.title},
                 link=f'/missions/{mission.pk}/',
             )
             messages.success(request, 'Livraison envoyee au client.')
@@ -331,8 +339,9 @@ def accept_submission(request, pk):
         create_notification(
             user=submission.student,
             notif_type='submission_accepted',
-            title='Livraison acceptee',
-            message=f'Votre livraison pour "{submission.mission.title}" a ete acceptee !',
+            title_key='delivery_accepted',
+            message_key='delivery_accepted',
+            params={'mission': submission.mission.title},
             link=f'/missions/{submission.mission.pk}/',
         )
         messages.success(request, 'Livraison acceptee.')
@@ -348,8 +357,9 @@ def request_revision(request, pk):
         create_notification(
             user=submission.student,
             notif_type='submission_revision',
-            title='Revision demandee',
-            message=f'Le client a demande une revision pour "{submission.mission.title}".',
+            title_key='revision_requested',
+            message_key='revision_requested',
+            params={'mission': submission.mission.title},
             link=f'/missions/{submission.mission.pk}/',
         )
         messages.warning(request, 'Revision demandee.')

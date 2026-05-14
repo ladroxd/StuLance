@@ -1,30 +1,300 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% block title %}{% trans "Edit Profile" %} — StuLance{% endblock %}
+
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card shadow">
-            <div class="card-body p-4">
-                <h4 class="mb-4"><i class="bi bi-pencil-square text-primary"></i> {% trans "Edit Profile" %}</h4>
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {% for field in form %}
-                    <div class="mb-3">
-                        <label class="form-label">{{ field.label }}</label>
-                        {{ field }}
-                        {% for error in field.errors %}
-                            <div class="text-danger small">{{ error }}</div>
-                        {% endfor %}
-                    </div>
-                    {% endfor %}
-                    <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
-                        <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary">{% trans "Cancel" %}</a>
-                    </div>
-                </form>
-            </div>
-        </div>
+  <div class="col-lg-8 col-md-10">
+
+    <!-- Header -->
+    <div class="d-flex align-items-center gap-3 mb-4">
+      <div class="ep-icon-wrap">
+        <i class="bi bi-person-gear"></i>
+      </div>
+      <div>
+        <h3 class="mb-0 fw-bold" style="color:var(--text-primary);">{% trans "Edit Profile" %}</h3>
+        <p class="mb-0 small" style="color:var(--text-muted);">{% trans "Keep your profile up to date so clients can find you." %}</p>
+      </div>
     </div>
+
+    <form method="post" enctype="multipart/form-data" id="editProfileForm">
+      {% csrf_token %}
+
+      <!-- Photo -->
+      {% with photo_field=form.photo %}
+      {% if photo_field %}
+      <div class="ep-section mb-4">
+        <div class="ep-section-header">
+          <i class="bi bi-camera"></i> {% trans "Profile Photo" %}
+        </div>
+        <div class="ep-section-body">
+          <div class="d-flex align-items-center gap-4 flex-wrap">
+            <div class="ep-photo-preview" id="photoPreviewWrap">
+              <i class="bi bi-person" id="photoPlaceholder"></i>
+              <img id="photoPreviewImg" src="" alt="preview" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:50%;">
+            </div>
+            <div class="flex-grow-1">
+              <label class="form-label ep-label">{{ photo_field.label }}</label>
+              {{ photo_field }}
+              {% for error in photo_field.errors %}
+                <div class="ep-field-error">{{ error }}</div>
+              {% endfor %}
+              <p class="ep-hint">{% trans "JPG or PNG, square recommended. Max 5 MB." %}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% endwith %}
+
+      <!-- About section -->
+      {% with bio=form.bio skills=form.skills %}
+      {% if bio or skills %}
+      <div class="ep-section mb-4">
+        <div class="ep-section-header">
+          <i class="bi bi-file-person"></i> {% trans "About You" %}
+        </div>
+        <div class="ep-section-body">
+          {% if bio %}
+          <div class="mb-3">
+            <label class="form-label ep-label">{{ bio.label }}</label>
+            {{ bio }}
+            {% for error in bio.errors %}<div class="ep-field-error">{{ error }}</div>{% endfor %}
+          </div>
+          {% endif %}
+          {% if skills %}
+          <div class="mb-0">
+            <label class="form-label ep-label">{{ skills.label }}</label>
+            {{ skills }}
+            {% for error in skills.errors %}<div class="ep-field-error">{{ error }}</div>{% endfor %}
+            <p class="ep-hint">{% trans "Separate each skill with a comma." %}</p>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+      {% endwith %}
+
+      <!-- Social Links (student) -->
+      {% with gh=form.github_url li=form.linkedin_url %}
+      {% if gh or li %}
+      <div class="ep-section mb-4">
+        <div class="ep-section-header">
+          <i class="bi bi-link-45deg"></i> {% trans "Social Links" %}
+        </div>
+        <div class="ep-section-body">
+          {% if gh %}
+          <div class="mb-3">
+            <label class="form-label ep-label"><i class="bi bi-github me-1"></i>{{ gh.label }}</label>
+            {{ gh }}
+            {% for error in gh.errors %}<div class="ep-field-error">{{ error }}</div>{% endfor %}
+          </div>
+          {% endif %}
+          {% if li %}
+          <div class="mb-0">
+            <label class="form-label ep-label"><i class="bi bi-linkedin me-1" style="color:#0a66c2;"></i>{{ li.label }}</label>
+            {{ li }}
+            {% for error in li.errors %}<div class="ep-field-error">{{ error }}</div>{% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+      {% endwith %}
+
+      <!-- Academic / Company info -->
+      {% with school=form.school fos=form.field_of_study cn=form.company_name ct=form.client_type ws=form.website %}
+      {% if school or fos or cn or ct or ws %}
+      <div class="ep-section mb-4">
+        <div class="ep-section-header">
+          {% if school %}<i class="bi bi-mortarboard"></i> {% trans "Academic Info" %}
+          {% else %}<i class="bi bi-building"></i> {% trans "Company Info" %}
+          {% endif %}
+        </div>
+        <div class="ep-section-body">
+          {% if ct %}
+          <div class="mb-3">
+            <label class="form-label ep-label">{{ ct.label }}</label>
+            {{ ct }}
+            {% for error in ct.errors %}<div class="ep-field-error">{{ error }}</div>{% endfor %}
+          </div>
+          {% endif %}
+          {% if cn %}
+          <div class="mb-3">
+            <label class="form-label ep-label">{{ cn.label }}</label>
+            {{ cn }}
+            {% for error in cn.errors %}<div class="ep-field-error">{{ error }}</div>{% endfor %}
+          </div>
+          {% endif %}
+          {% if ws %}
+          <div class="mb-0">
+            <label class="form-label ep-label">{{ ws.label }}</label>
+            {{ ws }}
+            {% for error in ws.errors %}<div class="ep-field-error">{{ error }}</div>{% endfor %}
+          </div>
+          {% endif %}
+          {% if school %}
+          <div class="mb-3">
+            <label class="form-label ep-label">{{ school.label }}</label>
+            {{ school }}
+            {% for error in school.errors %}<div class="ep-field-error">{{ error }}</div>{% endfor %}
+          </div>
+          {% endif %}
+          {% if fos %}
+          <div class="mb-0">
+            <label class="form-label ep-label">{{ fos.label }}</label>
+            {{ fos }}
+            {% for error in fos.errors %}<div class="ep-field-error">{{ error }}</div>{% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+      {% endwith %}
+
+      <!-- Student card upload -->
+      {% with sc=form.student_card %}
+      {% if sc %}
+      <div class="ep-section mb-4">
+        <div class="ep-section-header">
+          <i class="bi bi-card-heading"></i> {% trans "Verification Document" %}
+        </div>
+        <div class="ep-section-body">
+          <label class="form-label ep-label">{{ sc.label }}</label>
+          {{ sc }}
+          {% for error in sc.errors %}<div class="ep-field-error">{{ error }}</div>{% endfor %}
+          <p class="ep-hint">{% trans "PDF or image of your valid student card. Used for identity verification only." %}</p>
+        </div>
+      </div>
+      {% endif %}
+      {% endwith %}
+
+      <!-- Actions -->
+      <div class="d-flex gap-3 justify-content-end">
+        <a href="{% url 'dashboard' %}" class="btn ep-btn-cancel">
+          <i class="bi bi-x-lg me-1"></i>{% trans "Cancel" %}
+        </a>
+        <button type="submit" class="btn ep-btn-save">
+          <i class="bi bi-check-lg me-1"></i>{% trans "Save Changes" %}
+        </button>
+      </div>
+
+    </form>
+  </div>
 </div>
+
+<style>
+.ep-icon-wrap {
+  width: 48px; height: 48px;
+  background: var(--accent-light);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.ep-section {
+  background: var(--navy-card);
+  border: 1px solid var(--navy-border);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.ep-section:focus-within {
+  border-color: var(--accent);
+}
+.ep-section-header {
+  padding: 12px 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-glow2);
+  border-bottom: 1px solid var(--navy-border);
+  display: flex; align-items: center; gap: 8px;
+}
+.ep-section-body {
+  padding: 20px;
+}
+.ep-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary, #ccc);
+  margin-bottom: 6px;
+}
+.ep-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted, #888);
+  margin-top: 6px;
+  margin-bottom: 0;
+}
+.ep-field-error {
+  font-size: 0.78rem;
+  color: #f87171;
+  margin-top: 4px;
+}
+.ep-photo-preview {
+  width: 88px; height: 88px;
+  border-radius: 50%;
+  background: var(--accent-light);
+  border: 2px solid var(--navy-border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem;
+  color: var(--accent);
+  flex-shrink: 0;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.ep-btn-save {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 10px 28px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background 0.2s, transform 0.1s;
+}
+.ep-btn-save:hover {
+  background: var(--accent-dim);
+  color: #fff;
+  transform: translateY(-1px);
+}
+.ep-btn-cancel {
+  background: transparent;
+  color: var(--text-muted, #888);
+  border: 1px solid var(--navy-border);
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: border-color 0.2s, color 0.2s;
+}
+.ep-btn-cancel:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+</style>
+
+<script>
+(function(){
+  const input = document.querySelector('input[name="photo"]');
+  const img   = document.getElementById('photoPreviewImg');
+  const ph    = document.getElementById('photoPlaceholder');
+  if (!input || !img) return;
+  input.addEventListener('change', function(){
+    if (this.files && this.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function(e){
+        img.src = e.target.result;
+        img.style.display = 'block';
+        if (ph) ph.style.display = 'none';
+      };
+      reader.readAsDataURL(this.files[0]);
+    }
+  });
+})();
+</script>
 {% endblock %}

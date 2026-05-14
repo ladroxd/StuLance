@@ -1,7 +1,28 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% block title %}{% trans "Applications" %} — {{ mission.title }}{% endblock %}
+
 {% block content %}
+<style>
+.app-neg-chip {
+  display:inline-flex;align-items:center;
+  background:rgba(124,58,237,.1);
+  border:1px solid rgba(124,58,237,.3);
+  color:var(--accent);
+  font-size:.78rem;padding:3px 12px;border-radius:999px;
+}
+.app-neg-original { color:var(--text-muted,#888);margin-left:5px;font-weight:400; }
+.app-attach-link {
+  font-size:.8rem;font-weight:500;color:var(--accent);
+  text-decoration:none;
+  border:1px solid rgba(124,58,237,.3);
+  border-radius:6px;padding:2px 10px;
+  background:rgba(124,58,237,.07);
+  display:inline-flex;align-items:center;
+}
+.app-attach-link:hover { background:rgba(124,58,237,.15); }
+</style>
+<div style="min-height:80vh;">
 <h3 class="mb-1">{% trans "Applications for" %}</h3>
 <h4 class="text-primary mb-4">{{ mission.title }}</h4>
 
@@ -33,6 +54,34 @@
                     </div>
                 </div>
                 <p class="mb-2">{{ app.cover_letter|truncatewords:40 }}</p>
+
+                {% if app.proposed_budget or app.proposed_days %}
+                <div class="d-flex flex-wrap gap-2 mb-2">
+                  {% if app.proposed_budget %}
+                  <span class="app-neg-chip">
+                    <i class="bi bi-coin me-1"></i>
+                    {% trans "Proposes" %} <strong>{{ app.proposed_budget }} MAD</strong>
+                    <span class="app-neg-original">({% trans "posted:" %} {{ mission.budget }})</span>
+                  </span>
+                  {% endif %}
+                  {% if app.proposed_days %}
+                  <span class="app-neg-chip">
+                    <i class="bi bi-clock me-1"></i>
+                    {% trans "Proposes" %} <strong>{{ app.proposed_days }} {% trans "days" %}</strong>
+                    <span class="app-neg-original">({% trans "posted:" %} {{ mission.deadline_days }})</span>
+                  </span>
+                  {% endif %}
+                </div>
+                {% endif %}
+
+                {% if app.attachment %}
+                <div class="mb-2">
+                  <a href="{{ app.attachment.url }}" target="_blank" class="app-attach-link">
+                    <i class="bi bi-paperclip me-1"></i>{% trans "View attachment" %}
+                  </a>
+                </div>
+                {% endif %}
+
                 {% if app.student.student_profile.skills_list %}
                     {% for skill in app.student.student_profile.skills_list %}
                         <span class="badge bg-light text-dark border me-1">{{ skill }}</span>
@@ -67,4 +116,5 @@
 <a href="{% url 'mission_detail' mission.pk %}" class="btn btn-outline-secondary mt-2">
     <i class="bi bi-arrow-left"></i> {% trans "Back to Mission" %}
 </a>
+</div>
 {% endblock %}

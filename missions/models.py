@@ -62,6 +62,9 @@ class Application(models.Model):
     mission = models.ForeignKey(Mission, on_delete=models.CASCADE, related_name='applications')
     student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='applications')
     cover_letter = models.TextField()
+    attachment = models.FileField(upload_to='application_attachments/', blank=True, null=True)
+    proposed_budget = models.PositiveIntegerField(blank=True, null=True)
+    proposed_days = models.PositiveIntegerField(blank=True, null=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=STATUS_PENDING)
     applied_at = models.DateTimeField(auto_now_add=True)
 

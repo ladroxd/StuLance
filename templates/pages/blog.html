@@ -2,6 +2,18 @@
 {% load i18n %}
 {% block title %}Blog — StuLance{% endblock %}
 {% block content %}
+<style>
+.blog-title { color: #f0f0f0; }
+[data-theme="light"] .blog-title { color: #111111; }
+.blog-body-text { color: #bbb; }
+[data-theme="light"] .blog-body-text { color: #333; }
+.blog-muted { color: #888; }
+[data-theme="light"] .blog-muted { color: #555; }
+.blog-meta { color: #555; }
+[data-theme="light"] .blog-meta { color: #777; }
+.blog-page-header { color: #f0f0f0; }
+[data-theme="light"] .blog-page-header { color: #111; }
+</style>
 
 <div style="max-width:1100px; margin:0 auto; padding: 48px 16px 80px;">
 
@@ -10,10 +22,10 @@
         <span style="display:inline-block; background:rgba(124,58,237,0.12); color:#a78bfa; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:4px 16px; border-radius:999px; border:1px solid rgba(124,58,237,0.25); margin-bottom:16px;">
             StuLance Blog
         </span>
-        <h1 style="font-size:clamp(2rem,5vw,3rem); font-weight:800; color:#f0f0f0; margin-bottom:14px; line-height:1.15;">
+        <h1 class="blog-page-header" style="font-size:clamp(2rem,5vw,3rem); font-weight:800; margin-bottom:14px; line-height:1.15;">
             Resources for Students &amp; Clients
         </h1>
-        <p style="color:#888; font-size:16px; max-width:540px; margin:0 auto; line-height:1.6;">
+        <p class="blog-muted" style="font-size:16px; max-width:540px; margin:0 auto; line-height:1.6;">
             Tips, trends, and updates from the StuLance team — helping Moroccan students build their freelance careers.
         </p>
     </div>
@@ -35,8 +47,8 @@
                     <span style="background:rgba(124,58,237,0.15); color:#a78bfa; font-size:11px; font-weight:600; padding:2px 12px; border-radius:999px; border:1px solid rgba(124,58,237,0.25);">{{ post.category }}</span>
                     <span style="color:#555; font-size:12px;"><i class="bi bi-clock me-1"></i>{{ post.read_time }}</span>
                 </div>
-                <h2 style="font-size:1.5rem; font-weight:800; color:#f0f0f0; line-height:1.25; margin:0;">{{ post.title }}</h2>
-                <p style="color:#888; font-size:14px; line-height:1.65; margin:0;">{{ post.excerpt }}</p>
+                <h2 class="blog-title" style="font-size:1.5rem; font-weight:800; line-height:1.25; margin:0;">{{ post.title }}</h2>
+                <p class="blog-muted" style="font-size:14px; line-height:1.65; margin:0;">{{ post.excerpt }}</p>
                 <div style="display:flex; justify-content:space-between; align-items:center; padding-top:16px; border-top:1px solid rgba(124,58,237,0.12);">
                     <span style="color:#555; font-size:12px;">{{ post.date }}</span>
                     <span style="background:var(--accent,#7c3aed); color:#fff; font-size:13px; font-weight:600; padding:8px 20px; border-radius:999px;">Read More <i class="bi bi-arrow-right"></i></span>
@@ -59,8 +71,8 @@
                 </div>
                 <!-- Content -->
                 <div style="padding:20px 22px; flex:1; display:flex; flex-direction:column; gap:10px;">
-                    <h3 style="font-size:15px; font-weight:700; color:#f0f0f0; line-height:1.35; margin:0;">{{ post.title }}</h3>
-                    <p style="font-size:13px; color:#777; line-height:1.6; margin:0; flex:1;">{{ post.excerpt }}</p>
+                    <h3 class="blog-title" style="font-size:15px; font-weight:700; line-height:1.35; margin:0;">{{ post.title }}</h3>
+                    <p class="blog-muted" style="font-size:13px; line-height:1.6; margin:0; flex:1;">{{ post.excerpt }}</p>
                     <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid rgba(124,58,237,0.1); margin-top:auto;">
                         <span style="color:#555; font-size:11px;">{{ post.date }}</span>
                         <span style="color:#555; font-size:11px;"><i class="bi bi-clock me-1"></i>{{ post.read_time }}</span>
@@ -85,16 +97,16 @@
                     <span style="color:#444; font-size:11px;">{{ post.date }}</span>
                     <span style="color:#444; font-size:11px;"><i class="bi bi-clock me-1"></i>{{ post.read_time }}</span>
                 </div>
-                <h2 style="font-size:1.35rem; font-weight:800; color:#f0f0f0; margin:0; line-height:1.25;">{{ post.title }}</h2>
+                <h2 class="blog-title" style="font-size:1.35rem; font-weight:800; margin:0; line-height:1.25;">{{ post.title }}</h2>
             </div>
         </div>
 
-        <p style="font-size:15px; color:#999; line-height:1.7; margin-bottom:28px; padding-bottom:20px; border-bottom:1px solid rgba(124,58,237,0.12);">{{ post.excerpt }}</p>
+        <p class="blog-muted" style="font-size:15px; line-height:1.7; margin-bottom:28px; padding-bottom:20px; border-bottom:1px solid rgba(124,58,237,0.12);">{{ post.excerpt }}</p>
 
         {% for heading, content in post.body %}
         <div style="margin-bottom:24px;">
             <h4 style="font-size:14px; font-weight:700; color:#a78bfa; text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px;">{{ heading }}</h4>
-            <p style="font-size:15px; color:#bbb; line-height:1.75; margin:0;">{{ content }}</p>
+            <p class="blog-body-text" style="font-size:15px; line-height:1.75; margin:0;">{{ content }}</p>
         </div>
         {% endfor %}
 

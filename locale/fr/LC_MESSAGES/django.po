@@ -733,3 +733,52 @@ msgstr "Conçu pour les étudiants"
 
 msgid "Join the Future of Work"
 msgstr "Rejoignez le futur du travail"
+
+msgid "New application"
+msgstr "Nouvelle candidature"
+
+msgid "Application accepted"
+msgstr "Candidature acceptée"
+
+msgid "Mission completed"
+msgstr "Mission terminée"
+
+msgid "New delivery"
+msgstr "Nouvelle livraison"
+
+msgid "Delivery accepted"
+msgstr "Livraison acceptée"
+
+msgid "Revision requested"
+msgstr "Révision demandée"
+
+msgid "New message"
+msgstr "Nouveau message"
+
+msgid "Mission approved — funds released"
+msgstr "Mission approuvée — fonds libérés"
+
+msgid "%(name)s applied to your mission "%(mission)s""
+msgstr "%(name)s a postulé à votre mission "%(mission)s""
+
+msgid "Your application for "%(mission)s" has been accepted!"
+msgstr "Votre candidature pour "%(mission)s" a été acceptée !"
+
+msgid "The mission "%(mission)s" has been marked as completed."
+msgstr "La mission "%(mission)s" a été marquée comme terminée."
+
+msgid "%(name)s submitted a delivery for "%(mission)s""
+msgstr "%(name)s a soumis une livraison pour "%(mission)s""
+
+msgid "Your delivery for "%(mission)s" has been accepted!"
+msgstr "Votre livraison pour "%(mission)s" a été acceptée !"
+
+msgid "The client requested a revision for "%(mission)s"."
+msgstr "Le client a demandé une révision pour "%(mission)s"."
+
+msgid "%(name)s sent you a message."
+msgstr "%(name)s vous a envoyé un message."
+
+msgid "Admin approved the mission "%(mission)s". Funds have been credited to you."
+msgstr "L'admin a approuvé la mission "%(mission)s". Les fonds vous ont été attribués."
+

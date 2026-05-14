@@ -727,3 +727,52 @@ msgstr "مصمم للطلاب"
 
 msgid "Join the Future of Work"
 msgstr "انضم إلى مستقبل العمل"
+
+msgid "New application"
+msgstr "طلب جديد"
+
+msgid "Application accepted"
+msgstr "تم قبول الطلب"
+
+msgid "Mission completed"
+msgstr "اكتملت المهمة"
+
+msgid "New delivery"
+msgstr "تسليم جديد"
+
+msgid "Delivery accepted"
+msgstr "تم قبول التسليم"
+
+msgid "Revision requested"
+msgstr "تم طلب مراجعة"
+
+msgid "New message"
+msgstr "رسالة جديدة"
+
+msgid "Mission approved — funds released"
+msgstr "تمت الموافقة على المهمة — تم تحرير الأموال"
+
+msgid "%(name)s applied to your mission "%(mission)s""
+msgstr "%(name)s تقدّم لمهمتك "%(mission)s""
+
+msgid "Your application for "%(mission)s" has been accepted!"
+msgstr "تم قبول طلبك للمهمة "%(mission)s"!"
+
+msgid "The mission "%(mission)s" has been marked as completed."
+msgstr "تم وضع علامة اكتمال على المهمة "%(mission)s"."
+
+msgid "%(name)s submitted a delivery for "%(mission)s""
+msgstr "%(name)s قدّم تسليماً للمهمة "%(mission)s""
+
+msgid "Your delivery for "%(mission)s" has been accepted!"
+msgstr "تم قبول تسليمك للمهمة "%(mission)s"!"
+
+msgid "The client requested a revision for "%(mission)s"."
+msgstr "طلب العميل مراجعة للمهمة "%(mission)s"."
+
+msgid "%(name)s sent you a message."
+msgstr "%(name)s أرسل لك رسالة."
+
+msgid "Admin approved the mission "%(mission)s". Funds have been credited to you."
+msgstr "وافق المسؤول على المهمة "%(mission)s". تم إضافة الأموال إلى حسابك."
+

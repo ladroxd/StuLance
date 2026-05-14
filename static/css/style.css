@@ -1179,3 +1179,7 @@ a:hover {
 [data-theme="light"] #notif-dropdown-menu #notif-empty {
   color: #888888 !important;
 }
+[data-theme="light"] .home-hero__title,
+[data-theme="light"] .home-hero__sub {
+  color: #ffffff !important;
+}

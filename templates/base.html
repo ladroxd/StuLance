@@ -51,6 +51,11 @@
                         <i class="bi bi-journal-text"></i> {% trans "Blog" %}
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact/">
+                        <i class="bi bi-envelope"></i> {% trans "Contact" %}
+                    </a>
+                </li>
             </ul>
             <ul class="navbar-nav ms-auto align-items-center">
                 {% if user.is_authenticated %}
@@ -92,8 +97,11 @@
                             <li><a class="dropdown-item" href="{% url 'admin_stats' %}"><i class="bi bi-bar-chart-line"></i> {% trans " Statistics" %}</a></li>
                             {% endif %}
                             {% if user.role == 'student' %}
-                            <li><a class="dropdown-item" href="{% url 'student_profile' %}"><i class="bi bi-person"></i> {% trans " My Profile " %}</a></li>
-                            <li><a class="dropdown-item" href="{% url 'my_gigs' %}"><i class="bi bi-person-workspace"></i> {% trans " My Gigs " %}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'student_profile' %}"><i class="bi bi-person"></i> {% trans " Profile " %}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'my_gigs' %}"><i class="bi bi-boxes"></i> {% trans " Services " %}</a></li>
+                            {% endif %}
+                            {% if user.role == 'client' %}
+                            <li><a class="dropdown-item" href="{% url 'client_profile_detail' user.pk %}"><i class="bi bi-person-badge"></i> {% trans "Profile " %}</a></li>
                             {% endif %}
                             <li><hr class="dropdown-divider"></li>
                             <li>
@@ -113,12 +121,6 @@
                     </li>
                 {% endif %}
                 
-                <li class="nav-item ms-2">
-                    <button id="theme-toggle" class="nav-link bg-transparent border-0" style="padding:0.5rem 0;cursor:pointer" title="Toggle theme">
-                        <i id="theme-icon" class="bi bi-sun"></i>
-                    </button>
-                </li>
-
                 <li class="nav-item dropdown ms-2">
                     <button class="nav-link dropdown-toggle bg-transparent border-0" type="button" id="langDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="true" style="padding: 0.5rem 0; cursor: pointer;">
                         {% if CURRENT_LANG == 'ar' %}العربية
@@ -151,6 +153,12 @@
                             </form>
                         </li>
                     </ul>
+                </li>
+
+                <li class="nav-item ms-3 me-2">
+                    <button id="theme-toggle" class="nav-link bg-transparent border-0" style="padding:0.5rem 0.25rem;cursor:pointer" title="Toggle theme">
+                        <i id="theme-icon" class="bi bi-sun"></i>
+                    </button>
                 </li>
             </ul>
         </div>

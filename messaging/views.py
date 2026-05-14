@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages as django_messages
 from django.http import JsonResponse
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 from .models import Message, DirectConversation, DirectMessage
 from missions.models import Mission
 from notifications.utils import create_notification
@@ -44,8 +45,9 @@ def send_message(request, mission_pk):
     create_notification(
         user=other,
         notif_type='message',
-        title='Nouveau message',
-        message=f'{request.user.get_full_name()} vous a envoye un message.',
+        title_key='new_message',
+        message_key='new_message',
+        params={'name': request.user.get_full_name()},
         link=f'/messages/{mission_pk}/',
     )
     return JsonResponse({
@@ -170,8 +172,9 @@ def direct_send(request, pk):
     create_notification(
         user=other,
         notif_type='message',
-        title='New message',
-        message=f'{request.user.get_full_name() or request.user.username} sent you a message.',
+        title_key='new_message',
+        message_key='new_message',
+        params={'name': request.user.get_full_name() or request.user.username},
         link=f'/messages/{conv.pk}/chat/',
     )
 

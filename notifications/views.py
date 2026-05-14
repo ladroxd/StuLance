@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, StreamingHttpResponse
 from .models import Notification
+from .translation_keys import TITLES, MESSAGES, resolve
 
 
 @login_required
@@ -15,6 +16,11 @@ def notification_list(request):
     grouped = []
     for n in notifs:
         key = (n.notif_type, n.link)
+        # Resolve translated text now (request language is active at this point)
+        if n.title_key:
+            n.title = resolve(TITLES, n.title_key, n.params)
+        if n.message_key:
+            n.message = resolve(MESSAGES, n.message_key, n.params)
         if key in seen:
             entry = seen[key]
             entry['count'] += 1
@@ -91,11 +97,24 @@ def unread_count(request):
 @login_required
 def recent_notifications(request):
     notifs = Notification.objects.filter(user=request.user).order_by('-created_at')[:5]
+
+    def _title(n):
+        if n.title_key:
+            return resolve(TITLES, n.title_key, n.params)
+        return n.title  # legacy
+
+    def _message(n):
+        if n.message_key:
+            msg = resolve(MESSAGES, n.message_key, n.params)
+            return msg[:80] + ('…' if len(msg) > 80 else '')
+        msg = n.message
+        return msg[:80] + ('…' if len(msg) > 80 else '')  # legacy
+
     data = [
         {
             'id': n.pk,
-            'title': n.title,
-            'message': n.message[:80] + ('…' if len(n.message) > 80 else ''),
+            'title': _title(n),
+            'message': _message(n),
             'link': n.link,
             'is_read': n.is_read,
             'notif_type': n.notif_type,

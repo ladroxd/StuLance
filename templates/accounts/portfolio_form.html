@@ -1,28 +1,195 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% block title %}{% trans "Add a Project" %} — StuLance{% endblock %}
+
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card shadow">
-            <div class="card-body p-4">
-                <h4 class="mb-4"><i class="bi bi-folder-plus text-primary"></i> {% trans "Add a project to portfolio" %}</h4>
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {% for field in form %}
-                    <div class="mb-3">
-                        <label class="form-label">{{ field.label }}</label>
-                        {{ field }}
-                        {% for error in field.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
-                    </div>
-                    {% endfor %}
-                    <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-primary">{% trans "Add" %}</button>
-                        <a href="{% url 'student_profile' %}" class="btn btn-outline-secondary">{% trans "Cancel" %}</a>
-                    </div>
-                </form>
-            </div>
-        </div>
+  <div class="col-lg-7 col-md-9">
+
+    <!-- Header -->
+    <div class="d-flex align-items-center gap-3 mb-4">
+      <div class="pf-icon-wrap">
+        <i class="bi bi-folder-plus"></i>
+      </div>
+      <div>
+        <h3 class="mb-0 fw-bold" style="color:var(--text-primary);">{% trans "Add a Project" %}</h3>
+        <p class="mb-0 small" style="color:var(--text-muted);">{% trans "Showcase your best work in your portfolio." %}</p>
+      </div>
     </div>
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <!-- Project details -->
+      <div class="pf-section mb-4">
+        <div class="pf-section-header">
+          <i class="bi bi-code-square"></i> {% trans "Project Details" %}
+        </div>
+        <div class="pf-section-body">
+
+          <div class="mb-3">
+            <label class="form-label pf-label">{{ form.title.label }} <span class="text-danger">*</span></label>
+            {{ form.title }}
+            {% for error in form.title.errors %}<div class="pf-field-error">{{ error }}</div>{% endfor %}
+          </div>
+
+          <div class="mb-0">
+            <label class="form-label pf-label">{{ form.description.label }}</label>
+            {{ form.description }}
+            {% for error in form.description.errors %}<div class="pf-field-error">{{ error }}</div>{% endfor %}
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Link & image -->
+      <div class="pf-section mb-4">
+        <div class="pf-section-header">
+          <i class="bi bi-images"></i> {% trans "Link & Preview" %}
+        </div>
+        <div class="pf-section-body">
+
+          <div class="mb-3">
+            <label class="form-label pf-label"><i class="bi bi-link-45deg me-1"></i>{{ form.url.label }}</label>
+            {{ form.url }}
+            {% for error in form.url.errors %}<div class="pf-field-error">{{ error }}</div>{% endfor %}
+            <p class="pf-hint">{% trans "GitHub repo, live demo, or any public URL." %}</p>
+          </div>
+
+          <div class="mb-0">
+            <label class="form-label pf-label">{{ form.image.label }}</label>
+            <!-- image preview -->
+            <div class="pf-img-preview mb-2" id="imgPreviewBox" style="display:none;">
+              <img id="imgPreviewEl" src="" alt="preview" style="max-width:100%;max-height:200px;border-radius:8px;object-fit:cover;">
+            </div>
+            {{ form.image }}
+            {% for error in form.image.errors %}<div class="pf-field-error">{{ error }}</div>{% endfor %}
+            <p class="pf-hint">{% trans "Optional. PNG or JPG screenshot of your project." %}</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="d-flex gap-3 justify-content-end">
+        <a href="{% url 'student_profile' %}" class="btn pf-btn-cancel">
+          <i class="bi bi-x-lg me-1"></i>{% trans "Cancel" %}
+        </a>
+        <button type="submit" class="btn pf-btn-add">
+          <i class="bi bi-plus-lg me-1"></i>{% trans "Add to Portfolio" %}
+        </button>
+      </div>
+
+    </form>
+  </div>
 </div>
+
+<style>
+.pf-icon-wrap {
+  width: 48px; height: 48px;
+  background: var(--accent-light);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.pf-section {
+  background: var(--navy-card);
+  border: 1px solid var(--navy-border);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.pf-section:focus-within {
+  border-color: var(--accent);
+}
+.pf-section-header {
+  padding: 12px 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-glow2);
+  border-bottom: 1px solid var(--navy-border);
+  display: flex; align-items: center; gap: 8px;
+}
+.pf-section-body {
+  padding: 20px;
+}
+.pf-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary, #ccc);
+  margin-bottom: 6px;
+}
+.pf-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted, #888);
+  margin-top: 6px;
+  margin-bottom: 0;
+}
+.pf-field-error {
+  font-size: 0.78rem;
+  color: #f87171;
+  margin-top: 4px;
+}
+.pf-img-preview {
+  background: var(--navy);
+  border: 1px solid var(--navy-border);
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+}
+.pf-btn-add {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 10px 28px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background 0.2s, transform 0.1s;
+}
+.pf-btn-add:hover {
+  background: var(--accent-dim);
+  color: #fff;
+  transform: translateY(-1px);
+}
+.pf-btn-cancel {
+  background: transparent;
+  color: var(--text-muted, #888);
+  border: 1px solid var(--navy-border);
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: border-color 0.2s, color 0.2s;
+}
+.pf-btn-cancel:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+</style>
+
+<script>
+(function(){
+  const input = document.querySelector('input[name="image"]');
+  const box   = document.getElementById('imgPreviewBox');
+  const img   = document.getElementById('imgPreviewEl');
+  if (!input || !box || !img) return;
+  input.addEventListener('change', function(){
+    if (this.files && this.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function(e){
+        img.src = e.target.result;
+        box.style.display = 'block';
+      };
+      reader.readAsDataURL(this.files[0]);
+    }
+  });
+})();
+</script>
 {% endblock %}
