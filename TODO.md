@@ -1,11 +1,28 @@
 # StuLance — TODO
 
+## During Live Prod 
+
+ -  Before Launching Imma need to add these and start monitoring.
+ 
+ --  1 .   Error Tracking      by       'Sentry'.
+ --  2 .   Analytics           by       'PostHog'.
+ --  3 .   Uptime Monitoring   by       'BetterStack'.
+ 
+ 
+# Get the Dependencies Audit
+
+- Run NPM audit 
+- Lock Versions
+- In the requirements.txt file some libs and stuff are missing.
+
 ## Next — ASAP
 
 - [x] **Light / Dark theme switch**
   - Add a toggle in the navbar to switch between light and dark mode
   - Persist user preference via `localStorage`
   - Adapt all glass cards, backgrounds, text colors, and navbar for light mode
+  
+  
 
 ## High Priority
 
@@ -48,6 +65,29 @@
   - Direct conversation chatbox used Bootstrap's `#f8f9fa` background and `bg-white border` bubble
   - Fixed: chatbox now uses `var(--navy)`, received bubbles use `.message.received` theme class
 
+- [x] **Recruiter not being reviewed by admins**
+  - ( Needs to be reviewed & the whole company by an admin and approved later )
+
+- [x] **Admin cannot approve completed missions / release funds to student**
+  - Added "Approve & mark as completed" bulk action in Mission admin
+  - Added Submission inline on Mission admin detail page
+  - Registered Submission model in admin with status badges
+  - Student dashboard shows "Funds On Hold" amber banner after recruiter accepts submission, disappears once admin approves
+
+- [x] **Recruiter account not saved on DB after onboarding**
+  - Step 4 "All Set!" page was shown before account was actually created — user could close tab and account would be lost
+  - Fixed: account is now created and saved immediately when step 3 is submitted, then redirected to dashboard
+  
+- [x] **Forms for filling a mission or gig are not enhanced or perfect. **
+  - Colors are so hard to see and the whole form doesn't have life to it.
+  - Needs to be adapted to the whole site theme.
+  
+- [x] **The i18n is still having compatibility issues with some pages  **
+  - Navbar notification area only shows notifs in french for missions and gigs related.
+  - For the messages notifications we only have english supported ( No AR/FR ) 
+  
+
+
 ## Pre-Traffic UI Polish (do before first real user testing)
 
 - [ ] **Client identity on featured mission cards (home page)**
@@ -70,8 +110,12 @@
 - [ ] **Empty state illustrations**
   - Replace plain "No missions" / "No applications" text with a small SVG illustration
 
-- [ ] **Client profile report button**
+- [x] **Client profile report button**
   - Report button currently only on student profiles and mission detail — add to client profile detail page (`client_profile_detail.html`)
+  
+- [x] **Add a button for the recruiters in the gig pages aka Talent**
+  - Add a button for recruiters so they can take a gig from a student and work with him.
+  - The contact button should redirect to a conversation between the recruiter and the student not to the /messages page where he needs to manually start it.
 
 ## Features (planned for later CDC revision)
 
@@ -83,6 +127,12 @@
   - Already built — wire up properly once added to CDC
 
 ## UI / Theme
+
+
+- Improve the Forms 
+- In the admin Dashboard we will need to implement the alerts and notifications on top-right.
+- Every tab now needs to have a number of unresolved cases , requests or approvals , like submissions or accounts needed to be verified. 
+( For exemple : Accounts : Portofolio ( 1 ) , Recruiter Profiles ( 4 ) , Student Profiles ( 8 ) )   -- These numbers represent only the unsolved or unverified accounts / profiles etc .
 
 ## Production Phase
 

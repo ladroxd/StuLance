@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
-from .models import Mission, Application, Review, Category, Report
+from .models import Mission, Application, Review, Category, Report, Submission
+from notifications.utils import create_notification
 
 
 @admin.register(Category)
@@ -25,6 +26,15 @@ class ApplicationInline(admin.TabularInline):
     show_change_link = True
 
 
+class SubmissionInline(admin.TabularInline):
+    model = Submission
+    extra = 0
+    readonly_fields = ['student', 'file', 'link', 'message', 'status', 'created_at']
+    fields = ['student', 'status', 'file', 'link', 'message', 'created_at']
+    can_delete = False
+    show_change_link = True
+
+
 @admin.register(Mission)
 class MissionAdmin(admin.ModelAdmin):
     list_display = ['title', 'client', 'category', 'budget_display', 'status_badge', 'applications_count', 'created_at']
@@ -33,8 +43,8 @@ class MissionAdmin(admin.ModelAdmin):
     readonly_fields = ['created_at', 'updated_at', 'applications_count']
     list_per_page = 20
     date_hierarchy = 'created_at'
-    inlines = [ApplicationInline]
-    actions = ['cancel_missions', 'reopen_missions']
+    inlines = [ApplicationInline, SubmissionInline]
+    actions = ['approve_and_complete', 'cancel_missions', 'reopen_missions']
     fieldsets = (
         ('Mission Info', {'fields': ('title', 'description', 'category', 'skills_required')}),
         ('Details', {'fields': ('client', 'budget', 'deadline_days', 'status', 'selected_student')}),
@@ -64,6 +74,27 @@ class MissionAdmin(admin.ModelAdmin):
         count = obj.applications.count()
         return format_html('<span style="font-weight:600">{}</span>', count)
     applications_count.short_description = 'Applications'
+
+    @admin.action(description='✅ Approve & mark as completed (release funds)')
+    def approve_and_complete(self, request, queryset):
+        eligible = queryset.filter(status='in_progress')
+        count = 0
+        for mission in eligible:
+            mission.status = Mission.STATUS_COMPLETED
+            mission.save()
+            if mission.selected_student:
+                profile = mission.selected_student.student_profile
+                profile.total_missions += 1
+                profile.save()
+                create_notification(
+                    user=mission.selected_student,
+                    notif_type='mission_completed',
+                    title='Mission approuvée — fonds libérés',
+                    message=f'L\'admin a approuvé la mission "{mission.title}". Les fonds vous ont été attribués.',
+                    link=f'/missions/{mission.pk}/',
+                )
+            count += 1
+        self.message_user(request, f'{count} mission(s) approuvée(s) et marquée(s) comme terminées.')
 
     @admin.action(description='✘ Cancel selected missions')
     def cancel_missions(self, request, queryset):
@@ -125,6 +156,29 @@ class ReviewAdmin(admin.ModelAdmin):
         empty = '☆' * (5 - obj.rating)
         return format_html('<span style="color:#ffc107;font-size:16px">{}</span><span style="color:#ccc;font-size:16px">{}</span>', filled, empty)
     stars.short_description = 'Rating'
+
+
+@admin.register(Submission)
+class SubmissionAdmin(admin.ModelAdmin):
+    list_display = ['student', 'mission', 'status_badge', 'created_at']
+    list_filter = ['status', 'created_at']
+    search_fields = ['student__username', 'mission__title']
+    readonly_fields = ['student', 'mission', 'file', 'link', 'message', 'created_at']
+    list_per_page = 25
+
+    def status_badge(self, obj):
+        colors = {
+            'pending':  ('#ffc107', '⏳ Pending'),
+            'accepted': ('#198754', '✔ Accepted'),
+            'revision': ('#dc3545', '↩ Revision'),
+        }
+        color, label = colors.get(obj.status, ('#6c757d', obj.status))
+        text = '#000' if obj.status == 'pending' else '#fff'
+        return format_html(
+            '<span style="background:{};color:{};padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600">{}</span>',
+            color, text, label
+        )
+    status_badge.short_description = 'Status'
 
 
 @admin.register(Report)

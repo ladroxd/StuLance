@@ -113,9 +113,15 @@
                     <i class="bi bi-person"></i> {% trans "View Profile" %}
                 </a>
                 {% if user.is_authenticated and user != gig.student %}
-                <a href="{% url 'new_conversation' %}?user={{ gig.student.pk }}" class="btn btn-primary btn-sm w-100">
+                {% if user.is_client %}
+                <a href="{% url 'start_conversation' gig.student.pk %}" class="btn btn-primary btn-sm w-100 mb-2">
+                    <i class="bi bi-briefcase"></i> {% trans "Hire this Student" %}
+                </a>
+                {% else %}
+                <a href="{% url 'start_conversation' gig.student.pk %}" class="btn btn-ghost btn-sm w-100">
                     <i class="bi bi-chat-dots"></i> {% trans "Contact" %}
                 </a>
+                {% endif %}
                 {% endif %}
                 {% endwith %}
             </div>

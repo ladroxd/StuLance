@@ -242,6 +242,34 @@ How can students access freelance opportunities adapted to their academic schedu
 
 ---
 
+## Phase 17 — Admin Approval Flow, Funds On Hold & UX Fixes
+**2026-05-14**
+
+### Admin Mission Approval & Fund Release
+- Added **"✅ Approve & mark as completed (release funds)"** bulk action to Mission admin — selects any `in_progress` mission, marks it `completed`, increments student `total_missions`, and sends student a notification
+- Added `SubmissionInline` to Mission admin detail page — admin can now see the student's file, link, message and submission status without leaving the mission record
+- Registered `Submission` model in admin (`/admin/missions/submission/`) with colored status badges (Pending / Accepted / Revision) and search/filter
+
+### Student Dashboard — Funds On Hold Banner
+- New amber banner appears on student dashboard when recruiter has accepted a submission but admin hasn't approved yet
+- Shows total amount on hold (sum of pending mission budgets) and a per-mission breakdown with links
+- Banner disappears automatically once admin approves and mission moves to `completed`
+
+### Bug Fix — Recruiter Account Not Saved on Registration
+- Recruiter onboarding step 4 showed a "You're all set!" page before the account was actually created — closing the tab at that point lost the account entirely
+- Fixed: account is now created and saved to DB immediately on step 3 submission, then redirects straight to dashboard
+
+### Report Button on Client Profiles
+- Added report button to `client_profile_detail.html` — was only present on student profiles and mission detail pages
+- Shown to any authenticated user who isn't the profile owner, same styling and behaviour as student profile report button
+
+### Recruiter "Hire" Button on Gig Pages
+- Replaced broken "Contact" link (pointed to POST-only `new_conversation` view, dropped user on inbox) with a proper flow
+- New `start_conversation` view at `/messages/start/<user_pk>/` — gets or creates a `DirectConversation` and redirects straight to the chat
+- Gig sidebar now shows **"Hire this Student"** (primary button) for recruiters and a ghost "Contact" button for other authenticated users
+
+---
+
 ## Current Stack
 
 | Layer | Tech |

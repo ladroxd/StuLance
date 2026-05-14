@@ -104,6 +104,16 @@ def inbox(request):
 
 
 @login_required
+def start_conversation(request, user_pk):
+    """GET — get or create a direct conversation with user_pk and redirect to it."""
+    recipient = get_object_or_404(User, pk=user_pk)
+    if recipient == request.user:
+        return redirect('inbox')
+    conv = DirectConversation.get_or_create_between(request.user, recipient)
+    return redirect('direct_conversation', pk=conv.pk)
+
+
+@login_required
 def new_conversation(request):
     if request.method == 'POST':
         query = request.POST.get('recipient', '').strip()

@@ -229,9 +229,14 @@ def onboarding(request):
                     errors['main_field'] = 'Please select your main field.'
                 if not errors:
                     ob_data.update({'work_types': work_types, 'main_field': main_field})
-                    request.session['ob_data'] = ob_data
-                    request.session['ob_step'] = 4
-                    step = 4
+                    try:
+                        user = _create_recruiter_account(ob_data)
+                        login(request, user)
+                        _ob_clear(request)
+                        messages.success(request, 'Welcome to StuLance!')
+                        return redirect('dashboard')
+                    except Exception as e:
+                        errors['general'] = f'Account creation failed: {str(e)}'
 
         elif posted_step == 4:
             try:

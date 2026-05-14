@@ -9,6 +9,7 @@ urlpatterns = [
     # Direct inbox
     path('', views.inbox, name='inbox'),
     path('new/', views.new_conversation, name='new_conversation'),
+    path('start/<int:user_pk>/', views.start_conversation, name='start_conversation'),
     path('<int:pk>/chat/', views.direct_conversation, name='direct_conversation'),
     path('<int:pk>/chat/send/', views.direct_send, name='direct_send'),
     path('<int:pk>/chat/poll/', views.direct_poll, name='direct_poll'),

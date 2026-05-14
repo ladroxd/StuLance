@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum, Count, Avg
-from missions.models import Mission, Application, Review
+from missions.models import Mission, Application, Review, Submission
 from accounts.models import User, StudentProfile
 from gigs.models import Gig
 
@@ -17,6 +17,13 @@ def dashboard(request):
         total_earnings = completed_missions.aggregate(total=Sum('budget'))['total'] or 0
         profile = user.student_profile
         my_gigs = Gig.objects.filter(student=user)
+        # Missions where recruiter accepted the submission but admin hasn't approved yet
+        funds_on_hold = Submission.objects.filter(
+            student=user,
+            status=Submission.STATUS_ACCEPTED,
+            mission__status='in_progress',
+        ).select_related('mission')
+        funds_on_hold_total = sum(s.mission.budget for s in funds_on_hold)
         context = {
             'applications': applications,
             'active_missions': active_missions,
@@ -24,6 +31,8 @@ def dashboard(request):
             'total_earnings': total_earnings,
             'profile': profile,
             'my_gigs': my_gigs,
+            'funds_on_hold': funds_on_hold,
+            'funds_on_hold_total': funds_on_hold_total,
         }
         return render(request, 'dashboard/student.html', context)
     elif user.is_client():
