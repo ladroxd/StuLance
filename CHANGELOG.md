@@ -270,6 +270,43 @@ How can students access freelance opportunities adapted to their academic schedu
 
 ---
 
+## Phase 18 — UI Polish, Form Redesigns, Notification i18n & Apply Improvements
+**Tag: `1.6` — 2026-05-14**
+
+### Form Redesigns
+- Redesigned **edit profile** (student & client), **portfolio**, **mission create/edit**, **apply**, and **gig** forms with themed glass sections, accent-purple headers, and focus glow borders — matching the site's dark theme
+- Added `form-control` / `form-select` CSS classes to all Django form widgets so global theme styles apply correctly
+- Added descriptive placeholders and improved labels across all forms
+- **Skills tag input** on mission create/edit: press Enter or comma to add a skill as a pill tag, click a tag to remove it, Backspace removes the last tag — underlying field stays comma-separated for the server
+
+### Profile UX
+- **Edit Profile** button removed from navbar dropdown for recruiters — now lives inside the client profile card, visible only to the profile owner
+- Navbar: "My Gigs" renamed to "My Services"; "Contact" link added after "Blog" pointing to `/contact/`
+
+### Notifications — Translate at Display Time
+- `Notification` model gains `title_key`, `message_key`, and `params` (JSONField) — raw translation keys and dynamic values stored instead of pre-translated text
+- `notifications/translation_keys.py` — central registry of all notification strings as `gettext_lazy` with named placeholders
+- `notifications/utils.py` rewritten to store keys + params only (no translation at creation time)
+- `notifications/views.py` resolves translations at serve time using the active request language — switching language now instantly updates all notifications, including old ones
+- FR and AR translations added for all 8 notification types (titles + messages) in `.po` files and recompiled to `.mo`
+- `accounts/middleware.py` — `TrackUserLanguageMiddleware` persists `user.language` on every request (used as fallback)
+
+### Mission Apply Page
+- **Attachment upload**: drag-and-drop zone with file name preview — supports PDF, DOC, DOCX, ZIP, PNG, JPG
+- **Negotiation fields**: students can propose an alternative budget (MAD) and timeline (days) when applying; leaving them blank accepts the posted terms
+- Recruiter's applications page shows proposed terms as purple chips with the original values for comparison
+- Attachment shown as a link on the applications page
+
+### Light Mode Fixes
+- Hero heading and subtitle pinned to white (`#ffffff`) regardless of theme — previously went dark in light mode
+- Blog card titles, body text, and muted text now flip correctly in light mode via scoped CSS classes
+
+### Other
+- `my_gigs` page footer pushed to bottom with `min-height: 70vh` wrapper
+- `compile_mo.py` script saved at project root — pure Python `.po` → `.mo` compiler (no GNU gettext required on Windows)
+
+---
+
 ## Current Stack
 
 | Layer | Tech |

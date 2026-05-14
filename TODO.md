@@ -22,7 +22,7 @@
   - Persist user preference via `localStorage`
   - Adapt all glass cards, backgrounds, text colors, and navbar for light mode
   
-  
+
 
 ## High Priority
 
@@ -78,14 +78,16 @@
   - Step 4 "All Set!" page was shown before account was actually created — user could close tab and account would be lost
   - Fixed: account is now created and saved immediately when step 3 is submitted, then redirected to dashboard
   
-- [x] **Forms for filling a mission or gig are not enhanced or perfect. **
-  - Colors are so hard to see and the whole form doesn't have life to it.
-  - Needs to be adapted to the whole site theme.
-  
-- [x] **The i18n is still having compatibility issues with some pages  **
-  - Navbar notification area only shows notifs in french for missions and gigs related.
-  - For the messages notifications we only have english supported ( No AR/FR ) 
-  
+- [x] **Forms for filling a mission or gig are not enhanced or perfect.**
+  - Redesigned mission create/edit, apply, edit profile, and portfolio forms with themed glass sections, accent inputs, live previews
+
+- [x] **The i18n is still having compatibility issues with some pages**
+  - Notifications now translated at display time using key + params system — language switch takes effect instantly on all notifications
+  - FR and AR translations added for all notification strings
+
+- [ ] **Translation strings missing on mission create and gig create/edit forms**
+  - Labels, placeholders, and error messages on `missions/create/` and `gigs/form/` are still hardcoded in French/English
+  - Need to wrap all strings in `_()` and add FR/AR entries to `.po` files
 
 
 ## Pre-Traffic UI Polish (do before first real user testing)
@@ -117,6 +119,13 @@
   - Add a button for recruiters so they can take a gig from a student and work with him.
   - The contact button should redirect to a conversation between the recruiter and the student not to the /messages page where he needs to manually start it.
 
+- [x] **Edit profile for recruiters accessible from profile page**
+  - Removed "Edit Profile" from navbar dropdown — button now lives inside the client profile card (visible only to the profile owner)
+
+- [x] **Mission apply — attachment & negotiation**
+  - Students can attach supporting documents (portfolio, CV, case study) when applying
+  - Students can propose an alternative budget and deadline — shown as chips to the recruiter on the applications page
+
 ## Features (planned for later CDC revision)
 
 - [ ] **Multi-language completion**
@@ -128,11 +137,14 @@
 
 ## UI / Theme
 
+- [x] **Improve the Forms**
+  - Profile edit, portfolio, mission create/edit, apply forms all redesigned with themed glass sections
+  - Skills field on mission form is now a tag input (Enter or comma to add)
 
-- Improve the Forms 
-- In the admin Dashboard we will need to implement the alerts and notifications on top-right.
-- Every tab now needs to have a number of unresolved cases , requests or approvals , like submissions or accounts needed to be verified. 
-( For exemple : Accounts : Portofolio ( 1 ) , Recruiter Profiles ( 4 ) , Student Profiles ( 8 ) )   -- These numbers represent only the unsolved or unverified accounts / profiles etc .
+- [ ] **In the admin Dashboard implement alerts and notifications on top-right**
+- [ ] **Tab badges for unresolved cases**
+  - Every tab needs a count of unresolved cases/approvals
+  ( e.g. Accounts: Portfolio (1), Recruiter Profiles (4), Student Profiles (8) )
 
 ## Production Phase
 
