@@ -12,6 +12,9 @@ class Message(models.Model):
 
     class Meta:
         ordering = ['sent_at']
+        indexes = [
+            models.Index(fields=['mission', 'is_read'], name='message_mission_read_idx'),
+        ]
 
     def __str__(self):
         return f"{self.sender.username}: {self.content[:50]}"
@@ -26,6 +29,10 @@ class DirectConversation(models.Model):
     class Meta:
         unique_together = [('participant1', 'participant2')]
         ordering = ['-updated_at']
+        indexes = [
+            models.Index(fields=['participant1', '-updated_at'], name='conv_p1_updated_idx'),
+            models.Index(fields=['participant2', '-updated_at'], name='conv_p2_updated_idx'),
+        ]
 
     def other_participant(self, user):
         return self.participant2 if self.participant1 == user else self.participant1
@@ -53,6 +60,9 @@ class DirectMessage(models.Model):
 
     class Meta:
         ordering = ['sent_at']
+        indexes = [
+            models.Index(fields=['conversation', 'is_read'], name='dmessage_conv_read_idx'),
+        ]
 
     def __str__(self):
         return f"{self.sender.username}: {self.content[:50]}"

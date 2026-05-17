@@ -2,7 +2,7 @@
 {% load i18n %}
 {% block title %}{{ mission.title }} — StuLance{% endblock %}
 {% block content %}
-<div class="row">
+<div class="row" style="min-height:80vh;">
     <div class="col-md-8">
         <div class="card shadow mb-4">
             <div class="card-body p-4">
@@ -194,7 +194,7 @@
                 <h6 class="card-title">{% trans "Recruiter" %}</h6>
                 {% with profile=mission.client.client_profile %}
                     {% if profile and profile.pk %}
-                    <a href="{% url 'client_profile_detail' profile.pk %}" class="text-decoration-none">
+                    <a href="{% url 'client_profile_detail' profile.user.pk %}" class="text-decoration-none">
                         <strong>{{ profile }}</strong>
                     </a>
                     <div class="text-muted small">{{ profile.get_client_type_display }}</div>

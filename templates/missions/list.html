@@ -2,7 +2,7 @@
 {% load i18n %}
 {% block title %}{% trans "Missions" %} — StuLance{% endblock %}
 {% block content %}
-<div class="row">
+<div class="row" style="min-height:80vh;">
     <div class="col-md-3">
         <div class="card shadow-sm mb-4">
             <div class="card-body">
@@ -47,15 +47,56 @@
 
     <div class="col-md-9">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4>{% blocktrans with count=missions|length %}{{ count }} mission(s) available{% endblocktrans %}</h4>
+            <h4>{% blocktrans with count=page_obj.paginator.count %}{{ count }} mission(s) available{% endblocktrans %}</h4>
         </div>
         {% if missions %}
         <script id="missions-list-data" type="application/json">{{ missions_json|safe }}</script>
         <div id="missions-list-root"></div>
+
+        {% if page_obj.paginator.num_pages > 1 %}
+        <nav class="mt-4">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?{% for k,v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page={{ page_obj.previous_page_number }}">‹</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled"><span class="page-link">‹</span></li>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                    {% elif num >= page_obj.number|add:"-2" and num <= page_obj.number|add:"2" %}
+                    <li class="page-item">
+                        <a class="page-link" href="?{% for k,v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page={{ num }}">{{ num }}</a>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?{% for k,v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page={{ page_obj.next_page_number }}">›</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled"><span class="page-link">›</span></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+
         {% else %}
-        <div class="col-12 text-center py-5 text-muted">
-            <i class="bi bi-search fs-1 d-block mb-2"></i>
-            {% trans "No missions match your search." %}
+        <div class="col-12 text-center py-5">
+            <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="mb-4 mx-auto d-block">
+                <circle cx="60" cy="60" r="56" fill="rgba(124,58,237,0.08)" stroke="rgba(124,58,237,0.18)" stroke-width="2"/>
+                <circle cx="52" cy="50" r="18" stroke="rgba(124,58,237,0.5)" stroke-width="3" fill="none"/>
+                <line x1="65" y1="63" x2="80" y2="78" stroke="rgba(124,58,237,0.5)" stroke-width="3" stroke-linecap="round"/>
+                <line x1="44" y1="50" x2="60" y2="50" stroke="rgba(124,58,237,0.3)" stroke-width="2" stroke-linecap="round"/>
+                <line x1="44" y1="55" x2="57" y2="55" stroke="rgba(124,58,237,0.3)" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="80" cy="80" r="2.5" fill="rgba(167,139,250,0.6)"/>
+            </svg>
+            <h6 style="color:var(--text-muted,#888);font-weight:600;">{% trans "No missions match your search." %}</h6>
+            <p class="small mb-0" style="color:var(--text-muted,#666);">{% trans "Try different keywords or reset the filters." %}</p>
         </div>
         {% endif %}
     </div>

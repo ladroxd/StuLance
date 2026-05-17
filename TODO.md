@@ -15,6 +15,10 @@
 - Lock Versions
 - In the requirements.txt file some libs and stuff are missing.
 
+
+--------------------------------------------------
+
+
 ## Next — ASAP
 
 - [x] **Light / Dark theme switch**
@@ -44,14 +48,18 @@
 - [x] **Reduce messaging poll delay**
   - Replaced notification polling entirely with SSE (`/notifications/stream/`) — server pushes within ~1 second, zero wasted requests
 
-- [ ] **Paginate mission list**
+- [x] **Paginate mission list**
   - Currently loads all open missions at once — add pagination (20 per page)
+  - Django `Paginator` in `mission_list` view, JSON blob scoped to current page, pagination controls preserve active filters
 
-- [ ] **Add DB indexes**
+- [x] **Add DB indexes**
   - `Mission.status`, `Application.student`, `Notification.user + is_read` — common filter fields with no index
+  - Also added indexes on `Mission.client/category`, `Application.mission/status`, `Gig.status+is_active/student/category`, `Message.mission+is_read`, `DirectConversation.participant1+2`, `DirectMessage.conversation+is_read`
 
-- [ ] **Cache category list**
+- [x] **Cache category list**
   - Categories are queried on every mission list load — use `django.core.cache` or template fragment cache
+  - Cached for 15 min in `missions/utils.py` (`get_all_categories`), auto-invalidated via signals on Category save/delete
+  - Applied in `missions/views.py`, `stulance/views.py`, `gigs/views.py` (4 call sites replaced)
 
 ## Bug Fixes
 
@@ -85,9 +93,11 @@
   - Notifications now translated at display time using key + params system — language switch takes effect instantly on all notifications
   - FR and AR translations added for all notification strings
 
-- [ ] **Translation strings missing on mission create and gig create/edit forms**
+- [x] **Translation strings missing on mission create and gig create/edit forms**
   - Labels, placeholders, and error messages on `missions/create/` and `gigs/form/` are still hardcoded in French/English
-  - Need to wrap all strings in `_()` and add FR/AR entries to `.po` files
+  - Wrapped all strings in `_()` in views and forms; fixed JS extras row in `gigs/form.html` using GIG_I18N object
+  - `SubmissionForm` and `ReviewForm` labels/errors translated; flash messages in `missions/views.py` and `gigs/views.py` translated
+  - ~70 new entries added to both FR and AR `.po` files — compile with `python manage.py compilemessages` once GNU gettext is installed
 
 
 ## Pre-Traffic UI Polish (do before first real user testing)

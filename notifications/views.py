@@ -2,6 +2,7 @@ import json
 import time
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.http import JsonResponse, StreamingHttpResponse
 from .models import Notification
 from .translation_keys import TITLES, MESSAGES, resolve
@@ -32,7 +33,8 @@ def notification_list(request):
             grouped.append(entry)
 
     notifs.filter(is_read=False).update(is_read=True)
-    return render(request, 'notifications/list.html', {'grouped': grouped})
+    page_obj = Paginator(grouped, 30).get_page(request.GET.get('page'))
+    return render(request, 'notifications/list.html', {'grouped': page_obj, 'page_obj': page_obj})
 
 
 @login_required

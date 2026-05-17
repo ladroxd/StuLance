@@ -2,11 +2,13 @@ import json
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.utils.text import Truncator
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _, gettext as _g
 from .models import Mission, Application, Review, Category, Report, Submission
 from .forms import MissionForm, ApplicationForm, ReviewForm, SubmissionForm
+from .utils import get_all_categories
 from notifications.utils import create_notification
 
 
@@ -29,7 +31,10 @@ def mission_list(request):
     if duration:
         qs = qs.filter(deadline_days__lte=duration)
 
-    categories = Category.objects.all()
+    categories = get_all_categories()
+
+    paginator = Paginator(qs, 20)
+    page_obj = paginator.get_page(request.GET.get('page'))
 
     missions_json = json.dumps([
         {
@@ -47,13 +52,14 @@ def mission_list(request):
                 or m.client.username
             ) if hasattr(m.client, 'client_profile') else m.client.username,
         }
-        for m in qs
+        for m in page_obj
     ], ensure_ascii=False)
 
     return render(request, 'missions/list.html', {
-        'missions': qs,
+        'missions': page_obj,
         'missions_json': missions_json,
         'categories': categories,
+        'page_obj': page_obj,
         'q': q,
     })
 
@@ -160,8 +166,9 @@ def apply_mission(request, pk):
 @login_required
 def mission_applications(request, pk):
     mission = get_object_or_404(Mission, pk=pk, client=request.user)
-    applications = mission.applications.select_related('student', 'student__student_profile')
-    return render(request, 'missions/applications.html', {'mission': mission, 'applications': applications})
+    qs = mission.applications.select_related('student', 'student__student_profile')
+    page_obj = Paginator(qs, 20).get_page(request.GET.get('page'))
+    return render(request, 'missions/applications.html', {'mission': mission, 'applications': page_obj, 'page_obj': page_obj})
 
 
 @login_required
@@ -183,7 +190,7 @@ def accept_application(request, pk):
             params={'mission': mission.title},
             link=f'/missions/{mission.pk}/',
         )
-        messages.success(request, 'Candidature acceptee. Mission en cours.')
+        messages.success(request, _g('Application accepted. Mission in progress.'))
     return redirect('mission_applications', pk=application.mission.pk)
 
 
@@ -193,7 +200,7 @@ def reject_application(request, pk):
     if request.method == 'POST':
         application.status = 'rejected'
         application.save()
-        messages.success(request, 'Candidature refusee.')
+        messages.success(request, _g('Application rejected.'))
     return redirect('mission_applications', pk=application.mission.pk)
 
 

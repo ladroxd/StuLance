@@ -557,128 +557,11 @@ msgstr "تسجيل مُجنِّد"
 msgid "Recruiter Dashboard"
 msgstr "لوحة تحكم المُجنِّد"
 
-msgid "Morocco's #1 Student Talent Platform"
-msgstr "منصة المواهب الطلابية الأولى في المغرب"
-
-msgid "Where Student Talent"
-msgstr "حيث تلتقي المواهب الطلابية"
-
-msgid "Meets Opportunity"
-msgstr "بالفرصة"
-
-msgid "StuLance connects Morocco's brightest students with companies, startups, and individuals who need real skills — fast, secure, and verified."
-msgstr "تربط StuLance ألمع الطلاب المغاربة بالشركات والشركات الناشئة والأفراد الذين يحتاجون إلى مهارات حقيقية — بسرعة وأمان وموثوقية."
-
 msgid "I'm a Student →"
 msgstr "أنا طالب →"
 
 msgid "I'm Recruiting"
 msgstr "أنا أُجنِّد"
-
-msgid "Students"
-msgstr "الطلاب"
-
-msgid "Recruiters"
-msgstr "المُجنِّدون"
-
-msgid "Projects"
-msgstr "المشاريع"
-
-msgid "Satisfaction"
-msgstr "الرضا"
-
-msgid "For Students"
-msgstr "للطلاب"
-
-msgid "Build your freelance career while studying"
-msgstr "ابنِ مسيرتك المهنية المستقلة أثناء الدراسة"
-
-msgid "Create your profile"
-msgstr "أنشئ ملفك الشخصي"
-
-msgid "Verify your student status, add your skills, and upload portfolio pieces"
-msgstr "تحقق من وضعك الطلابي، أضف مهاراتك، وارفع أعمالك"
-
-msgid "Get discovered"
-msgstr "اجعل نفسك مرئياً"
-
-msgid "Recruiters find you via skill search, or apply directly to posted projects"
-msgstr "يجدك المُجنِّدون عبر البحث بالمهارات، أو تقدم مباشرة للمشاريع المنشورة"
-
-msgid "Deliver & get paid"
-msgstr "سلِّم واحصل على أجرك"
-
-msgid "Complete milestones, receive secure payments, build your reputation"
-msgstr "أكمل المراحل، استلم مدفوعات آمنة، وابنِ سمعتك"
-
-msgid "Join as Student →"
-msgstr "انضم كطالب →"
-
-msgid "For Recruiters"
-msgstr "للمُجنِّدين"
-
-msgid "Access verified student talent on demand"
-msgstr "تواصل مع المواهب الطلابية الموثقة عند الطلب"
-
-msgid "Post a project"
-msgstr "انشر مشروعاً"
-
-msgid "Describe your project, budget, and required skills in minutes"
-msgstr "صف مشروعك وميزانيتك والمهارات المطلوبة في دقائق"
-
-msgid "Browse matched talent"
-msgstr "تصفح المواهب المتطابقة"
-
-msgid "Our AI surfaces the most relevant student profiles for your needs"
-msgstr "يعرض ذكاؤنا الاصطناعي أكثر الملفات الطلابية ملاءمةً لاحتياجاتك"
-
-msgid "Hire with confidence"
-msgstr "وظِّف بثقة"
-
-msgid "All students are verified — pay securely with escrow protection"
-msgstr "جميع الطلاب موثقون — ادفع بأمان مع حماية الضمان"
-
-msgid "Browse Talent →"
-msgstr "تصفح المواهب →"
-
-msgid "Built for trust & results"
-msgstr "مصمم للثقة والنتائج"
-
-msgid "Verified Student Profiles"
-msgstr "ملفات طلابية موثقة"
-
-msgid "Every student is verified through their university ID, ensuring authentic talent."
-msgstr "كل طالب موثق عبر بطاقته الجامعية، مما يضمن مواهب حقيقية."
-
-msgid "Secure Escrow Payments"
-msgstr "مدفوعات آمنة بالضمان"
-
-msgid "Funds are held in escrow until project milestones are delivered and approved."
-msgstr "تُحتجز الأموال في الضمان حتى يتم تسليم مراحل المشروع والموافقة عليها."
-
-msgid "Skill-Matched AI"
-msgstr "ذكاء اصطناعي لمطابقة المهارات"
-
-msgid "Our matching engine connects recruiters to the most relevant student profiles."
-msgstr "يربط محرك المطابقة لدينا المُجنِّدين بأكثر الملفات الطلابية صلةً."
-
-msgid "Real Portfolio Work"
-msgstr "أعمال محفظة حقيقية"
-
-msgid "Students showcase live projects, not just CVs — see the work before you hire."
-msgstr "يعرض الطلاب مشاريع حقيقية وليس فقط السير الذاتية — شاهد العمل قبل التوظيف."
-
-msgid "Featured Missions"
-msgstr "المهام المميزة"
-
-msgid "Ready to launch your future?"
-msgstr "مستعد لإطلاق مستقبلك؟"
-
-msgid "Join thousands of students already building real careers."
-msgstr "انضم إلى آلاف الطلاب الذين يبنون مسارات مهنية حقيقية."
-
-msgid "Create Your Profile — It's Free"
-msgstr "أنشئ ملفك الشخصي — مجاناً"
 
 msgid "Moroccan Student Freelance Hub"
 msgstr "مركز العمل الحر للطلاب المغاربة"
@@ -688,9 +571,6 @@ msgstr "مستعد لإطلاق مسيرتك المهنية؟"
 
 msgid "Get Started"
 msgstr "ابدأ الآن"
-
-msgid "Browse Missions"
-msgstr "تصفح المهام"
 
 msgid "Explore Talent"
 msgstr "اكتشف المواهب"
@@ -712,9 +592,6 @@ msgstr "© 2026 StuLance. جميع الحقوق محفوظة."
 
 msgid "Find Student Talent"
 msgstr "ابحث عن مواهب الطلاب"
-
-msgid "Post a Mission"
-msgstr "نشر مهمة"
 
 msgid "Launch Your Gig"
 msgstr "أطلق خدمتك"
@@ -752,27 +629,185 @@ msgstr "رسالة جديدة"
 msgid "Mission approved — funds released"
 msgstr "تمت الموافقة على المهمة — تم تحرير الأموال"
 
-msgid "%(name)s applied to your mission "%(mission)s""
-msgstr "%(name)s تقدّم لمهمتك "%(mission)s""
+msgid "%(name)s applied to your mission '%(mission)s'"
+msgstr "%(name)s تقدّم لمهمتك '%(mission)s'"
 
-msgid "Your application for "%(mission)s" has been accepted!"
-msgstr "تم قبول طلبك للمهمة "%(mission)s"!"
+msgid "Your application for '%(mission)s' has been accepted!"
+msgstr "تم قبول طلبك للمهمة '%(mission)s'!"
 
-msgid "The mission "%(mission)s" has been marked as completed."
-msgstr "تم وضع علامة اكتمال على المهمة "%(mission)s"."
+msgid "The mission '%(mission)s' has been marked as completed."
+msgstr "تم وضع علامة اكتمال على المهمة '%(mission)s'."
 
-msgid "%(name)s submitted a delivery for "%(mission)s""
-msgstr "%(name)s قدّم تسليماً للمهمة "%(mission)s""
+msgid "%(name)s submitted a delivery for '%(mission)s'"
+msgstr "%(name)s قدّم تسليماً للمهمة '%(mission)s'"
 
-msgid "Your delivery for "%(mission)s" has been accepted!"
-msgstr "تم قبول تسليمك للمهمة "%(mission)s"!"
+msgid "Your delivery for '%(mission)s' has been accepted!"
+msgstr "تم قبول تسليمك للمهمة '%(mission)s'!"
 
-msgid "The client requested a revision for "%(mission)s"."
-msgstr "طلب العميل مراجعة للمهمة "%(mission)s"."
+msgid "The client requested a revision for '%(mission)s'."
+msgstr "طلب العميل مراجعة للمهمة '%(mission)s'."
 
 msgid "%(name)s sent you a message."
 msgstr "%(name)s أرسل لك رسالة."
 
-msgid "Admin approved the mission "%(mission)s". Funds have been credited to you."
-msgstr "وافق المسؤول على المهمة "%(mission)s". تم إضافة الأموال إلى حسابك."
+msgid "Admin approved the mission '%(mission)s'. Funds have been credited to you."
+msgstr "وافق المسؤول على المهمة '%(mission)s'. تم إضافة الأموال إلى حسابك."
 
+msgid "Only students can post services."
+msgstr "يمكن للطلاب فقط نشر الخدمات."
+
+msgid "Service deleted."
+msgstr "تم حذف الخدمة."
+
+msgid "Service saved."
+msgstr "تم حفظ الخدمة."
+
+msgid "Title is required."
+msgstr "العنوان مطلوب."
+
+msgid "Description is required."
+msgstr "الوصف مطلوب."
+
+msgid "Base rate is required."
+msgstr "السعر الأساسي مطلوب."
+
+msgid "Delivery time is required."
+msgstr "مدة التسليم مطلوبة."
+
+msgid "Publish"
+msgstr "نشر"
+
+msgid "Application accepted. Mission in progress."
+msgstr "تم قبول الطلب. المهمة قيد التنفيذ."
+
+msgid "Application rejected."
+msgstr "تم رفض الطلب."
+
+msgid "File (optional)"
+msgstr "ملف (اختياري)"
+
+msgid "Link (optional)"
+msgstr "رابط (اختياري)"
+
+msgid "Message"
+msgstr "رسالة"
+
+msgid "Describe what you are delivering..."
+msgstr "صف ما تسلّمه..."
+
+msgid "Please provide at least a file or a link."
+msgstr "يرجى تقديم ملف أو رابط على الأقل."
+
+msgid "Rating (1 to 5)"
+msgstr "التقييم (1 إلى 5)"
+
+msgid "Comment"
+msgstr "تعليق"
+
+msgid "Label"
+msgstr "تسمية"
+
+msgid "optional"
+msgstr "اختياري"
+
+msgid "Price (MAD)"
+msgstr "السعر (درهم)"
+
+msgid "e.g. Extra revision"
+msgstr "مثال: مراجعة إضافية"
+
+msgid "e.g. A full revision of the delivered work"
+msgstr "مثال: مراجعة كاملة للعمل المُسلَّم"
+
+msgid "e.g. Build a Django website"
+msgstr "مثال: بناء موقع باستخدام Django"
+
+msgid "Student Services"
+msgstr "خدمات الطلاب"
+
+msgid "Browse what our students have to offer."
+msgstr "تصفح ما يقدمه طلابنا."
+
+msgid "Post a Service"
+msgstr "نشر خدمة"
+
+msgid "Max rate (MAD)"
+msgstr "أقصى سعر (درهم)"
+
+msgid "No services found."
+msgstr "لم يتم العثور على خدمات."
+
+msgid "Be the first to post!"
+msgstr "كن أول من ينشر!"
+
+msgid "Basic Information"
+msgstr "المعلومات الأساسية"
+
+msgid "Pricing & Delivery"
+msgstr "التسعير والتسليم"
+
+msgid "Base Rate (MAD)"
+msgstr "السعر الأساسي (درهم)"
+
+msgid "Delivery (days)"
+msgstr "مدة التسليم (أيام)"
+
+msgid "Optional Extras"
+msgstr "إضافات اختيارية"
+
+msgid "Add Extra"
+msgstr "إضافة ميزة"
+
+msgid "Optional add-ons clients can select (e.g. extra revision, source files, priority delivery)."
+msgstr "ميزات إضافية يمكن للعملاء اختيارها (مثال: مراجعة إضافية، ملفات المصدر، تسليم ذو أولوية)."
+
+msgid "No extras yet. Click 'Add Extra' to add one."
+msgstr "لا توجد إضافات بعد. انقر على 'إضافة ميزة' لإضافة واحدة."
+
+msgid "a Service"
+msgstr "خدمة"
+
+msgid "Select a category"
+msgstr "اختر فئة"
+
+msgid "Your default from profile. You can change it."
+msgstr "القيمة الافتراضية من ملفك الشخصي. يمكنك تغييرها."
+
+msgid "My Services"
+msgstr "خدماتي"
+
+msgid "New Service"
+msgstr "خدمة جديدة"
+
+msgid "day(s)"
+msgstr "يوم(أيام)"
+
+msgid "Pending review"
+msgstr "في انتظار المراجعة"
+
+msgid "Approved"
+msgstr "مُوافَق عليه"
+
+msgid "You haven't posted any services yet."
+msgstr "لم تنشر أي خدمات بعد."
+
+msgid "Post your first service"
+msgstr "انشر خدمتك الأولى"
+
+msgid "Fill in the details below to post your mission."
+msgstr "أدخل التفاصيل أدناه لنشر مهمتك."
+
+msgid "Mission Info"
+msgstr "معلومات المهمة"
+
+msgid "Skills Required"
+msgstr "المهارات المطلوبة"
+
+msgid "Type a skill and press Enter or comma…"
+msgstr "اكتب مهارة ثم اضغط Enter أو الفاصلة…"
+
+msgid "Press Enter or comma to add each skill. Click a tag to remove it."
+msgstr "اضغط Enter أو الفاصلة لإضافة كل مهارة. انقر على التسمية لحذفها."
+
+msgid "Budget & Timeline"
+msgstr "الميزانية والجدول الزمني"

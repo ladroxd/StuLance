@@ -2,8 +2,11 @@ import json
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.paginator import Paginator
 from django.db.models import Q
+from django.utils.translation import gettext as _
 from missions.models import Category
+from missions.utils import get_all_categories
 from .models import Gig
 
 
@@ -20,9 +23,13 @@ def gig_list(request):
     if rate_max:
         qs = qs.filter(base_rate__lte=rate_max)
 
-    categories = Category.objects.all()
+    categories = get_all_categories()
+    paginator = Paginator(qs, 20)
+    page_obj = paginator.get_page(request.GET.get('page'))
+
     return render(request, 'gigs/list.html', {
-        'gigs': qs,
+        'gigs': page_obj,
+        'page_obj': page_obj,
         'categories': categories,
         'q': q,
     })
@@ -40,14 +47,14 @@ def gig_detail(request, pk):
 @login_required
 def gig_create(request):
     if not request.user.is_student():
-        messages.error(request, 'Seuls les étudiants peuvent publier des services.')
+        messages.error(request, _('Only students can post services.'))
         return redirect('gig_list')
     if request.method == 'POST':
         return _save_gig(request, gig=None)
     profile = request.user.student_profile
-    categories = Category.objects.all()
+    categories = get_all_categories()
     return render(request, 'gigs/form.html', {
-        'action': 'Publier',
+        'action': _('Publish'),
         'categories': categories,
         'default_rate': profile.hourly_rate or '',
         'gig': None,
@@ -59,9 +66,9 @@ def gig_edit(request, pk):
     gig = get_object_or_404(Gig, pk=pk, student=request.user)
     if request.method == 'POST':
         return _save_gig(request, gig=gig)
-    categories = Category.objects.all()
+    categories = get_all_categories()
     return render(request, 'gigs/form.html', {
-        'action': 'Modifier',
+        'action': _('Edit'),
         'categories': categories,
         'default_rate': gig.base_rate,
         'gig': gig,
@@ -73,7 +80,7 @@ def gig_delete(request, pk):
     gig = get_object_or_404(Gig, pk=pk, student=request.user)
     if request.method == 'POST':
         gig.delete()
-        messages.success(request, 'Service supprimé.')
+        messages.success(request, _('Service deleted.'))
         return redirect('dashboard')
     return render(request, 'gigs/confirm_delete.html', {'gig': gig})
 
@@ -110,20 +117,20 @@ def _save_gig(request, gig):
 
     errors = []
     if not title:
-        errors.append('Le titre est requis.')
+        errors.append(_('Title is required.'))
     if not description:
-        errors.append('La description est requise.')
+        errors.append(_('Description is required.'))
     if not base_rate:
-        errors.append('Le tarif de base est requis.')
+        errors.append(_('Base rate is required.'))
     if not delivery_days:
-        errors.append('Le délai de livraison est requis.')
+        errors.append(_('Delivery time is required.'))
 
-    categories = Category.objects.all()
+    categories = get_all_categories()
     if errors:
         for e in errors:
             messages.error(request, e)
         return render(request, 'gigs/form.html', {
-            'action': 'Publier' if gig is None else 'Modifier',
+            'action': _('Publish') if gig is None else _('Edit'),
             'categories': categories,
             'default_rate': base_rate,
             'gig': gig,
@@ -144,5 +151,5 @@ def _save_gig(request, gig):
         gig.status = Gig.STATUS_PENDING  # re-submit for approval on every edit
     gig.save()
 
-    messages.success(request, 'Service enregistré.')
+    messages.success(request, _('Service saved.'))
     return redirect('gig_detail', pk=gig.pk)

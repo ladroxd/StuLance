@@ -15,7 +15,7 @@
                     <h6 class="mb-3">{% trans "Basic Information" %}</h6>
                     <div class="mb-3">
                         <label class="form-label fw-semibold">{% trans "Title" %}</label>
-                        <input type="text" name="title" class="form-control" placeholder="ex: Création d'un site web avec Django" value="{{ gig.title|default:'' }}" required>
+                        <input type="text" name="title" class="form-control" placeholder="{% trans 'e.g. Build a Django website' %}" value="{{ gig.title|default:'' }}" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-semibold">{% trans "Description" %}</label>
@@ -77,11 +77,11 @@
                                 <div class="row g-2 align-items-end">
                                     <div class="col-md-4">
                                         <label class="form-label small">{% trans "Label" %}</label>
-                                        <input type="text" name="extra_label" class="form-control form-control-sm" placeholder="ex: Révision supplémentaire" value="{{ extra.label }}" required>
+                                        <input type="text" name="extra_label" class="form-control form-control-sm" placeholder="{% trans 'e.g. Extra revision' %}" value="{{ extra.label }}" required>
                                     </div>
                                     <div class="col-md-5">
                                         <label class="form-label small">{% trans "Description" %} <span class="text-muted">({% trans "optional" %})</span></label>
-                                        <input type="text" name="extra_description" class="form-control form-control-sm" placeholder="ex: Une révision complète du travail livré" value="{{ extra.description }}">
+                                        <input type="text" name="extra_description" class="form-control form-control-sm" placeholder="{% trans 'e.g. A full revision of the delivered work' %}" value="{{ extra.description }}">
                                     </div>
                                     <div class="col-md-2">
                                         <label class="form-label small">{% trans "Price (MAD)" %}</label>
@@ -115,6 +115,14 @@
 </div>
 
 <script>
+var GIG_I18N = {
+    label: "{% trans 'Label' %}",
+    description: "{% trans 'Description' %}",
+    optional: "{% trans 'optional' %}",
+    price_mad: "{% trans 'Price (MAD)' %}",
+    label_placeholder: "{% trans 'e.g. Extra revision' %}",
+    desc_placeholder: "{% trans 'e.g. A full revision of the delivered work' %}",
+};
 document.addEventListener('DOMContentLoaded', function () {
     var container = document.getElementById('extras-container');
     var noMsg = document.getElementById('no-extras-msg');
@@ -127,11 +135,11 @@ document.addEventListener('DOMContentLoaded', function () {
         var row = document.createElement('div');
         row.className = 'extra-row card mb-2';
         row.innerHTML = '<div class="card-body p-3"><div class="row g-2 align-items-end">'
-            + '<div class="col-md-4"><label class="form-label small">Label</label>'
-            + '<input type="text" name="extra_label" class="form-control form-control-sm" placeholder="ex: Révision supplémentaire" required></div>'
-            + '<div class="col-md-5"><label class="form-label small">Description <span class="text-muted">(optionnel)</span></label>'
-            + '<input type="text" name="extra_description" class="form-control form-control-sm" placeholder="ex: Une révision complète du travail livré"></div>'
-            + '<div class="col-md-2"><label class="form-label small">Prix (MAD)</label>'
+            + '<div class="col-md-4"><label class="form-label small">' + GIG_I18N.label + '</label>'
+            + '<input type="text" name="extra_label" class="form-control form-control-sm" placeholder="' + GIG_I18N.label_placeholder + '" required></div>'
+            + '<div class="col-md-5"><label class="form-label small">' + GIG_I18N.description + ' <span class="text-muted">(' + GIG_I18N.optional + ')</span></label>'
+            + '<input type="text" name="extra_description" class="form-control form-control-sm" placeholder="' + GIG_I18N.desc_placeholder + '"></div>'
+            + '<div class="col-md-2"><label class="form-label small">' + GIG_I18N.price_mad + '</label>'
             + '<input type="number" name="extra_price" class="form-control form-control-sm" min="1" step="0.01" required></div>'
             + '<div class="col-md-1 text-end"><button type="button" class="btn btn-ghost btn-sm text-danger remove-extra"><i class="bi bi-trash"></i></button></div>'
             + '</div></div>';

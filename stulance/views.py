@@ -4,11 +4,12 @@ from django.shortcuts import render, redirect
 from django.utils.text import Truncator
 
 from missions.models import Mission, Category
+from missions.utils import get_all_categories
 
 
 def home(request):
     missions_qs = Mission.objects.filter(status='open').select_related('client', 'client__client_profile', 'category').order_by('-created_at')[:6]
-    categories = Category.objects.all()
+    categories = get_all_categories()
 
     missions_json = json.dumps([
         {

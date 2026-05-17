@@ -47,6 +47,12 @@ class Mission(models.Model):
 
     class Meta:
         ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['status'], name='mission_status_idx'),
+            models.Index(fields=['client'], name='mission_client_idx'),
+            models.Index(fields=['category'], name='mission_category_idx'),
+            models.Index(fields=['status', '-created_at'], name='mission_status_created_idx'),
+        ]
 
 
 class Application(models.Model):
@@ -71,6 +77,11 @@ class Application(models.Model):
     class Meta:
         unique_together = ('mission', 'student')
         ordering = ['-applied_at']
+        indexes = [
+            models.Index(fields=['student'], name='application_student_idx'),
+            models.Index(fields=['mission'], name='application_mission_idx'),
+            models.Index(fields=['status'], name='application_status_idx'),
+        ]
 
     def __str__(self):
         return f"{self.student.username} -> {self.mission.title}"

@@ -81,19 +81,19 @@ class SubmissionForm(forms.ModelForm):
         model = Submission
         fields = ['file', 'link', 'message']
         widgets = {
-            'message': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Decrivez ce que vous livrez...'}),
+            'message': forms.Textarea(attrs={'rows': 4, 'placeholder': _('Describe what you are delivering...')}),
             'link': forms.URLInput(attrs={'placeholder': 'https://github.com/...'}),
         }
         labels = {
-            'file': 'Fichier (optionnel)',
-            'link': 'Lien (optionnel)',
-            'message': 'Message',
+            'file': _('File (optional)'),
+            'link': _('Link (optional)'),
+            'message': _('Message'),
         }
 
     def clean(self):
         cleaned = super().clean()
         if not cleaned.get('file') and not cleaned.get('link'):
-            raise forms.ValidationError('Fournissez au moins un fichier ou un lien.')
+            raise forms.ValidationError(_('Please provide at least a file or a link.'))
         return cleaned
 
 
@@ -106,6 +106,6 @@ class ReviewForm(forms.ModelForm):
             'rating': forms.RadioSelect(),
         }
         labels = {
-            'rating': 'Note (1 a 5)',
-            'comment': 'Commentaire',
+            'rating': _('Rating (1 to 5)'),
+            'comment': _('Comment'),
         }

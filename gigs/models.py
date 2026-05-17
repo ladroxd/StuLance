@@ -28,6 +28,11 @@ class Gig(models.Model):
 
     class Meta:
         ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['status', 'is_active'], name='gig_status_active_idx'),
+            models.Index(fields=['student'], name='gig_student_idx'),
+            models.Index(fields=['category'], name='gig_category_idx'),
+        ]
 
     def __str__(self):
         return f"{self.title} — {self.student.get_full_name() or self.student.username}"
